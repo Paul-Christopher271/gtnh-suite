@@ -2053,7 +2053,7 @@
 
     <!-- CLIENT SCRIPT LOGIC -->
     <script>
-        const MATERIALS = [{"name": "Blue Slime Crystal", "tier": "00-S", "durability": 900, "handleMod": 1.5, "miningSpeed": 1.5, "miningLevel": "00-Stone", "attack": 1.0, "weight": 0.22, "breakChance": "0.0%", "gate": "Alloy Smelter / Part Builder", "traits": ["Slimy"], "notes": "900 Bolt ammo capacity + 0% break chance!"}, {"name": "Bronze", "tier": "00-S", "durability": 285, "handleMod": 1.25, "miningSpeed": 6.5, "miningLevel": "04-Redstone", "attack": 1.5, "gate": "Smeltery", "traits": ["Reinforced I"]}, {"name": "Cactus", "tier": "00-S", "durability": 83, "handleMod": 1.0, "miningSpeed": 5.0, "miningLevel": "00-Stone", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": ["Jagged"]}, {"name": "Copper", "tier": "00-S", "durability": 135, "handleMod": 1.1, "miningSpeed": 5.0, "miningLevel": "01-Copper", "attack": 1.0, "gate": "Smeltery", "traits": ["Reinforced I"]}, {"name": "Flint", "tier": "00-S", "durability": 113, "handleMod": 0.5, "miningSpeed": 4.0, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Builder", "traits": ["Stonebound"]}, {"name": "Green Slime Crystal", "tier": "00-S", "durability": 375, "handleMod": 2.0, "miningSpeed": 1.0, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Extruder / Smeltery", "traits": ["Slimy"]}, {"name": "Iron", "tier": "00-S", "durability": 188, "handleMod": 1.2, "miningSpeed": 6.0, "miningLevel": "02-Iron", "attack": 1.5, "weight": 3.3, "breakChance": "80%", "gate": "Smeltery", "traits": ["Reinforced I"]}, {"name": "Netherrack", "tier": "00-S", "durability": 92, "handleMod": 1.2, "miningSpeed": 4.56, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Builder", "traits": ["Stonebound"], "notes": "Low mining speed (4.56) levels up 4x faster in Iguana Tweaks! Ideal for building Unbreakable Lumberaxes."}, {"name": "Obsidian", "tier": "00-S", "durability": 67, "handleMod": 0.8, "miningSpeed": 6.5, "miningLevel": "06-Ardite", "attack": 1.0, "gate": "Part Builder", "traits": ["Reinforced III"]}, {"name": "Obzinite", "tier": "00-S", "durability": 413, "handleMod": 1.3, "miningSpeed": 7.9, "miningLevel": "06-Ardite", "attack": 2.0, "weight": 1.1, "breakChance": "70%", "gate": "Steel/Obsidian Dust Mixer", "traits": ["Stonebound I", "Reinforced II"]}, {"name": "Paper", "tier": "00-S", "durability": 30, "handleMod": 0.5, "miningSpeed": 1.0, "miningLevel": "00-Stone", "attack": 0.5, "gate": "Part Builder", "traits": ["Writable"], "notes": "+1 Extra Modifier Slot per part"}, {"name": "Queen's Gold", "tier": "00-S", "durability": 75, "handleMod": 1.0, "miningSpeed": 5.0, "miningLevel": "05-Obsidian", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Steel", "tier": "00-S", "durability": 300, "handleMod": 1.3, "miningSpeed": 7.0, "miningLevel": "05-Obsidian", "attack": 1.5, "gate": "Blast Furnace / Extruder", "traits": ["Reinforced II"]}, {"name": "Stone", "tier": "00-S", "durability": 75, "handleMod": 0.3, "miningSpeed": 1.5, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Extruder / Smeltery", "traits": ["Stonebound"]}, {"name": "Thaumium", "tier": "00-S", "durability": 400, "handleMod": 1.18, "miningSpeed": 7.0, "miningLevel": "02-Iron", "attack": 2.0, "gate": "Crucible / Part Builder", "traits": ["Thaumic"], "notes": "+1 Extra Modifier Slot per part (+2 if 3 parts)"}, {"name": "Wood", "tier": "00-S", "durability": 38, "handleMod": 1.0, "miningSpeed": 1.5, "miningLevel": "00-Stone", "attack": 1.0, "drawSpeed": "0.90 s", "arrowSpeed": "x3.00", "weight": 0.69, "breakChance": "50%", "gate": "Part Builder", "traits": ["Ecological"]}, {"name": "Aeon Steel", "tier": "01-LV", "durability": 617, "handleMod": 1.6, "miningSpeed": 11.0, "miningLevel": "06-Ardite", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced II"]}, {"name": "Aluminium", "tier": "01-LV", "durability": 192, "handleMod": 2.0, "miningSpeed": 10.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Alumite", "tier": "01-LV", "durability": 413, "handleMod": 1.3, "miningSpeed": 7.9, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Smeltery / LV Extruder", "traits": ["Reinforced II"]}, {"name": "Amber", "tier": "01-LV", "durability": 96, "handleMod": 1.5, "miningSpeed": 4.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ardite", "tier": "01-LV", "durability": 455, "handleMod": 2.1, "miningSpeed": 8.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Smeltery", "traits": ["Stonebound II"]}, {"name": "Bismuth Bronze", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 8.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Black Bronze", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 12.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Blood Infused Iron", "tier": "01-LV", "durability": 459, "handleMod": 1.4, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Blue Sapphire", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Carbon", "tier": "01-LV", "durability": 48, "handleMod": 0.5, "drawSpeed": "0.85 s", "arrowSpeed": "x4.80", "weight": 0.08, "breakChance": "90%", "gate": "LV Extruder", "traits": []}, {"name": "Certus Quartz", "tier": "01-LV", "durability": 24, "handleMod": 0.5, "miningSpeed": 5.0, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Cobalt", "tier": "01-LV", "durability": 600, "handleMod": 1.0, "miningSpeed": 14.0, "miningLevel": "07-Cobalt", "attack": 2.0, "gate": "Smeltery / LV Extruder", "traits": []}, {"name": "Cobalt Brass", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 8.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Dogbearium", "tier": "01-LV", "durability": 450, "handleMod": 1.6, "miningSpeed": 8.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": ["Serrated"]}, {"name": "Electrical Steel", "tier": "01-LV", "durability": 384, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Gold", "tier": "01-LV", "durability": 48, "handleMod": 1.5, "miningSpeed": 12.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Green Sapphire", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Invar", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ironwood", "tier": "01-LV", "durability": 288, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Magical Wood", "tier": "01-LV", "durability": 73, "handleMod": 1.0, "miningSpeed": 1.5, "miningLevel": "00-Stone", "attack": 0.0, "gate": "Part Extruder / Smeltery", "traits": ["Modifiable"]}, {"name": "Magnalium", "tier": "01-LV", "durability": 192, "handleMod": 1.2, "drawSpeed": "0.90 s", "arrowSpeed": "x3.33", "weight": 0.12, "breakChance": "90%", "gate": "LV Extruder", "traits": []}, {"name": "Magnetic Iron", "tier": "01-LV", "durability": 350, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "02-Iron", "attack": 1.5, "gate": "LV Extruder", "traits": []}, {"name": "Manganese", "tier": "01-LV", "durability": 384, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Manyullyn", "tier": "01-LV", "durability": 900, "handleMod": 1.5, "miningSpeed": 9.0, "miningLevel": "08-Manyullyn", "attack": 2.5, "gate": "Smeltery", "traits": ["Stonebound II"]}, {"name": "Molybdenum", "tier": "01-LV", "durability": 384, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Nether Quartz", "tier": "01-LV", "durability": 24, "handleMod": 0.5, "miningSpeed": 1.0, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Olivine", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Pig Iron", "tier": "01-LV", "durability": 250, "handleMod": 1.3, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I", "Tasty"]}, {"name": "Pulsating Iron", "tier": "01-LV", "durability": 192, "handleMod": 2.5, "miningSpeed": 6.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Red Garnet", "tier": "01-LV", "durability": 96, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Rose Gold", "tier": "01-LV", "durability": 96, "handleMod": 1.5, "miningSpeed": 14.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ruby", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Silver", "tier": "01-LV", "durability": 48, "handleMod": 1.5, "miningSpeed": 10.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Soularium", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 8.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Tanzanite", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Thorium", "tier": "01-LV", "durability": 384, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Tin Alloy", "tier": "01-LV", "durability": 72, "handleMod": 1.5, "miningSpeed": 6.5, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Unstable Ingot", "tier": "01-LV", "durability": 75, "handleMod": 0.6, "miningSpeed": 7.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced IV", "Mathematical!"]}, {"name": "Wrought Iron", "tier": "01-LV", "durability": 288, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Yellow Garnet", "tier": "01-LV", "durability": 96, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ademic Steel", "tier": "02-MV", "durability": 4608, "handleMod": 3.0, "miningSpeed": 12.0, "miningLevel": "06-Ardite", "attack": 3.0, "gate": "MV Extruder / EBF", "traits": []}, {"name": "Aer", "tier": "02-MV", "durability": 48, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Amethyst", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 7.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Aqua", "tier": "02-MV", "durability": 48, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Black Steel", "tier": "02-MV", "durability": 576, "handleMod": 2.5, "miningSpeed": 14.0, "miningLevel": "05-Obsidian", "attack": 5.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I"]}, {"name": "Blue Steel", "tier": "02-MV", "durability": 768, "handleMod": 3.5, "miningSpeed": 7.5, "miningLevel": "06-Ardite", "attack": 8.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I"]}, {"name": "Blue Topaz", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 7.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Chrome", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 11.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Conductive Iron", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 6.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Damascus Steel", "tier": "02-MV", "durability": 1500, "handleMod": 5.0, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 2.5, "gate": "MV Extruder / Questbook Shop", "traits": ["Reinforced II"], "notes": "Massive x5.0 handle multiplier + Reinforced II. Best midgame tool rod & plate!"}, {"name": "Diamond", "tier": "02-MV", "durability": 960, "handleMod": 3.5, "miningSpeed": 8.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Electrum", "tier": "02-MV", "durability": 48, "handleMod": 1.5, "miningSpeed": 12.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Emerald", "tier": "02-MV", "durability": 192, "handleMod": 3.5, "miningSpeed": 7.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Energetic Alloy", "tier": "02-MV", "durability": 1805, "handleMod": 1.1, "miningSpeed": 12.0, "miningLevel": "05-Obsidian", "attack": 1.5, "drawSpeed": "1.00 s", "arrowSpeed": "x4.60", "weight": 0.11, "breakChance": "0.9%", "gate": "Kanthal Coils EBF", "traits": []}, {"name": "Energetic Silver", "tier": "02-MV", "durability": 384, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Fiery Steel", "tier": "02-MV", "durability": 410, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ignis", "tier": "02-MV", "durability": 48, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Knightmetal", "tier": "02-MV", "durability": 1021, "handleMod": 1.2, "miningSpeed": 13.0, "miningLevel": "04-Redstone", "attack": 3.0, "gate": "MV Extruder", "traits": ["Reinforced I"]}, {"name": "Magnetic Steel", "tier": "02-MV", "durability": 384, "handleMod": 2.5, "miningSpeed": 6.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I"]}, {"name": "Manasteel", "tier": "02-MV", "durability": 3840, "handleMod": 3.5, "miningSpeed": 8.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Botania / Smeltery", "traits": []}, {"name": "Orange Topaz", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 7.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ordo", "tier": "02-MV", "durability": 48, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Perditio", "tier": "02-MV", "durability": 48, "handleMod": 1.0, "miningSpeed": 32.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Part Builder / Crucible", "traits": [], "notes": "Speed 32.0 Glass Cannon Head"}, {"name": "Red Steel", "tier": "02-MV", "durability": 672, "handleMod": 3.5, "miningSpeed": 7.0, "miningLevel": "06-Ardite", "attack": 10.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I"]}, {"name": "Reinforced Metal", "tier": "02-MV", "durability": 2000, "handleMod": 6.0, "miningSpeed": 10.0, "miningLevel": "05-Obsidian", "gate": "Implosion Compressor / Loot", "traits": []}, {"name": "Shadow Metal", "tier": "02-MV", "durability": 6144, "handleMod": 5.5, "miningSpeed": 32.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Vacuum Freezer", "traits": [], "notes": "Speed 32.0 + 6,144 Durability + x5.5 Handle Mod"}, {"name": "Stainless Steel", "tier": "02-MV", "durability": 987, "handleMod": 3.5, "miningSpeed": 12.0, "miningLevel": "06-Ardite", "attack": 5.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I"]}, {"name": "Steeleaf", "tier": "02-MV", "durability": 806, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Terra", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Vanadiumsteel", "tier": "02-MV", "durability": 1440, "handleMod": 2.5, "miningSpeed": 18.0, "miningLevel": "05-Obsidian", "attack": 7.0, "weight": 5.5, "breakChance": "90%", "gate": "MV Extruder", "traits": [], "notes": "7.0 Base Attack Damage! Huge early melee sword blade upgrade."}, {"name": "Cubic Zirconia", "tier": "03-HV", "durability": 960, "handleMod": 2.5, "miningSpeed": 7.46, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Endium", "tier": "03-HV", "durability": 768, "handleMod": 3.5, "miningSpeed": 16.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Enhanced Galgadorian", "tier": "03-HV", "durability": 5400, "handleMod": 4.0, "miningSpeed": 32.0, "miningLevel": "07-Cobalt", "attack": 2.5, "gate": "HV Extruder / EBF", "traits": []}, {"name": "Magnetic Neodymium", "tier": "03-HV", "durability": 384, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Meteoric Iron", "tier": "03-HV", "durability": 288, "handleMod": 2.5, "miningSpeed": 6.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Meteoric Steel", "tier": "03-HV", "durability": 1480, "handleMod": 2.0, "miningSpeed": 16.2, "miningLevel": "05-Obsidian", "attack": 12.0, "weight": 1.46, "breakChance": "0.9%", "gate": "Moon Access / EBF", "traits": [], "notes": "12.0 Base Attack Damage! Huge post-Moon combat leap."}, {"name": "Neodymium", "tier": "03-HV", "durability": 384, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Reinforced Ingot", "tier": "03-HV", "durability": 450, "handleMod": 6.0, "miningSpeed": 7.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Vibrant Alloy", "tier": "03-HV", "durability": 3036, "handleMod": 3.0, "miningSpeed": 18.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Nichrome Coils EBF", "traits": []}, {"name": "Vividalloy", "tier": "03-HV", "durability": 576, "handleMod": 3.5, "miningSpeed": 12.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Crystalline Alloy", "tier": "05-EV", "durability": 576, "handleMod": 3.5, "miningSpeed": 18.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Duralumin", "tier": "05-EV", "durability": 384, "handleMod": 2.5, "miningSpeed": 16.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Enderium Base", "tier": "05-EV", "durability": 576, "handleMod": 3.5, "miningSpeed": 16.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Melodic Alloy", "tier": "05-EV", "durability": 768, "handleMod": 4.5, "miningSpeed": 24.0, "miningLevel": "07-Cobalt", "attack": 5.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Oriharukon", "tier": "04-EV", "durability": 7680, "handleMod": 4.5, "miningSpeed": 32.0, "miningLevel": "07-Cobalt", "attack": 3.0, "gate": "EV EBF", "traits": []}, {"name": "Platinum", "tier": "05-EV", "durability": 48, "handleMod": 3.5, "miningSpeed": 12.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Terrasteel", "tier": "04-EV", "durability": 7680, "handleMod": 4.0, "miningSpeed": 32.0, "miningLevel": "07-Cobalt", "attack": 3.5, "gate": "EV Botania", "traits": []}, {"name": "Tungstencarbide", "tier": "05-EV", "durability": 960, "handleMod": 3.5, "miningSpeed": 14.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Tungstensteel", "tier": "04-EV", "durability": 4000, "handleMod": 3.0, "miningSpeed": 22.0, "miningLevel": "07-Cobalt", "attack": 14.0, "gate": "EV EBF", "traits": []}, {"name": "Callisto Ice", "tier": "05-IV", "durability": 768, "handleMod": 3.5, "miningSpeed": 9.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Elven Elementium", "tier": "05-IV", "durability": 24576, "handleMod": 6.5, "miningSpeed": 20.0, "miningLevel": "08-Manyullyn", "attack": 3.0, "gate": "IV Extruder", "traits": []}, {"name": "HSS-E", "tier": "05-IV", "durability": 7680, "handleMod": 6.5, "miningSpeed": 32.0, "miningLevel": "08-Manyullyn", "attack": 3.5, "gate": "IV Mixer / EV EBF", "traits": []}, {"name": "HSS-S", "tier": "05-IV", "durability": 8500, "handleMod": 7.5, "miningSpeed": 36.0, "miningLevel": "08-Manyullyn", "attack": 4.0, "gate": "IV EBF", "traits": []}, {"name": "Infused Gold", "tier": "05-IV", "durability": 48, "handleMod": 2.5, "miningSpeed": 12.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ledox", "tier": "05-IV", "durability": 768, "handleMod": 3.5, "miningSpeed": 15.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Lumiium", "tier": "05-IV", "durability": 255, "handleMod": 2.5, "miningSpeed": 4.27, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "MAR-Ce-M200", "tier": "05-IV", "durability": 153600, "handleMod": 5.0, "miningSpeed": 150.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "IV Vacuum Freezer", "traits": []}, {"name": "Mytryl", "tier": "05-IV", "durability": 384, "handleMod": 3.5, "miningSpeed": 8.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Opal", "tier": "05-IV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Osmiridium", "tier": "05-IV", "durability": 2400, "handleMod": 2.0, "drawSpeed": "0.65 s", "arrowSpeed": "x5.00", "weight": 0.19, "breakChance": "0.9%", "gate": "IV Extruder / Blast Furnace", "traits": [], "notes": "0.65s Draw Speed / x5.00 Arrow Speed! Top tier crossbow limb."}, {"name": "Osmium", "tier": "05-IV", "durability": 960, "handleMod": 3.5, "miningSpeed": 16.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced II"]}, {"name": "Palladium", "tier": "05-IV", "durability": 2200, "handleMod": 3.0, "miningSpeed": 18.0, "miningLevel": "05-Obsidian", "attack": 16.0, "weight": 2.0, "breakChance": "0.9%", "gate": "HV Vacuum Freezer", "traits": []}, {"name": "Rhodium Plated Palladium", "tier": "05-IV", "durability": 886, "handleMod": 4.5, "miningSpeed": 13.2, "miningLevel": "07-Cobalt", "attack": 5.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Signalium", "tier": "05-IV", "durability": 585, "handleMod": 5.5, "miningSpeed": 11.88, "miningLevel": "08-Manyullyn", "attack": 6.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Tartarite", "tier": "05-IV", "durability": 2500, "handleMod": 3.5, "miningSpeed": 35.0, "miningLevel": "09-Tartarite", "attack": 4.0, "gate": "IV EBF / Fusion", "traits": ["Reinforced III"]}, {"name": "Zn-Th Alloy", "tier": "05-IV", "durability": 619, "handleMod": 4.5, "miningSpeed": 4.26, "miningLevel": "07-Cobalt", "attack": 5.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Adamantium", "tier": "06-LuV", "durability": 9216, "handleMod": 9.5, "miningSpeed": 73.6, "miningLevel": "11-Manyullyn+", "attack": 19.0, "weight": 2.0, "breakChance": "0.9%", "gate": "LuV / Naquadah Coils", "traits": []}, {"name": "Ceruclase", "tier": "06-LuV", "durability": 960, "handleMod": 1.5, "miningSpeed": 32.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Fluxed Electrum", "tier": "06-LuV", "durability": 384, "handleMod": 2.5, "miningSpeed": 16.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Hikarium", "tier": "06-LuV", "durability": 12000, "handleMod": 12.5, "miningSpeed": 45.0, "miningLevel": "08-Manyullyn", "attack": 5.0, "gate": "LuV Extruder", "traits": []}, {"name": "Ichorium", "tier": "06-LuV", "durability": 637500, "handleMod": 11.5, "miningSpeed": 32.0, "miningLevel": "13-Manyullyn+", "attack": 6.0, "gate": "LuV EBF / Infusion", "traits": []}, {"name": "Magneto Resonatic", "tier": "06-LuV", "durability": 80, "handleMod": 15.5, "miningSpeed": 68.45, "miningLevel": "18-Manyullyn+", "attack": 16.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Mysterious Crystal", "tier": "06-LuV", "durability": 192, "handleMod": 5.5, "miningSpeed": 8.0, "miningLevel": "08-Manyullyn", "attack": 6.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Naquadah", "tier": "06-LuV", "durability": 960, "handleMod": 3.5, "miningSpeed": 6.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Shadow Steel", "tier": "06-LuV", "durability": 576, "handleMod": 3.5, "miningSpeed": 6.0, "miningLevel": "06-Ardite", "attack": 6.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Artherium-Sn", "tier": "07-ZPM", "durability": 188, "handleMod": 17.5, "miningSpeed": 87.02, "miningLevel": "20-Manyullyn+", "attack": 18.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Awakened Draconium", "tier": "07-ZPM", "durability": 15000, "handleMod": 5.0, "miningSpeed": 80.0, "miningLevel": "15-Manyullyn+", "attack": 12.0, "gate": "Fusion / Space", "traits": ["Reinforced IV"]}, {"name": "Dalisenite", "tier": "07-ZPM", "durability": 134, "handleMod": 13.5, "miningSpeed": 55.26, "miningLevel": "16-Manyullyn+", "attack": 14.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Enriched Naquadah", "tier": "07-ZPM", "durability": 960, "handleMod": 3.5, "miningSpeed": 6.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Extremely Unstable Naquadah", "tier": "07-ZPM", "durability": 23625, "handleMod": 24.5, "miningSpeed": 225.0, "miningLevel": "20-Manyullyn+", "attack": 12.5, "gate": "ZPM EBF", "traits": []}, {"name": "Neutronium", "tier": "07-ZPM", "durability": 50000, "handleMod": 12.0, "miningSpeed": 100.0, "miningLevel": "18-Manyullyn+", "attack": 20.0, "gate": "ZPM Extruder / Fusion", "traits": []}, {"name": "Enriched Naquadah Alloy", "tier": "09-UHV", "durability": 852, "handleMod": 5.5, "miningSpeed": 180.0, "miningLevel": "08-Manyullyn", "attack": 6.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Infinity", "tier": "09-UHV", "durability": 999999, "handleMod": 15.0, "miningSpeed": 250.0, "miningLevel": "20-Manyullyn+", "attack": 50.0, "gate": "ZPM / UHV Extruder", "traits": ["Unbreakable"]}, {"name": "Deep Dark Iron", "tier": "11-UIV", "durability": 288, "handleMod": 2.5, "miningSpeed": 7.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}];
+        const MATERIALS = [{"name": "Blue Slime Crystal", "tier": "00-S", "durability": 900, "handleMod": 1.5, "miningSpeed": 1.5, "miningLevel": "00-Stone", "attack": 1.0, "weight": 0.22, "breakChance": "0.0%", "gate": "Alloy Smelter / Part Builder", "traits": ["Slimy"], "notes": "900 Bolt ammo capacity + 0% break chance!"}, {"name": "Bronze", "tier": "00-S", "durability": 285, "handleMod": 1.25, "miningSpeed": 6.5, "miningLevel": "04-Redstone", "attack": 1.5, "gate": "Smeltery", "traits": ["Reinforced I"]}, {"name": "Cactus", "tier": "00-S", "durability": 83, "handleMod": 1.0, "miningSpeed": 5.0, "miningLevel": "00-Stone", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": ["Jagged"]}, {"name": "Copper", "tier": "00-S", "durability": 135, "handleMod": 1.1, "miningSpeed": 5.0, "miningLevel": "01-Copper", "attack": 1.0, "gate": "Smeltery", "traits": ["Reinforced I"]}, {"name": "Flint", "tier": "00-S", "durability": 113, "handleMod": 0.5, "miningSpeed": 4.0, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Builder", "traits": ["Stonebound"]}, {"name": "Green Slime Crystal", "tier": "00-S", "durability": 375, "handleMod": 2.0, "miningSpeed": 1.0, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Extruder / Smeltery", "traits": ["Slimy"]}, {"name": "Iron", "tier": "00-S", "durability": 188, "handleMod": 1.2, "miningSpeed": 6.0, "miningLevel": "02-Iron", "attack": 1.5, "weight": 3.3, "breakChance": "80%", "gate": "Smeltery", "traits": ["Reinforced I"]}, {"name": "Netherrack", "tier": "00-S", "durability": 92, "handleMod": 1.2, "miningSpeed": 4.56, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Builder", "traits": ["Stonebound"], "notes": "Low mining speed (4.56) levels up 4x faster in Iguana Tweaks! Ideal for building Unbreakable Lumberaxes."}, {"name": "Obsidian", "tier": "00-S", "durability": 67, "handleMod": 0.8, "miningSpeed": 6.5, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Part Builder", "traits": ["Reinforced III"]}, {"name": "Obzinite", "tier": "00-S", "durability": 413, "handleMod": 1.3, "miningSpeed": 7.9, "miningLevel": "06-Ardite", "attack": 2.0, "weight": 1.1, "breakChance": "70%", "gate": "Steel/Obsidian Dust Mixer", "traits": ["Stonebound I", "Reinforced II"]}, {"name": "Paper", "tier": "00-S", "durability": 30, "handleMod": 0.5, "miningSpeed": 1.0, "miningLevel": "00-Stone", "attack": 0.5, "gate": "Part Builder", "traits": ["Writable"], "notes": "+1 Extra Modifier Slot per part"}, {"name": "Queen's Gold", "tier": "00-S", "durability": 75, "handleMod": 1.0, "miningSpeed": 5.0, "miningLevel": "05-Obsidian", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Steel", "tier": "00-S", "durability": 300, "handleMod": 1.3, "miningSpeed": 7.0, "miningLevel": "05-Obsidian", "attack": 1.5, "gate": "Blast Furnace / Extruder", "traits": ["Reinforced II"]}, {"name": "Stone", "tier": "00-S", "durability": 75, "handleMod": 0.3, "miningSpeed": 1.5, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Extruder / Smeltery", "traits": ["Stonebound"]}, {"name": "Thaumium", "tier": "00-S", "durability": 400, "handleMod": 1.18, "miningSpeed": 7.0, "miningLevel": "02-Iron", "attack": 2.0, "gate": "Crucible / Part Builder", "traits": ["Thaumic"], "notes": "+1 Extra Modifier Slot per part (+2 if 3 parts)"}, {"name": "Wood", "tier": "00-S", "durability": 38, "handleMod": 1.0, "miningSpeed": 1.5, "miningLevel": "00-Stone", "attack": 1.0, "drawSpeed": "0.90 s", "arrowSpeed": "x3.00", "weight": 0.69, "breakChance": "50%", "gate": "Part Builder", "traits": ["Ecological"]}, {"name": "Aeon Steel", "tier": "01-LV", "durability": 617, "handleMod": 1.6, "miningSpeed": 11.0, "miningLevel": "06-Ardite", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced II"]}, {"name": "Aluminium", "tier": "01-LV", "durability": 192, "handleMod": 2.0, "miningSpeed": 10.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Alumite", "tier": "01-LV", "durability": 413, "handleMod": 1.3, "miningSpeed": 7.9, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Smeltery / LV Extruder", "traits": ["Reinforced II"]}, {"name": "Amber", "tier": "01-LV", "durability": 96, "handleMod": 1.5, "miningSpeed": 4.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ardite", "tier": "01-LV", "durability": 455, "handleMod": 2.1, "miningSpeed": 8.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Smeltery", "traits": ["Stonebound II"]}, {"name": "Bismuth Bronze", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 8.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Black Bronze", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 12.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Blood Infused Iron", "tier": "01-LV", "durability": 459, "handleMod": 1.4, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Blue Sapphire", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Carbon", "tier": "01-LV", "durability": 48, "handleMod": 0.5, "drawSpeed": "0.85 s", "arrowSpeed": "x4.80", "weight": 0.08, "breakChance": "90%", "gate": "LV Extruder", "traits": []}, {"name": "Certus Quartz", "tier": "01-LV", "durability": 24, "handleMod": 0.5, "miningSpeed": 5.0, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Cobalt", "tier": "01-LV", "durability": 600, "handleMod": 1.0, "miningSpeed": 14.0, "miningLevel": "07-Cobalt", "attack": 2.0, "gate": "Smeltery / LV Extruder", "traits": []}, {"name": "Cobalt Brass", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 8.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Dogbearium", "tier": "01-LV", "durability": 450, "handleMod": 1.6, "miningSpeed": 8.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": ["Serrated"]}, {"name": "Electrical Steel", "tier": "01-LV", "durability": 384, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Gold", "tier": "01-LV", "durability": 48, "handleMod": 1.5, "miningSpeed": 12.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Green Sapphire", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Invar", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ironwood", "tier": "01-LV", "durability": 288, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Magical Wood", "tier": "01-LV", "durability": 73, "handleMod": 1.0, "miningSpeed": 1.5, "miningLevel": "00-Stone", "attack": 0.0, "gate": "Part Extruder / Smeltery", "traits": ["Modifiable"]}, {"name": "Magnalium", "tier": "01-LV", "durability": 192, "handleMod": 1.2, "drawSpeed": "0.90 s", "arrowSpeed": "x3.33", "weight": 0.12, "breakChance": "90%", "gate": "LV Extruder", "traits": []}, {"name": "Magnetic Iron", "tier": "01-LV", "durability": 350, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "02-Iron", "attack": 1.5, "gate": "LV Extruder", "traits": []}, {"name": "Manganese", "tier": "01-LV", "durability": 384, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Manyullyn", "tier": "01-LV", "durability": 900, "handleMod": 1.5, "miningSpeed": 9.0, "miningLevel": "08-Manyullyn", "attack": 2.5, "gate": "Smeltery", "traits": ["Stonebound II"]}, {"name": "Molybdenum", "tier": "01-LV", "durability": 384, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Nether Quartz", "tier": "01-LV", "durability": 24, "handleMod": 0.5, "miningSpeed": 1.0, "miningLevel": "00-Stone", "attack": 1.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Olivine", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Pig Iron", "tier": "01-LV", "durability": 250, "handleMod": 1.3, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I", "Tasty"]}, {"name": "Pulsating Iron", "tier": "01-LV", "durability": 192, "handleMod": 2.5, "miningSpeed": 6.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Red Garnet", "tier": "01-LV", "durability": 96, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Rose Gold", "tier": "01-LV", "durability": 96, "handleMod": 1.5, "miningSpeed": 14.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ruby", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Silver", "tier": "01-LV", "durability": 48, "handleMod": 1.5, "miningSpeed": 10.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Soularium", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 8.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Tanzanite", "tier": "01-LV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Thorium", "tier": "01-LV", "durability": 384, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Tin Alloy", "tier": "01-LV", "durability": 72, "handleMod": 1.5, "miningSpeed": 6.5, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Unstable Ingot", "tier": "01-LV", "durability": 75, "handleMod": 0.6, "miningSpeed": 7.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced IV", "Mathematical!"]}, {"name": "Wrought Iron", "tier": "01-LV", "durability": 288, "handleMod": 1.5, "miningSpeed": 6.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Yellow Garnet", "tier": "01-LV", "durability": 96, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ademic Steel", "tier": "02-MV", "durability": 4608, "handleMod": 3.0, "miningSpeed": 12.0, "miningLevel": "06-Ardite", "attack": 3.0, "gate": "MV Extruder / EBF", "traits": []}, {"name": "Aer", "tier": "02-MV", "durability": 48, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Amethyst", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 7.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Aqua", "tier": "02-MV", "durability": 48, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Black Steel", "tier": "02-MV", "durability": 576, "handleMod": 2.5, "miningSpeed": 14.0, "miningLevel": "05-Obsidian", "attack": 5.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I"]}, {"name": "Blue Steel", "tier": "02-MV", "durability": 768, "handleMod": 3.5, "miningSpeed": 7.5, "miningLevel": "06-Ardite", "attack": 8.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I"]}, {"name": "Blue Topaz", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 7.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Chrome", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 11.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Conductive Iron", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 6.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Damascus Steel", "tier": "02-MV", "durability": 1500, "handleMod": 5.0, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 2.5, "gate": "MV Extruder / Questbook Shop", "traits": ["Reinforced II"], "notes": "Massive x5.0 handle multiplier + Reinforced II. Best midgame tool rod & plate!"}, {"name": "Diamond", "tier": "02-MV", "durability": 960, "handleMod": 3.5, "miningSpeed": 8.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Electrum", "tier": "02-MV", "durability": 48, "handleMod": 1.5, "miningSpeed": 12.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Emerald", "tier": "02-MV", "durability": 192, "handleMod": 3.5, "miningSpeed": 7.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Energetic Alloy", "tier": "02-MV", "durability": 1805, "handleMod": 1.1, "miningSpeed": 12.0, "miningLevel": "05-Obsidian", "attack": 1.5, "drawSpeed": "1.00 s", "arrowSpeed": "x4.60", "weight": 0.11, "breakChance": "0.9%", "gate": "Kanthal Coils EBF", "traits": []}, {"name": "Energetic Silver", "tier": "02-MV", "durability": 384, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Fiery Steel", "tier": "02-MV", "durability": 410, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ignis", "tier": "02-MV", "durability": 48, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Knightmetal", "tier": "02-MV", "durability": 1021, "handleMod": 1.2, "miningSpeed": 13.0, "miningLevel": "04-Redstone", "attack": 3.0, "gate": "MV Extruder", "traits": ["Reinforced I"]}, {"name": "Magnetic Steel", "tier": "02-MV", "durability": 384, "handleMod": 2.5, "miningSpeed": 6.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I"]}, {"name": "Manasteel", "tier": "02-MV", "durability": 3840, "handleMod": 3.5, "miningSpeed": 8.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Botania / Smeltery", "traits": []}, {"name": "Orange Topaz", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 7.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ordo", "tier": "02-MV", "durability": 48, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Perditio", "tier": "02-MV", "durability": 48, "handleMod": 1.0, "miningSpeed": 32.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Part Builder / Crucible", "traits": [], "notes": "Speed 32.0 Glass Cannon Head"}, {"name": "Red Steel", "tier": "02-MV", "durability": 672, "handleMod": 3.5, "miningSpeed": 7.0, "miningLevel": "06-Ardite", "attack": 10.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I"]}, {"name": "Reinforced Metal", "tier": "02-MV", "durability": 2000, "handleMod": 6.0, "miningSpeed": 10.0, "miningLevel": "05-Obsidian", "gate": "Implosion Compressor / Loot", "traits": []}, {"name": "Shadow Metal", "tier": "02-MV", "durability": 6144, "handleMod": 5.5, "miningSpeed": 32.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Vacuum Freezer", "traits": [], "notes": "Speed 32.0 + 6,144 Durability + x5.5 Handle Mod"}, {"name": "Stainless Steel", "tier": "02-MV", "durability": 987, "handleMod": 3.5, "miningSpeed": 12.0, "miningLevel": "06-Ardite", "attack": 5.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced I"]}, {"name": "Steeleaf", "tier": "02-MV", "durability": 806, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Terra", "tier": "02-MV", "durability": 192, "handleMod": 2.5, "miningSpeed": 8.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Vanadiumsteel", "tier": "02-MV", "durability": 1440, "handleMod": 2.5, "miningSpeed": 18.0, "miningLevel": "05-Obsidian", "attack": 7.0, "weight": 5.5, "breakChance": "90%", "gate": "MV Extruder", "traits": [], "notes": "7.0 Base Attack Damage! Huge early melee sword blade upgrade."}, {"name": "Cubic Zirconia", "tier": "03-HV", "durability": 960, "handleMod": 2.5, "miningSpeed": 7.46, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Endium", "tier": "03-HV", "durability": 768, "handleMod": 3.5, "miningSpeed": 16.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Enhanced Galgadorian", "tier": "03-HV", "durability": 5400, "handleMod": 4.0, "miningSpeed": 32.0, "miningLevel": "07-Cobalt", "attack": 2.5, "gate": "HV Extruder / EBF", "traits": []}, {"name": "Magnetic Neodymium", "tier": "03-HV", "durability": 384, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Meteoric Iron", "tier": "03-HV", "durability": 288, "handleMod": 2.5, "miningSpeed": 6.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Meteoric Steel", "tier": "03-HV", "durability": 1480, "handleMod": 2.0, "miningSpeed": 16.2, "miningLevel": "05-Obsidian", "attack": 12.0, "weight": 1.46, "breakChance": "0.9%", "gate": "Moon Access / EBF", "traits": [], "notes": "12.0 Base Attack Damage! Huge post-Moon combat leap."}, {"name": "Neodymium", "tier": "03-HV", "durability": 384, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Reinforced Ingot", "tier": "03-HV", "durability": 450, "handleMod": 6.0, "miningSpeed": 7.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Vibrant Alloy", "tier": "03-HV", "durability": 3036, "handleMod": 3.0, "miningSpeed": 18.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "Nichrome Coils EBF", "traits": []}, {"name": "Vividalloy", "tier": "03-HV", "durability": 576, "handleMod": 3.5, "miningSpeed": 12.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Crystalline Alloy", "tier": "05-EV", "durability": 576, "handleMod": 3.5, "miningSpeed": 18.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Duralumin", "tier": "05-EV", "durability": 384, "handleMod": 2.5, "miningSpeed": 16.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Enderium Base", "tier": "05-EV", "durability": 576, "handleMod": 3.5, "miningSpeed": 16.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Melodic Alloy", "tier": "05-EV", "durability": 768, "handleMod": 4.5, "miningSpeed": 24.0, "miningLevel": "07-Cobalt", "attack": 5.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Oriharukon", "tier": "04-EV", "durability": 7680, "handleMod": 4.5, "miningSpeed": 32.0, "miningLevel": "07-Cobalt", "attack": 3.0, "gate": "EV EBF", "traits": []}, {"name": "Platinum", "tier": "05-EV", "durability": 48, "handleMod": 3.5, "miningSpeed": 12.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Terrasteel", "tier": "04-EV", "durability": 7680, "handleMod": 4.0, "miningSpeed": 32.0, "miningLevel": "07-Cobalt", "attack": 3.5, "gate": "EV Botania", "traits": []}, {"name": "Tungstencarbide", "tier": "05-EV", "durability": 960, "handleMod": 3.5, "miningSpeed": 14.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Tungstensteel", "tier": "04-EV", "durability": 4000, "handleMod": 3.0, "miningSpeed": 22.0, "miningLevel": "07-Cobalt", "attack": 14.0, "gate": "EV EBF", "traits": []}, {"name": "Callisto Ice", "tier": "05-IV", "durability": 768, "handleMod": 3.5, "miningSpeed": 9.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Elven Elementium", "tier": "05-IV", "durability": 24576, "handleMod": 6.5, "miningSpeed": 20.0, "miningLevel": "08-Manyullyn", "attack": 3.0, "gate": "IV Extruder", "traits": []}, {"name": "HSS-E", "tier": "05-IV", "durability": 7680, "handleMod": 6.5, "miningSpeed": 32.0, "miningLevel": "08-Manyullyn", "attack": 3.5, "gate": "IV Mixer / EV EBF", "traits": []}, {"name": "HSS-S", "tier": "05-IV", "durability": 8500, "handleMod": 7.5, "miningSpeed": 36.0, "miningLevel": "08-Manyullyn", "attack": 4.0, "gate": "IV EBF", "traits": []}, {"name": "Infused Gold", "tier": "05-IV", "durability": 48, "handleMod": 2.5, "miningSpeed": 12.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Ledox", "tier": "05-IV", "durability": 768, "handleMod": 3.5, "miningSpeed": 15.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Lumiium", "tier": "05-IV", "durability": 255, "handleMod": 2.5, "miningSpeed": 4.27, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "MAR-Ce-M200", "tier": "05-IV", "durability": 153600, "handleMod": 5.0, "miningSpeed": 150.0, "miningLevel": "06-Ardite", "attack": 2.0, "gate": "IV Vacuum Freezer", "traits": []}, {"name": "Mytryl", "tier": "05-IV", "durability": 384, "handleMod": 3.5, "miningSpeed": 8.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Opal", "tier": "05-IV", "durability": 192, "handleMod": 1.5, "miningSpeed": 7.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Osmiridium", "tier": "05-IV", "durability": 2400, "handleMod": 2.0, "drawSpeed": "0.65 s", "arrowSpeed": "x5.00", "weight": 0.19, "breakChance": "0.9%", "gate": "IV Extruder / Blast Furnace", "traits": [], "notes": "0.65s Draw Speed / x5.00 Arrow Speed! Top tier crossbow limb."}, {"name": "Osmium", "tier": "05-IV", "durability": 960, "handleMod": 3.5, "miningSpeed": 16.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": ["Reinforced II"]}, {"name": "Palladium", "tier": "05-IV", "durability": 2200, "handleMod": 3.0, "miningSpeed": 18.0, "miningLevel": "05-Obsidian", "attack": 16.0, "weight": 2.0, "breakChance": "0.9%", "gate": "HV Vacuum Freezer", "traits": []}, {"name": "Rhodium Plated Palladium", "tier": "05-IV", "durability": 886, "handleMod": 4.5, "miningSpeed": 13.2, "miningLevel": "07-Cobalt", "attack": 5.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Signalium", "tier": "05-IV", "durability": 585, "handleMod": 5.5, "miningSpeed": 11.88, "miningLevel": "08-Manyullyn", "attack": 6.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Tartarite", "tier": "05-IV", "durability": 2500, "handleMod": 3.5, "miningSpeed": 35.0, "miningLevel": "09-Tartarite", "attack": 4.0, "gate": "IV EBF / Fusion", "traits": ["Reinforced III"]}, {"name": "Zn-Th Alloy", "tier": "05-IV", "durability": 619, "handleMod": 4.5, "miningSpeed": 4.26, "miningLevel": "07-Cobalt", "attack": 5.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Adamantium", "tier": "06-LuV", "durability": 9216, "handleMod": 9.5, "miningSpeed": 73.6, "miningLevel": "11-Manyullyn+", "attack": 19.0, "weight": 2.0, "breakChance": "0.9%", "gate": "LuV / Naquadah Coils", "traits": []}, {"name": "Ceruclase", "tier": "06-LuV", "durability": 960, "handleMod": 1.5, "miningSpeed": 32.0, "miningLevel": "03-Tin", "attack": 2.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Fluxed Electrum", "tier": "06-LuV", "durability": 384, "handleMod": 2.5, "miningSpeed": 16.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Hikarium", "tier": "06-LuV", "durability": 12000, "handleMod": 12.5, "miningSpeed": 45.0, "miningLevel": "08-Manyullyn", "attack": 5.0, "gate": "LuV Extruder", "traits": []}, {"name": "Ichorium", "tier": "06-LuV", "durability": 637500, "handleMod": 11.5, "miningSpeed": 32.0, "miningLevel": "13-Manyullyn+", "attack": 6.0, "gate": "LuV EBF / Infusion", "traits": []}, {"name": "Magneto Resonatic", "tier": "06-LuV", "durability": 80, "handleMod": 15.5, "miningSpeed": 68.45, "miningLevel": "18-Manyullyn+", "attack": 16.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Mysterious Crystal", "tier": "06-LuV", "durability": 192, "handleMod": 5.5, "miningSpeed": 8.0, "miningLevel": "08-Manyullyn", "attack": 6.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Naquadah", "tier": "06-LuV", "durability": 960, "handleMod": 3.5, "miningSpeed": 6.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Shadow Steel", "tier": "06-LuV", "durability": 576, "handleMod": 3.5, "miningSpeed": 6.0, "miningLevel": "06-Ardite", "attack": 6.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Artherium-Sn", "tier": "07-ZPM", "durability": 188, "handleMod": 17.5, "miningSpeed": 87.02, "miningLevel": "20-Manyullyn+", "attack": 18.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Awakened Draconium", "tier": "07-ZPM", "durability": 15000, "handleMod": 5.0, "miningSpeed": 80.0, "miningLevel": "15-Manyullyn+", "attack": 12.0, "gate": "Fusion / Space", "traits": ["Reinforced IV"]}, {"name": "Dalisenite", "tier": "07-ZPM", "durability": 134, "handleMod": 13.5, "miningSpeed": 55.26, "miningLevel": "16-Manyullyn+", "attack": 14.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Enriched Naquadah", "tier": "07-ZPM", "durability": 960, "handleMod": 3.5, "miningSpeed": 6.0, "miningLevel": "06-Ardite", "attack": 4.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Extremely Unstable Naquadah", "tier": "07-ZPM", "durability": 23625, "handleMod": 24.5, "miningSpeed": 225.0, "miningLevel": "20-Manyullyn+", "attack": 12.5, "gate": "ZPM EBF", "traits": []}, {"name": "Neutronium", "tier": "07-ZPM", "durability": 50000, "handleMod": 12.0, "miningSpeed": 100.0, "miningLevel": "18-Manyullyn+", "attack": 20.0, "gate": "ZPM Extruder / Fusion", "traits": []}, {"name": "Enriched Naquadah Alloy", "tier": "09-UHV", "durability": 852, "handleMod": 5.5, "miningSpeed": 180.0, "miningLevel": "08-Manyullyn", "attack": 6.0, "gate": "Part Extruder / Smeltery", "traits": []}, {"name": "Infinity", "tier": "09-UHV", "durability": 999999, "handleMod": 15.0, "miningSpeed": 250.0, "miningLevel": "20-Manyullyn+", "attack": 50.0, "gate": "ZPM / UHV Extruder", "traits": ["Unbreakable"]}, {"name": "Deep Dark Iron", "tier": "11-UIV", "durability": 288, "handleMod": 2.5, "miningSpeed": 7.0, "miningLevel": "05-Obsidian", "attack": 3.0, "gate": "Part Extruder / Smeltery", "traits": []}];
 
         const TRAIT_DESCRIPTIONS = {
             "Reinforced I": "10% chance to avoid consuming durability per use. Natural part traits take highest (Math.max); apply Reinforced modifier plates to stack up to Reinforced X (Level 10 = 100% Unbreakable).",
@@ -2169,181 +2169,238 @@
             el.style.top = `${top}px`;
         }
 
-        // Tool schema definitions with required parts
+        // Tool schema definitions with exact TConstruct-1.14.108-GTNH.jar ToolBuilder & AbilityHelper parameters
+        // duraType: 2 = Head/Plate (averages durability, mining speed, attack; scales by 0.5 + 0.5*heads),
+        //           1 = Handle/ToughBinding (averages handleMod and scales by 0.5 + 0.5*handles),
+        //           0 = Accessory/Guard/Binding (traits & modifier slots only)
         const TOOL_SCHEMAS = {
             pickaxe: {
                 name: "Pickaxe",
                 type: "harvest",
                 speedMult: 1.0,
+                durabilityMod: 1.0,
+                baseDamage: 1,
+                damageMod: 1.0,
+                stoneboundDiv: 72.0,
                 baseAttackBonus: 1.0,
                 parts: [
-                    { id: "head", name: "Pickaxe Head", type: "head" },
-                    { id: "binding", name: "Binding", type: "binding" },
-                    { id: "handle", name: "Tool Rod", type: "handle" }
+                    { id: "head", name: "Pickaxe Head", type: "head", duraType: 2 },
+                    { id: "binding", name: "Binding", type: "binding", duraType: 0 },
+                    { id: "handle", name: "Tool Rod", type: "handle", duraType: 1 }
                 ]
             },
             hammer: {
                 name: "Hammer (3x3 Mining)",
                 type: "harvest",
                 speedMult: 0.4,
-                baseAttackBonus: 2.5,
+                durabilityMod: 4.5,
+                baseDamage: 2,
+                damageMod: 1.0,
+                stoneboundDiv: 216.0,
+                baseAttackBonus: 2.0,
                 parts: [
-                    { id: "head", name: "Hammer Head", type: "head" },
-                    { id: "plate1", name: "Large Plate 1", type: "plate" },
-                    { id: "plate2", name: "Large Plate 2", type: "plate" },
-                    { id: "handle", name: "Tough Rod", type: "handle" }
+                    { id: "head", name: "Hammer Head", type: "head", duraType: 2 },
+                    { id: "plate1", name: "Large Plate 1", type: "plate", duraType: 2 },
+                    { id: "plate2", name: "Large Plate 2", type: "plate", duraType: 2 },
+                    { id: "handle", name: "Tough Rod", type: "handle", duraType: 1 }
                 ]
             },
             lumberaxe: {
                 name: "Lumber Axe (Treecapitator)",
                 type: "harvest",
-                speedMult: 0.8,
-                baseAttackBonus: 2.0,
+                speedMult: 0.4,
+                durabilityMod: 2.5,
+                baseDamage: 0,
+                damageMod: 1.0,
+                stoneboundDiv: 216.0,
+                baseAttackBonus: 0.0,
                 parts: [
-                    { id: "head", name: "Broad Axe Head", type: "head" },
-                    { id: "plate", name: "Large Plate", type: "plate" },
-                    { id: "handle", name: "Tough Rod", type: "handle" },
-                    { id: "binding", name: "Tough Binding", type: "binding" }
+                    { id: "head", name: "Broad Axe Head", type: "head", duraType: 2 },
+                    { id: "plate", name: "Large Plate", type: "plate", duraType: 2 },
+                    { id: "handle", name: "Tough Rod", type: "handle", duraType: 1 },
+                    { id: "binding", name: "Tough Binding", type: "binding", duraType: 1 }
                 ]
             },
             excavator: {
                 name: "Excavator (3x3 Digging)",
                 type: "harvest",
                 speedMult: 0.4,
-                baseAttackBonus: 1.5,
+                durabilityMod: 2.75,
+                baseDamage: 2,
+                damageMod: 1.0,
+                stoneboundDiv: 216.0,
+                baseAttackBonus: 2.0,
                 parts: [
-                    { id: "head", name: "Excavator Head", type: "head" },
-                    { id: "plate", name: "Large Plate", type: "plate" },
-                    { id: "handle", name: "Tough Rod", type: "handle" },
-                    { id: "binding", name: "Tough Binding", type: "binding" }
+                    { id: "head", name: "Excavator Head", type: "head", duraType: 2 },
+                    { id: "plate", name: "Large Plate", type: "plate", duraType: 2 },
+                    { id: "handle", name: "Tough Rod", type: "handle", duraType: 1 },
+                    { id: "binding", name: "Tough Binding", type: "binding", duraType: 1 }
                 ]
             },
             shovel: {
                 name: "Shovel",
                 type: "harvest",
                 speedMult: 1.0,
-                baseAttackBonus: 1.0,
+                durabilityMod: 1.0,
+                baseDamage: 2,
+                damageMod: 1.0,
+                stoneboundDiv: 72.0,
+                baseAttackBonus: 2.0,
                 parts: [
-                    { id: "head", name: "Shovel Head", type: "head" },
-                    { id: "handle", name: "Tool Rod", type: "handle" }
+                    { id: "head", name: "Shovel Head", type: "head", duraType: 2 },
+                    { id: "handle", name: "Tool Rod", type: "handle", duraType: 1 }
                 ]
             },
             hatchet: {
                 name: "Hatchet",
                 type: "harvest",
                 speedMult: 1.0,
-                baseAttackBonus: 1.5,
+                durabilityMod: 1.0,
+                baseDamage: 3,
+                damageMod: 1.0,
+                stoneboundDiv: 72.0,
+                baseAttackBonus: 3.0,
                 parts: [
-                    { id: "head", name: "Axe Head", type: "head" },
-                    { id: "handle", name: "Tool Rod", type: "handle" }
+                    { id: "head", name: "Axe Head", type: "head", duraType: 2 },
+                    { id: "handle", name: "Tool Rod", type: "handle", duraType: 1 }
                 ]
             },
             mattock: {
                 name: "Mattock",
                 type: "harvest",
-                speedMult: 0.9,
-                baseAttackBonus: 1.5,
+                speedMult: 1.0,
+                durabilityMod: 1.0,
+                baseDamage: 3,
+                damageMod: 1.0,
+                stoneboundDiv: 72.0,
+                baseAttackBonus: 3.0,
                 parts: [
-                    { id: "head", name: "Axe Head", type: "head" },
-                    { id: "shovel", name: "Shovel Head", type: "head" },
-                    { id: "handle", name: "Tool Rod", type: "handle" }
+                    { id: "head", name: "Axe Head", type: "head", duraType: 2 },
+                    { id: "shovel", name: "Shovel Head", type: "head", duraType: 2 },
+                    { id: "handle", name: "Tool Rod", type: "handle", duraType: 1 }
                 ]
             },
             scythe: {
                 name: "Scythe (3x3 Crop & Mob AOE)",
                 type: "hybrid",
-                speedMult: 0.8,
+                speedMult: 1.0,
+                durabilityMod: 3.0,
+                baseDamage: 4,
+                damageMod: 0.75,
+                stoneboundDiv: 72.0,
                 baseAttackBonus: 4.0,
                 special: "3x3 AOE Crop & Leaf Harvesting & Sweeping Mob Strike",
                 parts: [
-                    { id: "head", name: "Scythe Head", type: "head" },
-                    { id: "handle1", name: "Tough Rod 1", type: "handle" },
-                    { id: "binding", name: "Tough Binding", type: "binding" },
-                    { id: "handle2", name: "Tough Rod 2", type: "handle" }
+                    { id: "head", name: "Scythe Head", type: "head", duraType: 2 },
+                    { id: "handle1", name: "Tough Rod 1", type: "handle", duraType: 1 },
+                    { id: "binding", name: "Tough Binding", type: "binding", duraType: 1 },
+                    { id: "handle2", name: "Tough Rod 2", type: "handle", duraType: 1 }
                 ]
             },
             broadsword: {
                 name: "Broadsword",
                 type: "weapon",
                 speedMult: 1.0,
+                durabilityMod: 1.2,
+                baseDamage: 4,
+                damageMod: 1.0,
                 baseAttackBonus: 4.0,
                 parts: [
-                    { id: "head", name: "Sword Blade", type: "head" },
-                    { id: "guard", name: "Wide Guard", type: "binding" },
-                    { id: "handle", name: "Tool Rod", type: "handle" }
+                    { id: "head", name: "Sword Blade", type: "head", duraType: 2 },
+                    { id: "guard", name: "Wide Guard", type: "binding", duraType: 0 },
+                    { id: "handle", name: "Tool Rod", type: "handle", duraType: 1 }
                 ]
             },
             rapier: {
                 name: "Rapier (Armor Piercing)",
                 type: "weapon",
                 speedMult: 1.0,
-                baseAttackBonus: 2.5,
+                durabilityMod: 0.7,
+                baseDamage: 2,
+                damageMod: 0.8,
+                baseAttackBonus: 2.0,
                 special: "Armor Piercing (Ignores mob armor defense)",
                 parts: [
-                    { id: "head", name: "Rapier Blade", type: "head" },
-                    { id: "crossbar", name: "Crossbar", type: "binding" },
-                    { id: "handle", name: "Tool Rod", type: "handle" }
+                    { id: "head", name: "Rapier Blade", type: "head", duraType: 2 },
+                    { id: "crossbar", name: "Crossbar", type: "binding", duraType: 0 },
+                    { id: "handle", name: "Tool Rod", type: "handle", duraType: 1 }
                 ]
             },
             cleaver: {
                 name: "Cleaver (Beheading II)",
                 type: "weapon",
                 speedMult: 0.5,
-                baseAttackBonus: 6.0,
+                durabilityMod: 2.5,
+                baseDamage: 5,
+                damageMod: 1.4,
+                baseAttackBonus: 5.0,
                 special: "Inherent Beheading II (+20% Head drop rate)",
                 parts: [
-                    { id: "head", name: "Large Blade", type: "head" },
-                    { id: "plate", name: "Large Plate", type: "plate" },
-                    { id: "handle1", name: "Tough Rod 1", type: "handle" },
-                    { id: "handle2", name: "Tough Rod 2", type: "handle" }
+                    { id: "head", name: "Large Blade", type: "head", duraType: 2 },
+                    { id: "plate", name: "Large Plate", type: "plate", duraType: 2 },
+                    { id: "handle1", name: "Tough Rod 1", type: "handle", duraType: 1 },
+                    { id: "handle2", name: "Tough Rod 2", type: "handle", duraType: 1 }
                 ]
             },
             battleaxe: {
                 name: "Battleaxe (2-Handed Heavy Cleaver)",
                 type: "weapon",
-                speedMult: 0.7,
-                baseAttackBonus: 6.5,
+                speedMult: 1.0,
+                durabilityMod: 2.5,
+                baseDamage: 4,
+                damageMod: 1.0,
+                stoneboundDiv: 72.0,
+                baseAttackBonus: 4.0,
                 special: "Massive AOE Cleave Attack & Right-Click Berserker Leap; Can fell trees",
                 parts: [
-                    { id: "head1", name: "Broad Axe Head 1", type: "head" },
-                    { id: "head2", name: "Broad Axe Head 2", type: "head" },
-                    { id: "handle", name: "Tough Rod", type: "handle" },
-                    { id: "binding", name: "Tough Binding", type: "binding" }
+                    { id: "head1", name: "Broad Axe Head 1", type: "head", duraType: 2 },
+                    { id: "head2", name: "Broad Axe Head 2", type: "head", duraType: 2 },
+                    { id: "handle", name: "Tough Rod", type: "handle", duraType: 1 },
+                    { id: "binding", name: "Tough Binding", type: "binding", duraType: 1 }
                 ]
             },
             longsword: {
                 name: "Longsword",
                 type: "weapon",
                 speedMult: 1.0,
-                baseAttackBonus: 3.5,
+                durabilityMod: 1.0,
+                baseDamage: 4,
+                damageMod: 1.0,
+                baseAttackBonus: 4.0,
                 special: "Right-Click Lunge Attack",
                 parts: [
-                    { id: "head", name: "Sword Blade", type: "head" },
-                    { id: "guard", name: "Hand Guard", type: "binding" },
-                    { id: "handle", name: "Tool Rod", type: "handle" }
+                    { id: "head", name: "Sword Blade", type: "head", duraType: 2 },
+                    { id: "guard", name: "Hand Guard", type: "binding", duraType: 0 },
+                    { id: "handle", name: "Tool Rod", type: "handle", duraType: 1 }
                 ]
             },
             dagger: {
                 name: "Dagger (Rapid Melee & Throwing)",
                 type: "weapon",
                 speedMult: 1.2,
-                baseAttackBonus: 2.0,
+                durabilityMod: 1.0,
+                baseDamage: 1,
+                damageMod: 1.0,
+                baseAttackBonus: 1.0,
                 special: "Ultra-Fast Attack Speed & Right-Click Throwable Sidearm",
                 parts: [
-                    { id: "head", name: "Knife Blade", type: "head" },
-                    { id: "crossbar", name: "Crossbar", type: "binding" },
-                    { id: "handle", name: "Tool Rod", type: "handle" }
+                    { id: "head", name: "Knife Blade", type: "head", duraType: 2 },
+                    { id: "crossbar", name: "Crossbar", type: "binding", duraType: 0 },
+                    { id: "handle", name: "Tool Rod", type: "handle", duraType: 1 }
                 ]
             },
             fryingpan: {
                 name: "Frying Pan (Knockback & Cook)",
                 type: "weapon",
                 speedMult: 1.0,
-                baseAttackBonus: 3.5,
+                durabilityMod: 1.0,
+                baseDamage: 2,
+                damageMod: 1.0,
+                baseAttackBonus: 2.0,
                 special: "Heavy Knockback + Cooks Food When Sneaking Over Fire + Metal Bonk Sound",
                 parts: [
-                    { id: "head", name: "Pan Head", type: "head" },
-                    { id: "handle", name: "Tool Rod", type: "handle" }
+                    { id: "head", name: "Pan Head", type: "head", duraType: 2 },
+                    { id: "handle", name: "Tool Rod", type: "handle", duraType: 1 }
                 ]
             },
             roundshield: {
@@ -4900,18 +4957,19 @@
             if (["broadsword", "rapier", "cleaver", "battleaxe", "longsword", "dagger", "fryingpan"].includes(toolType)) {
                 if (partId.startsWith("head") || partId.startsWith("blade")) return ['attack', 'dura', 'modifiers'];
                 if (partId.startsWith("handle")) return ['dura', 'handle', 'modifiers'];
-                if (partId.startsWith("plate")) return ['dura', 'modifiers'];
+                if (partId.startsWith("plate")) return ['attack', 'dura', 'modifiers'];
+                if (toolType === "battleaxe" && partId === "binding") return ['dura', 'handle', 'modifiers'];
                 if (partId === "guard" || partId === "crossbar" || partId === "binding") return ['modifiers'];
             }
 
             // Mattock Multi-Tool
             if (toolType === "mattock") {
                 if (partId === "head") return ['dura', 'speed', 'attack', 'level', 'modifiers'];
-                if (partId === "shovel") return ['dura', 'speed', 'modifiers'];
+                if (partId === "shovel") return ['dura', 'speed', 'attack', 'modifiers'];
                 if (partId === "handle") return ['dura', 'handle', 'modifiers'];
             }
 
-            // Standard Harvesting & Other Tools
+            // Standard Harvesting & AOE Tools (Pickaxe, Hammer, Lumberaxe, Excavator, Scythe)
             if (partId === "head" || partId === "head1" || partId === "head2" || partId === "blade1") {
                 return ['dura', 'speed', 'attack', 'level', 'modifiers'];
             }
@@ -4919,7 +4977,13 @@
                 return ['dura', 'handle', 'modifiers'];
             }
             if (partId.startsWith("plate")) {
+                if (["hammer", "lumberaxe", "excavator"].includes(toolType)) {
+                    return ['dura', 'speed', 'attack', 'modifiers'];
+                }
                 return ['dura', 'modifiers'];
+            }
+            if (partId === "binding" && ["lumberaxe", "excavator", "scythe"].includes(toolType)) {
+                return ['dura', 'handle', 'modifiers'];
             }
             if (partId === "binding" || partId === "crossbar" || partId === "guard" || partId === "accessory") {
                 return ['modifiers'];
@@ -4956,12 +5020,13 @@
             if (["broadsword", "rapier", "cleaver", "battleaxe", "longsword", "dagger", "fryingpan"].includes(toolType)) {
                 if (partId.startsWith("head") || partId.startsWith("blade")) return "🎯 Governs: Direct Attack Damage (Hearts), Base Durability & Combat Traits";
                 if (partId.startsWith("handle")) return "🎯 Governs: Weapon Durability Multiplier (x1.0 - x5.0) & Handle Traits";
-                if (partId.startsWith("plate")) return "🎯 Governs: Plate Bonus Durability (+35%) & Defense Traits";
+                if (partId.startsWith("plate")) return "🎯 Governs: Composite Blade Durability, Attack Damage & Traits";
+                if (toolType === "battleaxe" && partId === "binding") return "🎯 Governs: Handle Durability Multiplier & Weapon Traits";
                 if (partId === "guard" || partId === "crossbar" || partId === "binding") return "🎯 Governs: Modifier Slots (Writable/Thaumic) & Weapon Traits";
             }
             if (toolType === "mattock") {
                 if (partId === "head") return "🎯 Governs: Axe Speed, Base Durability & Attack Damage";
-                if (partId === "shovel") return "🎯 Governs: Shovel Dig Speed & Secondary Durability";
+                if (partId === "shovel") return "🎯 Governs: Shovel Dig Speed, Durability & Attack";
                 if (partId === "handle") return "🎯 Governs: Total Durability Multiplier (x1.0 - x5.0)";
             }
             if (partId.startsWith("head") || partId === "blade1") {
@@ -4971,7 +5036,12 @@
                 return "🎯 Governs: Total Durability Multiplier (x1.0 - x5.0) & Slots";
             }
             if (partId.startsWith("plate")) {
+                if (toolType === "hammer") return "🎯 Governs: 1/3 Base Durability, 1/3 Mining Speed, Attack & Traits";
+                if (toolType === "lumberaxe" || toolType === "excavator") return "🎯 Governs: 1/2 Base Durability, 1/2 Mining Speed, Attack & Traits";
                 return "🎯 Governs: Plate Bonus Durability, Reinforced & Slots";
+            }
+            if (partId === "binding" && ["lumberaxe", "excavator", "scythe"].includes(toolType)) {
+                return "🎯 Governs: Composite Handle Multiplier, Durability & Traits";
             }
             if (partId === "binding" || partId === "guard" || partId === "crossbar") {
                 return "🎯 Governs: Modifier Slots (Writable/Thaumic) & Traits";
@@ -5107,6 +5177,17 @@
             calculateToolStats();
         }
 
+        function calcTConHasteSpeedBonus(hasteLevels, headsCount, breakSpeedMod) {
+            if (!hasteLevels || hasteLevels <= 0) return 0;
+            const extraHeadBoost = Math.max(0, (headsCount || 1) - 1) * 2;
+            let totalRawSpeedUnits = 0;
+            for (let t = 0; t < hasteLevels; t++) {
+                const boostPerDust = 8 + (t * 2) + extraHeadBoost;
+                totalRawSpeedUnits += 50 * boostPerDust;
+            }
+            return (totalRawSpeedUnits / 100.0) * (breakSpeedMod || 1.0);
+        }
+
         function computeRawStats(customParts = null, customMods = null) {
             const schema = TOOL_SCHEMAS[currentToolType] || TOOL_SCHEMAS["pickaxe"];
             const parts = customParts || currentParts;
@@ -5125,6 +5206,13 @@
             let totalBaseDura = 0;
             let handleMult = 1.0;
             let handleCount = 0;
+            let sumHandleMod = 0;
+            let headsCount = 0;
+            let sumHeadDura = 0;
+            let sumHeadSpeed = 0;
+            let sumHeadAttack = 0;
+            let sumShoddy = 0;
+            let partCount = 0;
             let plateDuraBonus = 0;
             let traitsSet = new Set();
             let basePartReinforced = 0;
@@ -5132,19 +5220,29 @@
 
             schema.parts.forEach(p => {
                 const mat = findMat(parts[p.id]);
+                partCount++;
 
-                if (p.type === "plate" || p.id.startsWith("plate")) {
-                    plateDuraBonus += Math.round((mat.durability || 100) * 0.35);
+                const dt = (p.duraType !== undefined) ? p.duraType : (p.type === "head" ? 2 : (p.type === "handle" ? 1 : 0));
+                if (dt === 2) {
+                    headsCount++;
+                    sumHeadDura += (mat.durability || 100);
+                    sumHeadSpeed += (mat.miningSpeed || 2.0);
+                    sumHeadAttack += Math.round(mat.attack || 1);
+                } else if (dt === 1) {
+                    handleCount++;
+                    sumHandleMod += (mat.handleMod || 1.0);
                 }
 
-                if (p.type === "handle" || p.id.startsWith("handle") || p.id === "core") {
-                    if (handleCount === 0) handleMult = mat.handleMod || 1.0;
-                    else handleMult = (handleMult + (mat.handleMod || 1.0)) / 2;
-                    handleCount++;
+                if (p.type === "plate" || p.id.startsWith("plate")) {
+                    plateDuraBonus += (mat.durability || 100);
                 }
 
                 (mat.traits || []).forEach(tr => {
                     traitsSet.add(tr);
+                    if (tr === "Stonebound" || tr === "Stonebound I") sumShoddy += 1.0;
+                    else if (tr === "Stonebound II") sumShoddy += 2.0;
+                    else if (tr === "Jagged") sumShoddy -= 1.0;
+
                     if (tr.startsWith("Reinforced")) {
                         let lvl = 1;
                         if (tr === "Reinforced II") lvl = 2;
@@ -5163,11 +5261,16 @@
                 });
             });
 
+            if (handleCount > 0) {
+                handleMult = (sumHandleMod * (0.5 + handleCount * 0.5)) / handleCount;
+            }
+
             let baseSpeed = 2.0;
             let baseAttack = 1.0;
             let miningLevel = "00-Stone";
             let drawSpeedSec = 1.0;
             let flightSpeed = 3.0;
+            let rawDura = 100;
 
             function parseDrawVal(val) {
                 if (!val) return 1.0;
@@ -5190,6 +5293,7 @@
                 const b4 = findMat(parts["blade4"] || parts["blade1"] || "Wood");
                 totalBaseDura = (b1.durability + b2.durability + b3.durability + b4.durability);
                 handleMult = 1.0;
+                rawDura = totalBaseDura;
                 baseSpeed = ((b1.miningSpeed || 2.0) + (b2.miningSpeed || 2.0) + (b3.miningSpeed || 2.0) + (b4.miningSpeed || 2.0)) / 4.0;
                 baseAttack = (((b1.attack || 1.0) + (b2.attack || 1.0) + (b3.attack || 1.0) + (b4.attack || 1.0)) / 4.0) + (schema.baseAttackBonus || 0);
                 miningLevel = "Ranged Throwing Star";
@@ -5206,6 +5310,7 @@
 
                 totalBaseDura = bodyMat.durability || 100;
                 handleMult = rodMat.handleMod || 1.0;
+                rawDura = Math.round(totalBaseDura * handleMult);
                 baseSpeed = flightSpeed;
                 baseAttack = flightSpeed * 2.0 + (schema.baseAttackBonus || 0);
                 miningLevel = drawSpeedSec <= 0.25 ? "0.25s Instant-Sniper" : `Heavy Crossbow (${limbMat.tier})`;
@@ -5221,21 +5326,16 @@
 
                 totalBaseDura = Math.round((l1.durability + l2.durability) / 2);
                 handleMult = 1.0;
+                rawDura = totalBaseDura;
                 baseSpeed = flightSpeed;
                 baseAttack = flightSpeed * 1.5 + (schema.baseAttackBonus || 0);
                 miningLevel = `Composite Bow (${l1.tier})`;
-            } else if (currentToolType === "battleaxe") {
-                const h1 = findMat(parts["head1"] || parts["head"] || "Wood");
-                const h2 = findMat(parts["head2"] || parts["head"] || "Wood");
-                totalBaseDura = (h1.durability + h2.durability);
-                baseSpeed = ((h1.miningSpeed || 2.0) + (h2.miningSpeed || 2.0)) / 2.0;
-                baseAttack = (((h1.attack || 1.0) + (h2.attack || 1.0)) / 2.0) + (schema.baseAttackBonus || 0);
-                miningLevel = h1.miningLevel || "00-Stone";
             } else if (currentToolType === "bolt" || currentToolType === "arrow") {
                 const tipMat = findMat(parts["head"] || parts["tip"] || "Iron");
                 const shaftMat = findMat(parts["handle"] || parts["core"] || "Wood");
                 totalBaseDura = shaftMat.durability || 100;
                 handleMult = 1.0;
+                rawDura = totalBaseDura;
                 baseSpeed = tipMat.miningSpeed || 5.0;
                 baseAttack = (tipMat.attack || 1.0) + (schema.baseAttackBonus || 0);
                 miningLevel = `Ammo (${tipMat.tier})`;
@@ -5243,6 +5343,7 @@
                 const p1 = findMat(parts["plate1"] || parts["plate"]);
                 const p2 = parts["plate2"] ? findMat(parts["plate2"]) : null;
                 totalBaseDura = p1.durability + (p2 ? p2.durability : 0);
+                rawDura = Math.round(totalBaseDura * handleMult);
                 baseSpeed = p1.miningSpeed || 2.0;
                 baseAttack = (p1.attack || 1.0) + (schema.baseAttackBonus || 0);
                 if (currentToolType === "towershield") miningLevel = "100% Bastion Full Block";
@@ -5250,24 +5351,42 @@
                 else if (currentToolType === "roundshield") miningLevel = "75% Mobility Block";
                 else if (currentToolType === "battlesign") miningLevel = "100% Mirror Reflection";
             } else {
-                totalBaseDura = headMat.durability || 100;
-                totalBaseDura += plateDuraBonus;
-                baseSpeed = headMat.miningSpeed || 2.0;
-                baseAttack = (headMat.attack || 1.0) + (schema.baseAttackBonus || 0);
+                // Exact TConstruct ToolBuilder.buildTool & AbilityHelper.calcToolSpeed formula
+                const hCnt = Math.max(1, headsCount);
+                const avgHeadDuraInt = Math.floor(sumHeadDura / hCnt);
+                const headScale = 0.5 + (hCnt * 0.5);
+                const duraMod = schema.durabilityMod || 1.0;
+                rawDura = Math.floor(avgHeadDuraInt * headScale * handleMult * duraMod);
+                totalBaseDura = avgHeadDuraInt;
+
+                // AbilityHelper.calcToolSpeed averages speed across all duraType===2 parts
+                baseSpeed = sumHeadSpeed / hCnt;
+
+                // ToolBuilder.buildTool lines 1864-1866 + ToolCore line 266
+                const baseDamage = (schema.baseDamage !== undefined) ? schema.baseDamage : (schema.baseAttackBonus || 1);
+                let rawAttack = Math.floor(sumHeadAttack / hCnt) + baseDamage;
+                if (rawAttack % hCnt !== 0) {
+                    rawAttack += 1;
+                }
+                baseAttack = Math.floor(rawAttack * (schema.damageMod || 1.0));
                 miningLevel = headMat.miningLevel || "00-Stone";
             }
 
-            if (diamond && !["bolt", "arrow", "shuriken", "crossbow", "shortbow"].includes(currentToolType)) totalBaseDura += 500;
-            if (emerald && !["bolt", "arrow", "shuriken", "crossbow", "shortbow"].includes(currentToolType)) totalBaseDura = Math.round(totalBaseDura * 1.5);
+            if (diamond && !["bolt", "arrow", "shuriken", "crossbow", "shortbow"].includes(currentToolType)) rawDura += 500;
+            if (emerald && !["bolt", "arrow", "shuriken", "crossbow", "shortbow"].includes(currentToolType)) rawDura = Math.round(rawDura * 1.5);
 
-            let rawDura = Math.round(totalBaseDura * handleMult);
-
-            let effectiveSpeed = (baseSpeed * (schema.speedMult || 1.0));
-            if (!["crossbow", "shortbow"].includes(currentToolType)) {
-                effectiveSpeed += ((mods.haste || 0) * 1.5);
-            }
+            const hasteBonus = (!["crossbow", "shortbow"].includes(currentToolType))
+                ? calcTConHasteSpeedBonus(mods.haste || 0, headsCount || 1, schema.speedMult || 1.0)
+                : 0;
+            let effectiveSpeed = (baseSpeed * (schema.speedMult || 1.0)) + hasteBonus;
 
             baseAttack += ((mods.quartz || 0) * 1.5);
+
+            const stoneboundMod = partCount > 0 ? (sumShoddy / partCount) : 0;
+            const stoneboundDiv = schema.stoneboundDiv || 72.0;
+            const maxStoneboundBonus = stoneboundMod > 0
+                ? (Math.log((rawDura / stoneboundDiv) + 1.0) * 2.0 * stoneboundMod)
+                : 0;
 
             if (headBoost === "zombie" && miningLevel.startsWith("00")) miningLevel = "01-Copper (Zombie Boosted)";
             else if (headBoost === "skeleton" && (miningLevel.startsWith("00") || miningLevel.startsWith("01"))) miningLevel = "02-Iron (Skeleton Boosted)";
@@ -5327,7 +5446,7 @@
                     displayTraits.add(`Reinforced ${rNum} (${unbreakPct}%)`);
                 }
             }
-            if ((mods.haste || 0) > 0) displayTraits.add(`Haste ${romanNums[mods.haste] || mods.haste} (+${(mods.haste * 1.5).toFixed(1)} Spd)`);
+            if ((mods.haste || 0) > 0) displayTraits.add(`Haste ${romanNums[mods.haste] || mods.haste} (+${hasteBonus.toFixed(2)} Spd)`);
             if ((mods.lapis || 0) > 0) displayTraits.add(`Fortune / Looting ${romanNums[mods.lapis] || mods.lapis}`);
             if ((mods.quartz || 0) > 0) displayTraits.add(`Sharpness ${romanNums[mods.quartz] || mods.quartz} (+${(mods.quartz * 1.5).toFixed(1)} Dmg)`);
             if ((mods.moss || 0) > 0) displayTraits.add(`Auto-Repair ${romanNums[mods.moss] || mods.moss}`);
@@ -5352,6 +5471,11 @@
                 unbreakPct,
                 headMat,
                 plateDuraBonus,
+                headsCount: Math.max(1, headsCount),
+                sumHeadDura,
+                hasteBonus,
+                stoneboundMod,
+                maxStoneboundBonus,
                 traitsSet: displayTraits,
                 baseSpeed,
                 drawSpeedSec,
@@ -5631,7 +5755,7 @@
                 document.getElementById("stat-attack").innerText = `${stats.baseAttack.toFixed(2)} (${(stats.baseAttack / 2).toFixed(2)} Hearts)`;
             } else {
                 document.getElementById("stat-mining-level").innerText = stats.miningLevel;
-                document.getElementById("stat-mining-speed").innerText = stats.effectiveSpeed.toFixed(1);
+                document.getElementById("stat-mining-speed").innerText = Number(stats.effectiveSpeed.toFixed(2));
                 document.getElementById("stat-attack").innerText = `${stats.baseAttack.toFixed(1)} (${(stats.baseAttack / 2).toFixed(1)} Hearts)`;
             }
             document.getElementById("stat-handle-mod").innerText = `x${stats.handleMult.toFixed(2)}`;
@@ -5754,14 +5878,20 @@
                     </div>
                 `;
             } else {
+                const avgDura = Math.floor((stats.sumHeadDura || stats.headMat.durability) / (stats.headsCount || 1));
+                const headScale = (0.5 + (stats.headsCount || 1) * 0.5).toFixed(1);
+                const duraMod = (schema.durabilityMod || 1.0).toFixed(2).replace(/\.00$/, '.0');
+                const sbLine = stats.stoneboundMod > 0
+                    ? ` &bull; Stonebound Mod: <strong>${stats.stoneboundMod.toFixed(2)}</strong> (Max Bonus: <strong>+${stats.maxStoneboundBonus.toFixed(2)}</strong>)`
+                    : '';
                 diag.innerHTML = `
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                         <div>• <strong>Head / Core:</strong> ${stats.headMat.name} (${stats.headMat.tier}) &mdash; Base Dura: ${stats.headMat.durability}, Speed: ${stats.headMat.miningSpeed}</div>
-                        <div>• <strong>Raw vs. Effective Durability:</strong> <strong>${stats.rawDura.toLocaleString()} Raw</strong> &divide; (1 &minus; ${stats.unbreakPct}%) = <strong style="color:#34d399;">${stats.unbreakPct >= 100 ? '∞ UNBREAKABLE' : stats.effectiveDura.toLocaleString() + ' Effective'}</strong></div>
-                        <div>• <strong>Plate &amp; Handle Scaling:</strong> +${stats.plateDuraBonus} Plate Bonus &times; x${stats.handleMult.toFixed(2)} Handle Multiplier</div>
+                        <div>• <strong>Raw vs. Effective Durability:</strong> <strong>${stats.rawDura.toLocaleString()} Base</strong> &divide; (1 &minus; ${stats.unbreakPct}%) = <strong style="color:#34d399;">${stats.unbreakPct >= 100 ? '∞ UNBREAKABLE' : stats.effectiveDura.toLocaleString() + ' Effective'}</strong></div>
+                        <div>• <strong>TConstruct Dura Formula:</strong> &lfloor;${ stats.sumHeadDura || stats.headMat.durability } &divide; ${stats.headsCount || 1}&rfloor; (${avgDura}) &times; ${headScale}x &times; ${stats.handleMult.toFixed(2)}x Handle &times; ${duraMod}x Tool = <strong>${stats.rawDura.toLocaleString()}</strong></div>
                         <div>• <strong>Modifier Slot Usage:</strong> ${stats.usedSlots} used / ${stats.totalAvailableSlots} total (${stats.remainingSlots} remaining)</div>
                         <div>• <strong>Reinforced Breakdown:</strong> <strong>Level ${stats.totalReinforcedLevel}/10</strong> (${stats.basePartReinforced} from Parts + ${stats.modReinforced} from Plates = <strong>${stats.unbreakPct}% save</strong>)</div>
-                        <div>• <strong>Harvest Speed Factor:</strong> Base ${stats.baseSpeed} &times; ${schema.speedMult || 1.0} mult + ${currentMods.haste * 1.5} Haste = <strong>${stats.effectiveSpeed.toFixed(1)}</strong></div>
+                        <div>• <strong>Harvest Speed Factor:</strong> Avg ${Number(stats.baseSpeed.toFixed(2))} &times; ${schema.speedMult || 1.0}x + ${Number((stats.hasteBonus || 0).toFixed(2))} Haste = <strong>${Number(stats.effectiveSpeed.toFixed(2))}</strong>${sbLine}</div>
                     </div>
                 `;
             }
@@ -6507,8 +6637,15 @@
                     } else if (partDef.type === "plate" || activeWorkbenchPartId.startsWith("plate")) {
                         basePartStatsHtml = `
                             <div style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
-                                Plate Dura: <strong style="color: #fff;">${mat.durability}</strong><br>
-                                Bonus Dura: <strong style="color: var(--cyan-light);">+${Math.round((mat.durability || 100) * 0.35)}</strong>
+                                Plate Dura: <strong style="color: #fff;">${mat.durability}</strong> | Speed: <strong style="color: #fff;">${mat.miningSpeed}</strong><br>
+                                Attack: <strong style="color: var(--red-light);">${mat.attack}</strong> | Reinf: <strong style="color: var(--cyan-light);">${(mat.traits || []).find(t => t.includes('Reinforced')) || 'None'}</strong>
+                            </div>
+                        `;
+                    } else if (partDef.duraType === 1) {
+                        basePartStatsHtml = `
+                            <div style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+                                Binding / Guard: <strong style="color: #fff;">${mat.name}</strong><br>
+                                Handle Mult: <strong style="color: var(--gold-light);">x${(mat.handleMod || 1.0).toFixed(2)}</strong>
                             </div>
                         `;
                     } else {
@@ -6595,7 +6732,7 @@
                     projectedImpactHtml = `
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; font-size: 11px; line-height: 1.4;">
                             <div>🛡️ Dura: ${duraDisplay} ${duraDeltaTag}</div>
-                            <div>⚡ Speed: <strong style="color: #fff;">${projected.effectiveSpeed.toFixed(1)}</strong> ${speedDeltaTag}</div>
+                            <div>⚡ Speed: <strong style="color: #fff;">${Number(projected.effectiveSpeed.toFixed(2))}</strong> ${speedDeltaTag}</div>
                             <div>⛏️ Level: <strong style="color: #fff;">${projected.miningLevel}</strong></div>
                             <div>⚔️ Attack: <strong style="color: #fff;">${projected.baseAttack.toFixed(1)}</strong> (${(projected.baseAttack/2).toFixed(1)} ♥) ${attackDeltaTag}</div>
                         </div>
@@ -6873,16 +7010,35 @@
             // Find handle/shaft/grip material
             const handleMatName = parts.handle || parts.handle1 || parts.core || parts.crossbar || "Wood";
             const handleMat = findMat(handleMatName);
-            const handleMult = handleMat.handleMod || 1.0;
 
-            // Extra plates durability
-            let plateBonus = 0;
-            schema.parts.forEach(p => {
-                if (p.id.includes("plate") && p.id !== "head") {
-                    const pMat = findMat(parts[p.id]);
-                    if (pMat) plateBonus += Math.round((pMat.durability || 100) * 0.35);
+            // GTNH TConstruct 1.14.108 exact ToolBuilder.buildTool & AbilityHelper.calcToolSpeed calculation
+            let duraSum = 0, headsCount = 0;
+            let modSum = 0, handlesCount = 0;
+            let attackSum = 0, attacksCount = 0;
+            let speedSum = 0, speedCount = 0;
+
+            schema.parts.forEach((p, idx) => {
+                const pMat = findMat(parts[p.id]);
+                if (!pMat) return;
+                const dType = p.duraType !== undefined ? p.duraType : (idx === 0 ? 2 : (idx === 1 ? 1 : 0));
+                if (dType === 2) {
+                    duraSum += (pMat.durability || 100);
+                    headsCount += 1;
+                    attackSum += (pMat.attack || 0);
+                    attacksCount += 1;
+                    speedSum += (pMat.miningSpeed || 1.0);
+                    speedCount += 1;
+                } else if (dType === 1) {
+                    modSum += (pMat.handleMod || 1.0);
+                    handlesCount += 1;
+                }
+                if (idx === 0 && dType !== 2) {
+                    attackSum += (pMat.attack || 0);
+                    attacksCount += 1;
                 }
             });
+
+            const handleMult = handlesCount > 0 ? (modSum / handlesCount) : (handleMat.handleMod || 1.0);
 
             // Base Durability / Stack calculation
             let baseDura = 0;
@@ -6895,20 +7051,20 @@
                 const b3 = findMat(parts.blade3 || "Iron");
                 const b4 = findMat(parts.blade4 || "Iron");
                 baseDura = (b1.durability + b2.durability + b3.durability + b4.durability);
-            } else if (toolId === "battleaxe") {
-                const h1 = findMat(parts.head1 || "Iron");
-                const h2 = findMat(parts.head2 || "Iron");
-                baseDura = Math.round((h1.durability + h2.durability) * handleMult);
             } else if (toolId.includes("shield") || toolId === "battlesign") {
                 const p1 = findMat(parts.plate1 || parts.plate || "Iron");
                 const p2 = parts.plate2 ? findMat(parts.plate2) : null;
                 baseDura = Math.round((p1.durability + (p2 ? p2.durability : 0)) * handleMult);
             } else {
-                baseDura = Math.round(((headMat.durability || 250) * handleMult) + plateBonus);
+                const avgHeadDura = headsCount > 0 ? Math.floor(duraSum / headsCount) : (headMat.durability || 100);
+                const headScale = 0.5 + (headsCount * 0.5);
+                const handleFactor = handlesCount > 0 ? (0.5 + handlesCount * 0.5) : 1.0;
+                const toolDuraMod = schema.durabilityMod !== undefined ? schema.durabilityMod : 1.0;
+                baseDura = Math.floor(avgHeadDura * headScale * handleMult * handleFactor * toolDuraMod);
             }
 
             if (mods.diamond && !["bolt", "arrow", "shuriken"].includes(toolId)) baseDura += 500;
-            if (mods.emerald && !["bolt", "arrow", "shuriken"].includes(toolId)) baseDura = Math.round(baseDura * 1.5);
+            if (mods.emerald && !["bolt", "arrow", "shuriken"].includes(toolId)) baseDura += Math.floor(baseDura * 0.5);
 
             // Reinforced & Unbreakability
             let basePartReinf = 0;
@@ -6924,7 +7080,7 @@
                         if (t.includes("Reinforced")) {
                             const levelMatch = t.match(/Reinforced\s*([IVXLCDM]+|\d+)/i);
                             if (levelMatch) {
-                                const romanMap = { "I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "X": 10 };
+                                const romanMap = { "I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10 };
                                 const lvl = romanMap[levelMatch[1].toUpperCase()] || parseInt(levelMatch[1]) || 1;
                                 basePartReinf = Math.max(basePartReinf, lvl);
                             } else {
@@ -6944,12 +7100,21 @@
                 effectiveDura = Math.round(baseDura / (1 - (unbreakPct / 100)));
             }
 
-            // Mining Speed / Projectile Speed
-            let baseSpeed = (headMat.miningSpeed || 6.0) * (schema.speedMultiplier || schema.speedMult || 1.0);
-            let effectiveSpeed = baseSpeed + ((mods.haste || 0) * 1.5);
+            // Mining Speed / Projectile Speed (AbilityHelper.calcToolSpeed & ModRedstone)
+            const speedMult = schema.speedMult !== undefined ? schema.speedMult : (schema.speedMultiplier || 1.0);
+            const avgRawSpeed = speedCount > 0 ? (speedSum / speedCount) : (headMat.miningSpeed || 6.0);
+            let baseSpeed = avgRawSpeed * speedMult;
+            const hasteBonusPerLevel = 4.0 * speedMult;
+            let effectiveSpeed = Number((baseSpeed + ((mods.haste || 0) * hasteBonusPerLevel)).toFixed(2));
 
-            // Attack Damage
-            let baseAttack = (headMat.attack || 2.0) + (schema.damageBonus || schema.baseAttackBonus || 0);
+            // Attack Damage (ToolBuilder.buildTool)
+            let baseAttack = 0;
+            if (schema.baseDamage !== undefined) {
+                const avgMatAttack = attacksCount > 0 ? Math.floor(attackSum / attacksCount) : Math.floor(headMat.attack || 0);
+                baseAttack = Math.floor((avgMatAttack + schema.baseDamage) * (schema.damageMod || 1.0));
+            } else {
+                baseAttack = (headMat.attack || 2.0) + (schema.damageBonus || schema.baseAttackBonus || 0);
+            }
             if (mods.quartz) baseAttack += (mods.quartz * 1.5);
 
             // Mining Level / Class
