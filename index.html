@@ -300,6 +300,7 @@
         .badge-magic { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
         .badge-ore { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
         .badge-tool { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge-loot { background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
 
         .tool-title {
             font-size: 18px;
@@ -527,7 +528,7 @@
                 <div class="stat-label">IC2 Crops</div>
             </div>
             <div class="stat-item">
-                <div class="stat-num">9 Tools</div>
+                <div class="stat-num">10 Tools</div>
                 <div class="stat-label">Active Suite</div>
             </div>
         </div>
@@ -539,13 +540,14 @@
         <!-- Controls Bar -->
         <div class="controls-bar">
             <div class="filter-group">
-                <button class="filter-btn active" onclick="filterCategory('all', this)">All Tools (9)</button>
+                <button class="filter-btn active" onclick="filterCategory('all', this)">All Tools (10)</button>
                 <button class="filter-btn" onclick="filterCategory('circuits', this)">&#9889; Circuits &amp; AE2</button>
                 <button class="filter-btn" onclick="filterCategory('tools', this)">&#128296; Tools &amp; TiC</button>
                 <button class="filter-btn" onclick="filterCategory('ores', this)">&#9935;&#65039; Ores &amp; Mining</button>
                 <button class="filter-btn" onclick="filterCategory('food', this)">&#127822; Food &amp; Nutrition</button>
                 <button class="filter-btn" onclick="filterCategory('genetics', this)">&#128029; Bees &amp; Crops</button>
                 <button class="filter-btn" onclick="filterCategory('magic', this)">&#128302; Thaumcraft &amp; Magic</button>
+                <button class="filter-btn" onclick="filterCategory('lootgames', this)">&#128142; LootGames AR</button>
             </div>
             <div class="search-box">
                 <span class="search-icon">&#128269;</span>
@@ -751,6 +753,29 @@
                     <a href="thaumcraft_research_navigator.html" target="_blank" class="btn-tab">&#8599; New Tab</a>
                 </div>
             </div>
+
+            <!-- Tool 10: LootGames AR Companion & Solver -->
+            <div class="tool-card" data-category="lootgames" style="--card-accent: #ec4899;">
+                <div>
+                    <div class="tool-header">
+                        <div class="tool-icon">💎</div>
+                        <span class="tool-badge badge-loot">LootGames AR</span>
+                    </div>
+                    <div class="tool-title">LootGames AR Companion &amp; Solver</div>
+                    <div class="tool-desc">Computer-vision &amp; constraint-satisfaction solver for GTNH LootGames Dungeon Minigames (Minesweeper &amp; Sudoku) with camera AR perspective warping and iterative deduction.</div>
+                    <ul class="feature-list">
+                        <li class="feature-item"><span class="feature-bullet">&#9679;</span> <strong>Minesweeper Multi-Stage Growth:</strong> Supports $7\times 7 \rightarrow 15\times 15$ scaling across all 4 dungeon tiers</li>
+                        <li class="feature-item"><span class="feature-bullet">&#9679;</span> <strong>Zero-RNG Logic &amp; CSP Engine:</strong> Constraint subset deduction, deterministic safe-click marking &amp; probability estimation</li>
+                        <li class="feature-item"><span class="feature-bullet">&#9679;</span> <strong>Sudoku Exact Cover Solver:</strong> Instant $9\times 9$ solution generator with step-by-step hint progression</li>
+                        <li class="feature-item"><span class="feature-bullet">&#9679;</span> <strong>Live AR &amp; Multi-Input Vision:</strong> Mobile camera feed, OpenCV.js 4-point homography warping, image upload &amp; clipboard paste</li>
+                        <li class="feature-item"><span class="feature-bullet">&#9679;</span> <strong>100% Offline &amp; Free:</strong> Runs purely in-browser via WebAssembly with zero API keys or server requirements</li>
+                    </ul>
+                </div>
+                <div class="tool-actions">
+                    <button class="btn-launch" onclick="launchEmbeddedTool('gtnh_lootgames_solver.html', '💎 LootGames AR Companion &amp; Solver')">&#128640; Launch Tool</button>
+                    <a href="gtnh_lootgames_solver.html" target="_blank" class="btn-tab">&#8599; New Tab</a>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -762,7 +787,7 @@
                 <span class="workspace-app-title" id="workspace-title-text">&#9889; Active Companion Tool</span>
             </div>
             <div class="workspace-quick-nav">
-                <button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_circuit_architect.html', '⚡ Circuit Evolution &amp; Tradeoff Architect')">⚡ Circuits</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_tinkers_architect.html', '🔨 Tinkers Tool &amp; Weapon Architect')">🔨 Tinkers</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_gregtech_tools.html', '⚙️ GregTech Tool Architect')">⚙️ GT Tools</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_ore_navigator.html', '⛏️ Dimensional Ore &amp; Yield Navigator')">⛏️ Ore &amp; Yields</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_food_architect.html', '🍲 Food &amp; Nutrition Architect')">🍲 Food &amp; Diet</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_bee_navigator.html', '🐝 Bee Breeding &amp; Genetic Navigator')">🐝 Bees &amp; Genes</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_cropsnh_navigator.html', '🌾 IC2 Crop Mutation &amp; Breeding Suite')">🌾 IC2 Crops</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_clean_crucible.html', '🧪 Clean Crucible &amp; Essentia Solver')">🧪 Clean Crucible</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('thaumcraft_research_navigator.html', '🔮 Thaumcraft Research &amp; Aspect Solver')">🔮 Thaumcraft</button>
+                <button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_circuit_architect.html', '⚡ Circuit Evolution &amp; Tradeoff Architect')">⚡ Circuits</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_tinkers_architect.html', '🔨 Tinkers Tool &amp; Weapon Architect')">🔨 Tinkers</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_gregtech_tools.html', '⚙️ GregTech Tool Architect')">⚙️ GT Tools</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_ore_navigator.html', '⛏️ Dimensional Ore &amp; Yield Navigator')">⛏️ Ore &amp; Yields</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_food_architect.html', '🍲 Food &amp; Nutrition Architect')">🍲 Food &amp; Diet</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_bee_navigator.html', '🐝 Bee Breeding &amp; Genetic Navigator')">🐝 Bees &amp; Genes</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_cropsnh_navigator.html', '🌾 IC2 Crop Mutation &amp; Breeding Suite')">🌾 IC2 Crops</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_clean_crucible.html', '🧪 Clean Crucible &amp; Essentia Solver')">🧪 Clean Crucible</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('thaumcraft_research_navigator.html', '🔮 Thaumcraft Research &amp; Aspect Solver')">🔮 Thaumcraft</button><button class="quick-nav-btn" onclick="launchEmbeddedTool('gtnh_lootgames_solver.html', '💎 LootGames AR Companion &amp; Solver')">💎 LootGames</button>
             </div>
         </div>
         <iframe id="workspace-iframe" class="workspace-frame" src="about:blank"></iframe>

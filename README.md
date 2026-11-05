@@ -51,6 +51,13 @@ A comprehensive, zero-dependency web companion suite for **GregTech: New Horizon
 9. **🔮 Thaumcraft Research & Aspect Solver (`thaumcraft_research_navigator.html`)**
    - Hex grid shortest-path aspect combination solver.
 
+10. **💎 LootGames AR Companion & Solver (`gtnh_lootgames_solver.html`)**
+    - Computer vision and constraint-satisfaction solver for GTNH LootGames Dungeon Minigames.
+    - **Minesweeper Solver**: Supports multi-stage dynamic board expansion ($7\times 7 \rightarrow 15\times 15$), zero-RNG logic verification, deterministic safe-click / mine deduction, and probabilistic risk assessment for unrevealed tiles.
+    - **Sudoku Solver**: Instant exact-cover solution generator with step-by-step hint progression.
+    - **Multi-Input Camera & AR**: Live mobile camera feed, 4-point homography perspective warping via OpenCV.js, image file upload, and clipboard paste (`Ctrl+V`).
+    - 100% offline, client-side WebAssembly execution with zero API keys or developer fees required.
+
 ---
 
 ## 🌐 Live Hosting

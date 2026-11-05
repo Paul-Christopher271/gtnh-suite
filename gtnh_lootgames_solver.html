@@ -1,0 +1,3016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-11CS186SLE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('config', 'G-11CS186SLE');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GTNH LootGames Solver &amp; AR Companion | GTNH Companion Suite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #080c14;
+            --bg-card: rgba(15, 23, 42, 0.9);
+            --bg-card-hover: rgba(30, 41, 59, 0.95);
+            --border-card: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(245, 158, 11, 0.4);
+            
+            --gold-primary: #f59e0b;
+            --gold-light: #fbbf24;
+            --gold-glow: rgba(245, 158, 11, 0.25);
+            
+            --cyan: #06b6d4;
+            --cyan-light: #22d3ee;
+            --purple: #8b5cf6;
+            --purple-light: #a78bfa;
+            --green: #10b981;
+            --green-light: #34d399;
+            --red: #ef4444;
+            --red-light: #f87171;
+            --blue: #3b82f6;
+            --blue-light: #60a5fa;
+            
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --text-dim: #6b7280;
+
+            /* LootGames Tile Colors */
+            --tile-bg: #0d2847;
+            --tile-hover: #173d66;
+            --tile-border: #1e4d7e;
+            --num-1: #7c74ff; /* GTNH ms_board.png #6960ff Periwinkle/Lavender */
+            --num-2: #00ff00; /* GTNH ms_board.png #00ff00 Pure Green */
+            --num-3: #ff4747; /* GTNH ms_board.png #ff3a3a Coral Red */
+            --num-4: #1d68ff; /* GTNH ms_board.png #0027ff Royal Blue */
+            --num-5: #ff0000; /* GTNH ms_board.png #ff0000 Deep Red */
+            --num-6: #f4e909; /* GTNH ms_board.png #f4e909 Yellow */
+            --num-7: #ff00ff; /* GTNH ms_board.png #ff00ff Magenta */
+            --num-8: #00e1d5; /* GTNH ms_board.png #00e1d5 Cyan */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 85% 20%, rgba(6, 182, 212, 0.06) 0%, transparent 45%),
+                linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        /* HEADER */
+        .hero {
+            padding: 24px 16px 18px 16px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(8, 12, 20, 0.6) 100%);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            border-radius: 9999px;
+            color: var(--purple-light);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(20px, 3.5vw, 30px);
+            font-weight: 900;
+            letter-spacing: 0.02em;
+            background: linear-gradient(135deg, #ffffff 30%, #c4b5fd 70%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* NAVIGATION TABS */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(11, 17, 30, 0.7);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border-color: var(--gold-primary);
+            color: var(--gold-light);
+            box-shadow: 0 0 16px var(--gold-glow);
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 16px;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 2-COLUMN WORKSPACE */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 900px) {
+            .workspace-grid {
+                grid-template-columns: 1.1fr 1fr;
+            }
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 14px;
+            padding: 16px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+        }
+
+        .card-title .icon {
+            font-size: 18px;
+        }
+
+        .badge {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-purple { background: rgba(139, 92, 246, 0.2); color: var(--purple-light); border: 1px solid rgba(139, 92, 246, 0.4); }
+        .badge-cyan { background: rgba(6, 182, 212, 0.2); color: var(--cyan-light); border: 1px solid rgba(6, 182, 212, 0.4); }
+        .badge-green { background: rgba(16, 185, 129, 0.2); color: var(--green-light); border: 1px solid rgba(16, 185, 129, 0.4); }
+        .badge-gold { background: rgba(245, 158, 11, 0.2); color: var(--gold-light); border: 1px solid rgba(245, 158, 11, 0.4); }
+
+        /* BUTTONS & TOOLBARS */
+        .input-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(6, 182, 212, 0.3) 100%);
+            border-color: var(--purple-light);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.45) 0%, rgba(6, 182, 212, 0.45) 100%);
+            box-shadow: 0 0 14px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(5, 150, 105, 0.3) 100%);
+            border-color: var(--green-light);
+            color: var(--green-light);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.45) 0%, rgba(5, 150, 105, 0.45) 100%);
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.3);
+        }
+
+        /* CAMERA & CANVAS VIEWPORT */
+        .camera-viewport {
+            width: 100%;
+            height: 280px;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+        }
+
+        .camera-viewport video,
+        .camera-viewport canvas {
+            max-width: 100%;
+            border-radius: 8px;
+            touch-action: none;
+            cursor: crosshair;
+            display: none;
+        }
+        /* replaced */ .camera-viewport-old-canvas {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .camera-placeholder {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 13px;
+            padding: 20px;
+        }
+
+        /* STAGE SELECTOR (MINESWEEPER) */
+        .stage-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .stage-btn {
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .stage-btn.active {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: var(--cyan-light);
+            color: var(--cyan-light);
+        }
+
+        /* GAME BOARDS */
+        .board-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 12px 0;
+            overflow-x: auto;
+            padding: 6px;
+        }
+
+        /* MINESWEEPER GRID */
+        .ms-grid {
+            display: grid;
+            gap: 3px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px;
+            border-radius: 10px;
+            border: 2px solid var(--tile-border);
+        }
+
+        .ms-cell {
+            width: 32px;
+            height: 32px;
+            background: var(--tile-bg);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.15s;
+        }
+
+        .ms-cell:hover {
+            background: var(--tile-hover);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .ms-cell.revealed {
+            background: #091a2e;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .ms-cell.safe {
+            background: rgba(16, 185, 129, 0.25) !important;
+            border-color: var(--green-light) !important;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            animation: pulseSafe 1.5s infinite;
+        }
+
+        .ms-cell.mine {
+            background: rgba(239, 68, 68, 0.3) !important;
+            border-color: var(--red-light) !important;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        @keyframes pulseSafe {
+            0%, 100% { box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 0 16px rgba(16, 185, 129, 0.8); }
+        }
+
+        .val-1 { color: var(--num-1); }
+        .val-2 { color: var(--num-2); }
+        .val-3 { color: var(--num-3); }
+        .val-4 { color: var(--num-4); }
+        .val-5 { color: var(--num-5); }
+        .val-6 { color: var(--num-6); }
+        .val-7 { color: var(--num-7); }
+        .val-8 { color: var(--num-8); }
+
+        /* SUDOKU GRID */
+        .sudoku-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 2px;
+            background: #081525;
+            padding: 8px;
+            border-radius: 10px;
+            border: 3px solid #1e4d7e;
+            max-width: 440px;
+            width: 100%;
+        }
+
+        .sdk-cell {
+            aspect-ratio: 1;
+            background: var(--tile-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(14px, 3.5vw, 19px);
+            font-weight: 800;
+            color: #fff;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.15s;
+        }
+
+        .sdk-cell:nth-child(3n) {
+            border-right: 2px solid #2a6bb3;
+        }
+
+        .sdk-cell:nth-child(n+19):nth-child(-n+27),
+        .sdk-cell:nth-child(n+46):nth-child(-n+54) {
+            border-bottom: 2px solid #2a6bb3;
+        }
+
+        .sdk-cell:hover {
+            background: var(--tile-hover);
+        }
+
+        .sdk-cell.selected {
+            background: rgba(245, 158, 11, 0.25);
+            border-color: var(--gold-light);
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        .sdk-cell.initial {
+            color: #60a5fa;
+        }
+
+        .sdk-cell.solved {
+            color: var(--green-light);
+            background: rgba(16, 185, 129, 0.12);
+        }
+
+        /* KEYPAD */
+        .keypad {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .key-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+
+        .key-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--gold-light);
+            color: var(--gold-light);
+        }
+
+        /* HUD / ACTION BAR */
+        .action-hud {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .hud-box {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .hud-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .hud-val.green { color: var(--green-light); }
+        .hud-val.red { color: var(--red-light); }
+        .hud-val.purple { color: var(--purple-light); }
+        .hud-val.gold { color: var(--gold-light); }
+
+        .hud-label {
+            font-size: 11px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* LIVE DEBUG CONSOLE CARD */
+        .debug-console-box {
+            background: #050811;
+            color: #34d399;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            padding: 12px;
+            border-radius: 8px;
+            max-height: 180px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            line-height: 1.45;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-top: 10px;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+    <!-- OpenCV.js for local fallback processing -->
+    <script async src="https://docs.opencv.org/4.10.0/opencv.js" onload="onOpenCvReady()"></script>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="hero">
+        <div class="hero-badge">&#128142; GTNH LootGames &bull; Mobile &amp; Desktop Vision Solver</div>
+        <h1>LOOTGAMES AR COMPANION &amp; SOLVER</h1>
+        <p>Point phone camera or paste screenshot &bull; Auto-detects game grid &bull; Solves multi-stage Minesweeper (7x7 to 15x15) &amp; Sudoku (9x9) with guaranteed next moves!</p>
+    </header>
+
+    <!-- NAVIGATION TABS -->
+    <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="switchGame('ms', this)">&#128163; Minesweeper Solver</button>
+        <button class="tab-btn" onclick="switchGame('sdk', this)">&#128290; Sudoku Solver</button>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="container">
+
+        <!-- ============================================================== -->
+        <!-- TAB 1: MINESWEEPER SOLVER -->
+        <!-- ============================================================== -->
+        <section id="pane-ms" class="tab-pane active">
+            
+            <div class="workspace-grid">
+                
+                <!-- Left: Vision / Camera Capture -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><span class="icon">&#128248;</span> Scanner &amp; Input</div>
+                        <span class="badge badge-purple" id="cv-status-badge">Engine Ready</span>
+                    </div>
+
+                    <div class="input-toolbar">
+                        <button class="btn btn-warning" id="btn-live-ms" onclick="toggleLiveCamera('ms')">&#128249; Live Feed</button>
+                        <button class="btn btn-primary" id="btn-win-ms" onclick="toggleWindowCapture('ms')">&#128187; Capture Game Window</button>
+                        <button class="btn" onclick="document.getElementById('video-capture-ms').click()">&#127909; Record Walkaround</button>
+                        <button class="btn btn-primary" onclick="triggerCameraInput('ms')">&#128248; Take Photo</button>
+                        <button class="btn" onclick="document.getElementById('file-input-ms').click()">&#128193; Upload Image</button>
+                        <button class="btn btn-success" id="btn-scan-ms" onclick="captureAndSolveMS()">&#9889; Scan &amp; Solve</button>
+                        <button class="btn btn-primary" id="btn-pin-scan-ms" onclick="captureAndSolveMS(true)">&#128204; Pin Scan</button>
+                        <button class="btn" onclick="resetPins('ms')">&#8634; Reset Pins</button>
+                        <div style="width:100%; display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            <label style="display:inline-flex; align-items:center; gap:6px; font-size:12px; cursor:pointer; background:rgba(255,255,255,0.06); padding:4px 8px; border-radius:6px;">
+                                <input type="checkbox" id="additive-merge-ms" checked>
+                                <span>&#128260; Additive Merge (Multi-Shot)</span>
+                            </label>
+                            <span style="font-size:11px; color:var(--text-muted);">&#128070; Drag the 4 pins on the photo to align with the board!</span>
+                        </div>
+                        <button class="btn" onclick="resetMSBoard()">&#128465;&#65039; Reset</button>
+                        <input type="file" id="file-input-ms" accept="image/*,video/*" style="display:none;" onchange="handleImageUpload(event, 'ms')">
+                        <input type="file" id="camera-capture-ms" accept="image/*,video/*" capture="environment" style="display:none;" onchange="handleImageUpload(event, 'ms')">
+                        <input type="file" id="video-capture-ms" accept="video/*" capture="environment" style="display:none;" onchange="handleVideoUpload(event, 'ms')">
+                    </div>
+
+                    <div class="camera-viewport" id="viewport-ms">
+                        <video id="camera-video-ms" autoplay playsinline style="display:none;"></video>
+                        <canvas id="preview-canvas-ms" style="display:none;"></canvas>
+                        <div class="camera-placeholder" id="placeholder-ms">
+                            &#128247; Camera / Image Ready<br>
+                            Point phone at Minesweeper floor or upload photo!
+                        </div>
+                    </div>
+
+                    <!-- Warped Preview -->
+                    <div id="warped-box-ms" style="display:none; margin-top:10px; background:rgba(0,0,0,0.5); padding:8px; border-radius:8px; text-align:center; border:1px solid rgba(255,255,255,0.1);">
+                        <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px; font-weight:600;">📐 Computer Vision Warped Grid</div>
+                        <img id="warped-img-ms" style="max-width:100%; max-height:220px; border-radius:6px; border:1px solid #06b6d4;" alt="Warped Grid">
+                    </div>
+
+                    <div class="action-hud">
+                        <div class="hud-box">
+                            <div class="hud-val green" id="hud-safe-count">0</div>
+                            <div class="hud-label">Safe Moves (100%)</div>
+                        </div>
+                        <div class="hud-box">
+                            <div class="hud-val red" id="hud-mine-count">0</div>
+                            <div class="hud-label">Mines (Flag + Solved)</div>
+                        </div>
+                        <div class="hud-box">
+                            <div class="hud-val purple" id="hud-unrevealed-count">0 / 169</div>
+                            <div class="hud-label">Scanned / Locked</div>
+                        </div>
+                    </div>
+
+                    <!-- Live Debug Log -->
+                    <div style="margin-top: 14px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <span style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">📡 Live Debug Log (Streaming to Python Server)</span>
+                            <div style="display:flex; gap:6px;">
+                                <button class="btn" style="padding:2px 8px; font-size:10px;" onclick="clearDebugLog()">Clear</button>
+                                <button class="btn" style="padding:2px 8px; font-size:10px;" onclick="copyDebugLog()">Copy</button>
+                            </div>
+                        </div>
+                        <pre class="debug-console-box" id="debug-log-console-ms">Waiting for input...</pre>
+                    </div>
+
+                </div>
+
+                <!-- Right: Solved Interactive Board -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><span class="icon">&#127918;</span> Stage Grid &amp; Next Safe Moves</div>
+                        <div class="stage-selector">
+                            <span style="font-size:11px; color:var(--text-muted);">Stage:</span>
+                            <button class="stage-btn active" onclick="setMSSize(13, this)">S1 (13x13)</button>
+                            <button class="stage-btn" onclick="setMSSize(15, this)">S2 (15x15)</button>
+                            <button class="stage-btn" onclick="setMSSize(17, this)">S3 (17x17)</button>
+                            <button class="stage-btn" onclick="setMSSize(19, this)">S4 (19x19)</button>
+                        </div>
+                    </div>
+
+                    <div class="board-container">
+                        <div class="ms-grid" id="ms-grid-element"></div>
+                    </div>
+
+                    <!-- Legend & Confidence Status -->
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; font-size:11px; color:var(--text-muted); align-items:center;">
+                        <span><b style="color:#64748b;">?</b> Unknown</span>
+                        <span><b style="color:#38bdf8;">&#9638;</b> Scanned Blue</span>
+                        <span><b style="color:#34d399;">&#10004;</b> 100% Safe</span>
+                        <span><b style="color:#ef4444;">&#128163;</b> Deduced Mine</span>
+                        <span><b style="color:#f59e0b;">&#128681;</b> In-Game Flag</span>
+                        <span><b style="color:#f97316;">&#9888;</b> Conflict (Rescan)</span>
+                        <span id="ms-anchor-status" style="margin-left:auto; color:#06b6d4; font-weight:600;">Waiting for view...</span>
+                    </div>
+
+                    <!-- Manual Paint Toolbar -->
+                    <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06);">
+                        <div style="font-size:11px; color:var(--text-dim); margin-bottom:6px; text-transform:uppercase; font-weight:700;">Manual Edit Palette:</div>
+                        <div class="keypad" style="justify-content: flex-start;">
+                            <button class="key-btn" style="color:#94a3b8;" onclick="setSelectedTool(0)" title="Empty Revealed (0)">0</button>
+                            <button class="key-btn" style="color:var(--num-1);" onclick="setSelectedTool(1)">1</button>
+                            <button class="key-btn" style="color:var(--num-2);" onclick="setSelectedTool(2)">2</button>
+                            <button class="key-btn" style="color:var(--num-3);" onclick="setSelectedTool(3)">3</button>
+                            <button class="key-btn" style="color:var(--num-4);" onclick="setSelectedTool(4)">4</button>
+                            <button class="key-btn" style="color:var(--num-5);" onclick="setSelectedTool(5)">5</button>
+                            <button class="key-btn" style="color:var(--num-6);" onclick="setSelectedTool(6)">6</button>
+                            <button class="key-btn" style="color:#ef4444;" onclick="setSelectedTool('M')" title="Flagged Mine">&#128681;</button>
+                            <button class="key-btn" style="color:#38bdf8;" onclick="setSelectedTool('U')" title="Scanned Unrevealed Blue Tile">&#9638;</button>
+                            <button class="key-btn" style="color:#64748b;" onclick="setSelectedTool('?')" title="Unknown / Unscanned">?</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 2: SUDOKU SOLVER -->
+        <!-- ============================================================== -->
+        <section id="pane-sdk" class="tab-pane">
+            
+            <div class="workspace-grid">
+                
+                <!-- Left: Vision / Camera Capture -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><span class="icon">&#128248;</span> Scanner &amp; Input (9x9 Sudoku)</div>
+                        <span class="badge badge-purple" id="sdk-status-badge">DLX Engine</span>
+                    </div>
+
+                    <div class="input-toolbar">
+                        <button class="btn btn-warning" id="btn-live-sdk" onclick="toggleLiveCamera('sdk')">&#128249; Live Feed</button>
+                        <button class="btn btn-primary" id="btn-win-sdk" onclick="toggleWindowCapture('sdk')">&#128187; Capture Game Window</button>
+                        <button class="btn" onclick="document.getElementById('video-capture-sdk').click()">&#127909; Record Walkaround</button>
+                        <button class="btn btn-primary" onclick="triggerCameraInput('sdk')">&#128248; Take Photo</button>
+                        <button class="btn" onclick="document.getElementById('file-input-sdk').click()">&#128193; Upload Image</button>
+                        <button class="btn btn-success" id="btn-scan-sdk" onclick="captureAndSolveSDK()">&#9889; Scan &amp; Solve</button>
+                        <button class="btn btn-primary" id="btn-pin-scan-sdk" onclick="captureAndSolveSDK(true)">&#128204; Pin Scan</button>
+                        <button class="btn" onclick="resetPins('sdk')">&#8634; Reset Pins</button>
+                        <div style="width:100%; display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                            <label style="display:inline-flex; align-items:center; gap:6px; font-size:12px; cursor:pointer; background:rgba(255,255,255,0.06); padding:4px 8px; border-radius:6px;">
+                                <input type="checkbox" id="additive-merge-sdk" checked>
+                                <span>&#128260; Additive Merge (Multi-Shot)</span>
+                            </label>
+                            <select id="region-sdk" class="btn" style="padding:4px 8px; font-size:11px; background:#1e293b; color:#f3f4f6; border-radius:6px; border:1px solid rgba(255,255,255,0.15);">
+                                <option value="full">&#127760; Full Board (9x9)</option>
+                                <option value="top_left">&#8598;&#65039; Top-Left Quadrant</option>
+                                <option value="top_right">&#8599;&#65039; Top-Right Quadrant</option>
+                                <option value="bottom_left">&#8601;&#65039; Bottom-Left Quadrant</option>
+                                <option value="bottom_right">&#8600;&#65039; Bottom-Right Quadrant</option>
+                            </select>
+                            <span style="font-size:11px; color:var(--text-muted);">&#128070; Drag the 4 pins on the photo to align with the board!</span>
+                        </div>
+                        <button class="btn" onclick="resetSDKBoard()">&#128465;&#65039; Clear</button>
+                        <input type="file" id="file-input-sdk" accept="image/*,video/*" style="display:none;" onchange="handleImageUpload(event, 'sdk')">
+                        <input type="file" id="camera-capture-sdk" accept="image/*,video/*" capture="environment" style="display:none;" onchange="handleImageUpload(event, 'sdk')">
+                        <input type="file" id="video-capture-sdk" accept="video/*" capture="environment" style="display:none;" onchange="handleVideoUpload(event, 'sdk')">
+                    </div>
+
+                    <div class="camera-viewport" id="viewport-sdk">
+                        <video id="camera-video-sdk" autoplay playsinline style="display:none;"></video>
+                        <canvas id="preview-canvas-sdk" style="display:none;"></canvas>
+                        <div class="camera-placeholder" id="placeholder-sdk">
+                            &#128247; Camera / Image Ready<br>
+                            Point phone at the 9x9 Sudoku board, upload image, or paste with <strong>Ctrl+V</strong>!
+                        </div>
+                    </div>
+
+                    <!-- Warped Preview -->
+                    <div id="warped-box-sdk" style="display:none; margin-top:10px; background:rgba(0,0,0,0.5); padding:8px; border-radius:8px; text-align:center; border:1px solid rgba(255,255,255,0.1);">
+                        <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px; font-weight:600;">📐 Computer Vision Warped Board Preview</div>
+                        <img id="warped-img-sdk" style="max-width:100%; max-height:220px; border-radius:6px; border:1px solid #06b6d4;" alt="Warped Sudoku Board">
+                    </div>
+
+                    <div class="action-hud">
+                        <div class="hud-box">
+                            <div class="hud-val gold" id="sdk-clues-count">0</div>
+                            <div class="hud-label">Initial Clues</div>
+                        </div>
+                        <div class="hud-box">
+                            <div class="hud-val green" id="sdk-status-text">Ready</div>
+                            <div class="hud-label">Solver Status</div>
+                        </div>
+                    </div>
+
+                    <!-- Live Debug Log -->
+                    <div style="margin-top: 14px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <span style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em;">📡 Live Debug Log (Streaming to Python Server)</span>
+                            <div style="display:flex; gap:6px;">
+                                <button class="btn" style="padding:2px 8px; font-size:10px;" onclick="clearDebugLog()">Clear</button>
+                                <button class="btn" style="padding:2px 8px; font-size:10px;" onclick="copyDebugLog()">Copy</button>
+                            </div>
+                        </div>
+                        <pre class="debug-console-box" id="debug-log-console-sdk">Waiting for input...</pre>
+                    </div>
+
+                </div>
+
+                <!-- Right: Solved Sudoku Grid -->
+                <div class="card">
+                    <div class="card-header" style="flex-wrap:wrap; gap:8px;">
+                        <div class="card-title"><span class="icon">&#129513;</span> 9x9 Sudoku Matrix</div>
+                        <span class="badge badge-amber" id="sdk-workflow-badge">&#128269; Step 1: Scanning &amp; Verifying Clues</span>
+                    </div>
+
+                    <!-- Explicit 3-Step Workflow Controls + 3x3 Square Lock -->
+                    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; padding:10px; background:rgba(15,23,42,0.65); border:1px solid rgba(255,255,255,0.1); border-radius:10px; align-items:center;">
+                        <button class="btn btn-danger" id="btn-clear-sdk-main" onclick="resetSDKBoard()" style="flex:1; min-width:140px; font-weight:700; padding:10px 12px;">
+                            &#128465;&#65039; 1. Clear &amp; Scan New
+                        </button>
+                        <button class="btn btn-success" id="btn-lock-solve-sdk" onclick="solveSudoku()" style="flex:1.4; min-width:185px; font-weight:800; padding:10px 14px; font-size:14px; box-shadow:0 0 15px rgba(16,185,129,0.35);">
+                            &#128274; 2. Verify &amp; Lock Solve (Idle)
+                        </button>
+                        <button class="btn" id="btn-unlock-sdk" onclick="unlockSudokuBoard()" style="display:none; font-weight:700; padding:10px 12px;" title="Unlock solution to edit clues or resume scanning">
+                            &#128275; Unlock Clues
+                        </button>
+                        <div style="width:100%; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:6px; padding-top:6px; border-top:1px solid rgba(255,255,255,0.08);">
+                            <span style="font-size:11.5px; color:#a7f3d0; font-weight:600;" id="sdk-box-lock-summary">
+                                &#128274; Click any 3&times;3 square on the board to Lock / Unlock it! (0/9 boxes locked)
+                            </span>
+                            <button class="btn" id="btn-sdk-click-mode" onclick="toggleSDKClickMode()" style="padding:4px 10px; font-size:11px; background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#ecfdf5; font-weight:700;">
+                                &#128274; Click Mode: Lock/Unlock 3&times;3 Square
+                            </button>
+                        </div>
+                        <div style="width:100%; font-size:11px; color:var(--text-muted); line-height:1.35;" id="sdk-workflow-hint">
+                            <strong>Tip:</strong> Stand over a 3&times;3 square until it looks right, then <strong>click that 3&times;3 square</strong> to lock it in (turns green &#128274;) so moving around never undoes it! Click a locked 3&times;3 square again to unlock it.
+                        </div>
+                    </div>
+
+                    <div class="board-container">
+                        <div class="sudoku-grid" id="sudoku-grid-element">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Keypad for manual entry -->
+                    <div class="keypad">
+                        <button class="key-btn" onclick="setSudokuKey(1)">1</button>
+                        <button class="key-btn" onclick="setSudokuKey(2)">2</button>
+                        <button class="key-btn" onclick="setSudokuKey(3)">3</button>
+                        <button class="key-btn" onclick="setSudokuKey(4)">4</button>
+                        <button class="key-btn" onclick="setSudokuKey(5)">5</button>
+                        <button class="key-btn" onclick="setSudokuKey(6)">6</button>
+                        <button class="key-btn" onclick="setSudokuKey(7)">7</button>
+                        <button class="key-btn" onclick="setSudokuKey(8)">8</button>
+                        <button class="key-btn" onclick="setSudokuKey(9)">9</button>
+                        <button class="key-btn" style="color:#ef4444;" onclick="setSudokuKey(0)" title="Set cell to Empty (0)">&#9003;</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>GregTech: New Horizons Companion Suite &bull; GTNH LootGames AR Companion &amp; Solver &bull; Offline PWA Enabled</p>
+    </footer>
+
+    <!-- SOLVER ENGINES SCRIPT -->
+    <script>
+        let cvReady = false;
+        function onOpenCvReady() {
+            cvReady = true;
+            logDebug('OpenCV.js loaded successfully');
+            const badge = document.getElementById('cv-status-badge');
+            if (badge) {
+                badge.className = 'badge badge-green';
+                badge.innerText = 'CV Engine Ready';
+            }
+        }
+
+        // ==============================================================
+        // DEBUG LOGGING SYSTEM (STREAMS TO BROWSER & PYTHON SERVER)
+        // ==============================================================
+        function logDebug(msg, level = 'info') {
+            const time = new Date().toLocaleTimeString();
+            const logLine = `[${time}] [${level.toUpperCase()}] ${msg}`;
+            console.log(logLine);
+
+            // Update both debug consoles
+            ['debug-log-console-ms', 'debug-log-console-sdk'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (el.innerText.trim() === 'Waiting for input...') el.innerText = '';
+                    el.innerText += (el.innerText ? '\n' : '') + logLine;
+                    el.scrollTop = el.scrollHeight;
+                }
+            });
+
+            // Asynchronously send to python server if running
+            try {
+                fetch('/api/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg, level: level, time: time })
+                }).catch(() => {});
+            } catch (err) {}
+        }
+
+        function clearDebugLog() {
+            ['debug-log-console-ms', 'debug-log-console-sdk'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = 'Log cleared.';
+            });
+        }
+
+        function copyDebugLog() {
+            const activeTab = document.getElementById('pane-sdk').classList.contains('active') ? 'sdk' : 'ms';
+            const el = document.getElementById(`debug-log-console-${activeTab}`);
+            if (el && navigator.clipboard) {
+                navigator.clipboard.writeText(el.innerText).then(() => {
+                    logDebug('Log copied to clipboard!');
+                });
+            }
+        }
+
+        // TAB SWITCHER
+        let activeGameTab = 'ms';
+        function switchGame(gameId, btn) {
+            activeGameTab = gameId;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            const target = document.getElementById('pane-' + gameId);
+            if (target) target.classList.add('active');
+            const other = gameId === 'sdk' ? 'ms' : 'sdk';
+            if (typeof liveStreams !== 'undefined' && liveStreams[other]) {
+                stopLiveCamera(other);
+            }
+            if (typeof windowStreams !== 'undefined' && windowStreams[other]) {
+                stopWindowCapture(other);
+            }
+            logDebug(`Switched tab to ${gameId === 'sdk' ? 'Sudoku' : 'Minesweeper'}`);
+        }
+
+        // ==============================================================
+        // MINESWEEPER LOGIC (INCREMENTAL CONFIDENCE & LOCAL PATCH STITCHER)
+        // ==============================================================
+        let msSize = 13;
+        let msBoard = [];
+        let msConfidence = [];
+        let msConflicts = [];
+        let msLastAnchor = null;
+        let msSolutionState = { safe: [], mines: [], probs: {} };
+        let activeTool = 1;
+
+        function applyServerMSPayload(data) {
+            if (!data || !data.board) return false;
+            const bSize = data.board.length;
+            if (bSize !== msSize) {
+                // Ignore stale size payload while server is resetting to new stage size
+                return false;
+            }
+            let changed = false;
+            for (let r = 0; r < msSize; r++) {
+                for (let c = 0; c < msSize; c++) {
+                    const v = data.board[r][c];
+                    const conf = (data.confidence && data.confidence[r]) ? data.confidence[r][c] : 1.0;
+                    const confDiff = Math.abs((msConfidence[r] ? msConfidence[r][c] : 0) - conf);
+                    const cfl = (data.conflicts && data.conflicts[r]) ? Boolean(data.conflicts[r][c]) : false;
+                    if (msBoard[r][c] !== v || confDiff > 0.04 || msConflicts[r][c] !== cfl) {
+                        msBoard[r][c] = v;
+                        msConfidence[r][c] = conf;
+                        msConflicts[r][c] = cfl;
+                        changed = true;
+                    }
+                }
+            }
+            const newAnchor = data.lastAnchor || null;
+            if (JSON.stringify(msLastAnchor) !== JSON.stringify(newAnchor)) {
+                msLastAnchor = newAnchor;
+                changed = true;
+            }
+            const anchorEl = document.getElementById('ms-anchor-status');
+            if (anchorEl) {
+                if (msLastAnchor) {
+                    anchorEl.innerText = `View locked: (${msLastAnchor.r0},${msLastAnchor.c0}) [${msLastAnchor.h}x${msLastAnchor.w}] via ${msLastAnchor.reason || 'patch'}`;
+                } else {
+                    anchorEl.innerText = 'Waiting for corner or landmark match...';
+                }
+            }
+            return changed;
+        }
+
+        async function syncMSStateFromServer() {
+            if (typeof activeGameTab !== 'undefined' && activeGameTab !== 'ms') return;
+            try {
+                const res = await fetch('/api/ms_state');
+                const data = await res.json();
+                if (applyServerMSPayload(data)) {
+                    solveMinesweeper();
+                    renderMSGrid();
+                }
+            } catch (e) {}
+        }
+
+        function initMSBoard(forceEmpty = false) {
+            msBoard = Array(msSize).fill(0).map(() => Array(msSize).fill('?'));
+            msConfidence = Array(msSize).fill(0).map(() => Array(msSize).fill(0.0));
+            msConflicts = Array(msSize).fill(0).map(() => Array(msSize).fill(false));
+            msLastAnchor = null;
+            solveMinesweeper();
+            renderMSGrid();
+            logDebug(`Minesweeper board initialized: ${msSize}x${msSize} (all '?' unknown)`);
+            if (!forceEmpty) {
+                syncMSStateFromServer();
+            }
+        }
+        setInterval(syncMSStateFromServer, 1200);
+
+        function setMSSize(size, btn) {
+            msSize = size;
+            document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            initMSBoard(true);
+            fetch('/api/reset_ms', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ size: msSize, gridSize: msSize })
+            }).catch(() => {});
+        }
+
+        function setSelectedTool(tool) {
+            activeTool = tool;
+            logDebug(`Selected manual tool: ${tool}`);
+        }
+
+        function onCellClick(r, c) {
+            if (activeTool === 'M') {
+                msBoard[r][c] = msBoard[r][c] === 'M' ? 'U' : 'M';
+            } else if (activeTool === 'U') {
+                msBoard[r][c] = 'U';
+            } else if (activeTool === '?') {
+                msBoard[r][c] = '?';
+            } else {
+                msBoard[r][c] = parseInt(activeTool);
+            }
+            msConfidence[r][c] = msBoard[r][c] === '?' ? 0.0 : 1.0;
+            msConflicts[r][c] = false;
+            solveMinesweeper();
+            renderMSGrid();
+            fetch('/api/update_ms_cell', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ r, c, val: msBoard[r][c] })
+            }).catch(() => {});
+        }
+
+        function resetMSBoard() {
+            initMSBoard(true);
+            fetch('/api/reset_ms', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ size: msSize, gridSize: msSize })
+            }).catch(() => {});
+        }
+
+        function solveMinesweeper() {
+            const safe = [];
+            const mines = [];
+            const probs = {};
+
+            const isKnownMine = (r, c) => msBoard[r][c] === 'M' || mines.some(([mr, mc]) => mr === r && mc === c);
+            const isKnownSafe = (r, c) => safe.some(([sr, sc]) => sr === r && sc === c);
+
+            let changed = true;
+            while (changed) {
+                changed = false;
+                const constraints = [];
+
+                for (let r = 0; r < msSize; r++) {
+                    for (let c = 0; c < msSize; c++) {
+                        const val = msBoard[r][c];
+                        const conf = (msConfidence[r] && msConfidence[r][c] !== undefined) ? msConfidence[r][c] : 1.0;
+                        const conflict = (msConflicts[r] && msConflicts[r][c]);
+
+                        // STRICT NO-GUESSING RULE:
+                        // 1. Only numbered tiles 1..8 with solid confidence (>= 0.55) and no conflict can generate deductions
+                        // 2. All 8 neighbors of (r, c) MUST be scanned (none can be '?')
+                        if (typeof val === 'number' && val >= 1 && val <= 8 && conf >= 0.55 && !conflict) {
+                            const neighbors = getNeighbors(r, c);
+                            const unknownNeighbors = neighbors.filter(([nr, nc]) => msBoard[nr][nc] === '?');
+                            if (unknownNeighbors.length > 0) {
+                                continue; // Do not deduce from a number whose neighborhood isn't fully scanned!
+                            }
+                            const neighborConflict = neighbors.some(([nr, nc]) => msConflicts[nr] && msConflicts[nr][nc]);
+                            if (neighborConflict) {
+                                continue;
+                            }
+
+                            const flagged = neighbors.filter(([nr, nc]) => isKnownMine(nr, nc));
+                            const unrev = neighbors.filter(([nr, nc]) => msBoard[nr][nc] === 'U' && !isKnownMine(nr, nc) && !isKnownSafe(nr, nc));
+                            const rem = val - flagged.length;
+
+                            if (rem < 0 || rem > unrev.length) {
+                                // Invalid local state — skip deduction
+                                continue;
+                            }
+
+                            if (unrev.length > 0) {
+                                if (rem === unrev.length) {
+                                    unrev.forEach(([nr, nc]) => {
+                                        if (!isKnownMine(nr, nc)) {
+                                            mines.push([nr, nc]);
+                                            changed = true;
+                                        }
+                                    });
+                                } else if (rem === 0) {
+                                    unrev.forEach(([nr, nc]) => {
+                                        if (!isKnownSafe(nr, nc)) {
+                                            safe.push([nr, nc]);
+                                            changed = true;
+                                        }
+                                    });
+                                } else if (rem > 0) {
+                                    constraints.push({ cells: unrev, rem });
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // General Overlap Bound & Subset Deduction (handles 1-2-1, 3-1, 4-2, and strict subsets)
+                for (let i = 0; i < constraints.length; i++) {
+                    const c1 = constraints[i];
+                    for (let j = 0; j < constraints.length; j++) {
+                        if (i === j) continue;
+                        const c2 = constraints[j];
+                        const only1 = c1.cells.filter(([r1, col1]) => !c2.cells.some(([r2, col2]) => r1 === r2 && col1 === col2));
+                        const only2 = c2.cells.filter(([r2, col2]) => !c1.cells.some(([r1, col1]) => r1 === r2 && col1 === col2));
+                        if (only2.length === c1.cells.length) continue; // No overlap
+
+                        const dRem = c2.rem - c1.rem;
+                        // If c2 needs (only2.length) more mines than c1, then ALL of only2 are mines and ALL of only1 are safe!
+                        if (dRem === only2.length && (only2.length > 0 || only1.length > 0)) {
+                            only2.forEach(([dr, dc]) => {
+                                if (!isKnownMine(dr, dc) && !isKnownSafe(dr, dc)) {
+                                    mines.push([dr, dc]);
+                                    changed = true;
+                                }
+                            });
+                            only1.forEach(([dr, dc]) => {
+                                if (!isKnownSafe(dr, dc) && !isKnownMine(dr, dc)) {
+                                    safe.push([dr, dc]);
+                                    changed = true;
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            // Local Connected-Component Frontier CSP (works mid-game even when parts of board are '?' unknown!)
+            // Groups coupled constraints into connected components (up to 22 variables each) and solves them exactly.
+            {
+                const finalConstraints = [];
+                for (let r = 0; r < msSize; r++) {
+                    for (let c = 0; c < msSize; c++) {
+                        const val = msBoard[r][c];
+                        const conf = (msConfidence[r] && msConfidence[r][c] !== undefined) ? msConfidence[r][c] : 1.0;
+                        const conflict = (msConflicts[r] && msConflicts[r][c]);
+                        if (typeof val === 'number' && val >= 1 && val <= 8 && conf >= 0.55 && !conflict) {
+                            const nbs = getNeighbors(r, c);
+                            if (nbs.some(([nr, nc]) => msBoard[nr][nc] === '?' || (msConflicts[nr] && msConflicts[nr][nc]))) continue;
+                            const flagged = nbs.filter(([nr, nc]) => isKnownMine(nr, nc));
+                            const unrev = nbs.filter(([nr, nc]) => msBoard[nr][nc] === 'U' && !isKnownMine(nr, nc) && !isKnownSafe(nr, nc));
+                            const rem = val - flagged.length;
+                            if (unrev.length > 0 && rem > 0 && rem < unrev.length) {
+                                finalConstraints.push({ cells: unrev.map(([ur, uc]) => `${ur},${uc}`), rem });
+                            }
+                        }
+                    }
+                }
+
+                // Build connected components of variables sharing constraints
+                const varToConstraints = new Map();
+                finalConstraints.forEach((con, cIdx) => {
+                    con.cells.forEach(vKey => {
+                        if (!varToConstraints.has(vKey)) varToConstraints.set(vKey, []);
+                        varToConstraints.get(vKey).push(cIdx);
+                    });
+                });
+
+                const visitedVars = new Set();
+                for (const startVar of varToConstraints.keys()) {
+                    if (visitedVars.has(startVar)) continue;
+                    const compVars = [];
+                    const compConIdxs = new Set();
+                    const queue = [startVar];
+                    visitedVars.add(startVar);
+
+                    while (queue.length > 0) {
+                        const curr = queue.shift();
+                        compVars.push(curr);
+                        for (const cIdx of (varToConstraints.get(curr) || [])) {
+                            if (!compConIdxs.has(cIdx)) {
+                                compConIdxs.add(cIdx);
+                                for (const nextVar of finalConstraints[cIdx].cells) {
+                                    if (!visitedVars.has(nextVar)) {
+                                        visitedVars.add(nextVar);
+                                        queue.push(nextVar);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (compVars.length > 0 && compVars.length <= 22) {
+                        const varIdxMap = new Map();
+                        compVars.forEach((vk, i) => varIdxMap.set(vk, i));
+                        const compCons = Array.from(compConIdxs).map(cIdx => ({
+                            uIdxs: finalConstraints[cIdx].cells.map(vk => varIdxMap.get(vk)),
+                            rem: finalConstraints[cIdx].rem
+                        }));
+
+                        const nV = compVars.length;
+                        const hits = new Array(nV).fill(0);
+                        let nSols = 0;
+                        const a = new Array(nV).fill(0);
+
+                        function solveComp(idx) {
+                            if (nSols > 2000) return;
+                            for (let k = 0; k < compCons.length; k++) {
+                                const cc = compCons[k];
+                                let p = 0, u = 0;
+                                for (let m = 0; m < cc.uIdxs.length; m++) {
+                                    const ui = cc.uIdxs[m];
+                                    if (ui < idx) p += a[ui];
+                                    else u++;
+                                }
+                                if (p > cc.rem || p + u < cc.rem) return;
+                            }
+                            if (idx === nV) {
+                                nSols++;
+                                for (let i = 0; i < nV; i++) if (a[i]) hits[i]++;
+                                return;
+                            }
+                            a[idx] = 1;
+                            solveComp(idx + 1);
+                            a[idx] = 0;
+                            solveComp(idx + 1);
+                        }
+
+                        solveComp(0);
+                        if (nSols > 0 && nSols <= 2000) {
+                            for (let i = 0; i < nV; i++) {
+                                const [ur, uc] = compVars[i].split(',').map(Number);
+                                if (hits[i] === nSols && !isKnownMine(ur, uc)) {
+                                    mines.push([ur, uc]);
+                                } else if (hits[i] === 0 && !isKnownSafe(ur, uc)) {
+                                    safe.push([ur, uc]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Stage Mine-Count Exact CSP Solver (when entire board is scanned with 0 conflicts and <= 26 'U' tiles remain)
+            const STAGE_MINES = { 13: 20, 15: 30, 17: 42, 19: 68 };
+            const totalStageMines = STAGE_MINES[msSize] || 0;
+            let unknownCount = 0;
+            let conflictCount = 0;
+            let flaggedOrDeducedMines = 0;
+            const remainingU = [];
+
+            for (let r = 0; r < msSize; r++) {
+                for (let c = 0; c < msSize; c++) {
+                    if (msBoard[r][c] === '?') unknownCount++;
+                    if (msConflicts[r] && msConflicts[r][c]) conflictCount++;
+                    if (isKnownMine(r, c)) flaggedOrDeducedMines++;
+                    else if (msBoard[r][c] === 'U' && !isKnownSafe(r, c)) remainingU.push([r, c]);
+                }
+            }
+
+            const remGlobalMines = totalStageMines - flaggedOrDeducedMines;
+            if (totalStageMines > 0 && unknownCount === 0 && conflictCount === 0 && remainingU.length > 0 && remainingU.length <= 26 && remGlobalMines >= 0 && remGlobalMines <= remainingU.length) {
+                const uIndexMap = new Map();
+                remainingU.forEach(([r, c], idx) => uIndexMap.set(`${r},${c}`, idx));
+
+                const activeConstraints = [];
+                for (let r = 0; r < msSize; r++) {
+                    for (let c = 0; c < msSize; c++) {
+                        const val = msBoard[r][c];
+                        if (typeof val === 'number' && val >= 1 && val <= 8) {
+                            const nbs = getNeighbors(r, c);
+                            const mCnt = nbs.filter(([nr, nc]) => isKnownMine(nr, nc)).length;
+                            const uIdxs = nbs
+                                .filter(([nr, nc]) => uIndexMap.has(`${nr},${nc}`))
+                                .map(([nr, nc]) => uIndexMap.get(`${nr},${nc}`));
+                            const rem = val - mCnt;
+                            if (uIdxs.length > 0) {
+                                activeConstraints.push({ uIdxs, rem });
+                            }
+                        }
+                    }
+                }
+
+                const nU = remainingU.length;
+                const mineHits = new Array(nU).fill(0);
+                let validSolutions = 0;
+                const assign = new Array(nU).fill(0);
+
+                function backtrackCSP(idx, minesPlaced) {
+                    if (minesPlaced > remGlobalMines) return;
+                    if (minesPlaced + (nU - idx) < remGlobalMines) return;
+                    if (validSolutions > 2000) return;
+
+                    for (let k = 0; k < activeConstraints.length; k++) {
+                        const ac = activeConstraints[k];
+                        let placed = 0;
+                        let undecided = 0;
+                        for (let m = 0; m < ac.uIdxs.length; m++) {
+                            const uIdx = ac.uIdxs[m];
+                            if (uIdx < idx) placed += assign[uIdx];
+                            else undecided++;
+                        }
+                        if (placed > ac.rem || placed + undecided < ac.rem) return;
+                    }
+
+                    if (idx === nU) {
+                        if (minesPlaced === remGlobalMines) {
+                            validSolutions++;
+                            for (let i = 0; i < nU; i++) {
+                                if (assign[i]) mineHits[i]++;
+                            }
+                        }
+                        return;
+                    }
+
+                    assign[idx] = 1;
+                    backtrackCSP(idx + 1, minesPlaced + 1);
+                    assign[idx] = 0;
+                    backtrackCSP(idx + 1, minesPlaced);
+                }
+
+                backtrackCSP(0, 0);
+                if (validSolutions > 0 && validSolutions <= 2000) {
+                    for (let i = 0; i < nU; i++) {
+                        const [ur, uc] = remainingU[i];
+                        if (mineHits[i] === validSolutions && !isKnownMine(ur, uc)) {
+                            mines.push([ur, uc]);
+                        } else if (mineHits[i] === 0 && !isKnownSafe(ur, uc)) {
+                            safe.push([ur, uc]);
+                        } else {
+                            probs[`${ur},${uc}`] = mineHits[i] / validSolutions;
+                        }
+                    }
+                }
+            }
+
+            msSolutionState = { safe, mines, probs };
+            updateMSHUD();
+        }
+
+        function getNeighbors(r, c) {
+            const neighbors = [];
+            for (let dr = -1; dr <= 1; dr++) {
+                for (let dc = -1; dc <= 1; dc++) {
+                    if (dr === 0 && dc === 0) continue;
+                    const nr = r + dr;
+                    const nc = c + dc;
+                    if (nr >= 0 && nr < msSize && nc >= 0 && nc < msSize) {
+                        neighbors.push([nr, nc]);
+                    }
+                }
+            }
+            return neighbors;
+        }
+
+        function updateMSHUD() {
+            let scanned = 0;
+            let locked = 0;
+            let flagged = 0;
+            for (let r = 0; r < msSize; r++) {
+                for (let c = 0; c < msSize; c++) {
+                    if (msBoard[r][c] !== '?') {
+                        scanned++;
+                        if (msConfidence[r] && msConfidence[r][c] >= 0.75) locked++;
+                    }
+                    if (msBoard[r][c] === 'M') flagged++;
+                }
+            }
+            const totalMines = flagged + msSolutionState.mines.length;
+            document.getElementById('hud-safe-count').innerText = msSolutionState.safe.length;
+            document.getElementById('hud-mine-count').innerText = `${totalMines} (${flagged}🚩+${msSolutionState.mines.length}💣)`;
+            document.getElementById('hud-unrevealed-count').innerText = `${scanned}/${msSize * msSize} (${locked}🔒)`;
+        }
+
+        function renderMSGrid() {
+            const grid = document.getElementById('ms-grid-element');
+            grid.style.gridTemplateColumns = `repeat(${msSize}, 1fr)`;
+            grid.innerHTML = '';
+
+            for (let r = 0; r < msSize; r++) {
+                for (let c = 0; c < msSize; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'ms-cell';
+                    const val = msBoard[r][c];
+                    const conf = (msConfidence[r] && msConfidence[r][c] !== undefined) ? msConfidence[r][c] : 0.0;
+                    const conflict = (msConflicts[r] && msConflicts[r][c]);
+                    const confPct = Math.round(conf * 100);
+                    cell.title = `Row ${r + 1}, Col ${c + 1} | State: ${val} | Confidence: ${confPct}%${conflict ? ' | CONFLICT: Look here in-game to rescan' : ''}`;
+
+                    const isSafe = val === 'U' && msSolutionState.safe.some(([sr, sc]) => sr === r && sc === c);
+                    const isDeducedMine = val === 'U' && msSolutionState.mines.some(([mr, mc]) => mr === r && mc === c);
+
+                    if (val === '?') {
+                        // Unknown / unscanned cell
+                        cell.style.background = '#0f172a';
+                        cell.style.border = '1px solid rgba(148, 163, 184, 0.12)';
+                        cell.style.color = 'rgba(148, 163, 184, 0.25)';
+                        cell.style.fontSize = '11px';
+                        cell.innerText = '?';
+                    } else if (val === 'M') {
+                        cell.classList.add('mine');
+                        cell.style.background = `rgba(245, 158, 11, ${0.22 + 0.25 * conf})`;
+                        cell.style.border = conf >= 0.75 ? '2px solid #f59e0b' : '2px dashed #f59e0b';
+                        cell.innerHTML = '&#128681;';
+                    } else if (typeof val === 'number' && val >= 0) {
+                        cell.classList.add('revealed');
+                        cell.style.background = '#072232';
+                        cell.style.opacity = String(0.55 + 0.45 * conf);
+                        cell.style.border = conf >= 0.75 ? '1px solid #0e4b68' : '1px dashed #38bdf8';
+                        if (val > 0) {
+                            cell.classList.add(`val-${val}`);
+                            const numColors = {
+                                1: '#7c74ff', // Periwinkle / Lavender
+                                2: '#00ff00', // Pure Green
+                                3: '#ff4747', // Coral Red
+                                4: '#1d68ff', // Royal Blue
+                                5: '#ff0000', // Deep Red
+                                6: '#f4e909', // Yellow
+                                7: '#ff00ff', // Magenta
+                                8: '#00e1d5'  // Cyan
+                            };
+                            if (numColors[val]) cell.style.color = numColors[val];
+                            cell.style.fontWeight = '900';
+                            cell.style.textShadow = '0 0 6px currentColor';
+                            cell.innerText = val;
+                        }
+                    } else if (isSafe) {
+                        cell.classList.add('safe');
+                        cell.style.background = 'rgba(16, 185, 129, 0.34)';
+                        cell.style.border = '2px solid #10b981';
+                        cell.style.color = '#34d399';
+                        cell.style.fontWeight = '900';
+                        cell.innerHTML = '&#10004;';
+                    } else if (isDeducedMine) {
+                        cell.classList.add('mine');
+                        cell.style.background = 'rgba(239, 68, 68, 0.30)';
+                        cell.style.border = '2px dashed #ef4444';
+                        cell.innerHTML = '&#128163;';
+                    } else {
+                        // Scanned Unrevealed ('U') raised blue LootGames tile
+                        cell.style.background = '#135270';
+                        cell.style.opacity = String(0.45 + 0.55 * conf);
+                        cell.style.borderTop = '2px solid #247ba0';
+                        cell.style.borderLeft = '2px solid #247ba0';
+                        cell.style.borderRight = '2px solid #0b3449';
+                        cell.style.borderBottom = '2px solid #0b3449';
+                    }
+
+                    // Highlight conflict cells in bright orange so the user knows to look at them
+                    if (conflict) {
+                        cell.style.outline = '2px solid #f97316';
+                        cell.style.outlineOffset = '-2px';
+                    } else if (
+                        msLastAnchor &&
+                        r >= msLastAnchor.r0 && r < msLastAnchor.r0 + msLastAnchor.h &&
+                        c >= msLastAnchor.c0 && c < msLastAnchor.c0 + msLastAnchor.w
+                    ) {
+                        // Subtle cyan camera frustum indicator showing what the scanner is currently looking at
+                        cell.style.boxShadow = 'inset 0 0 0 1px rgba(6, 182, 212, 0.65)';
+                    }
+
+                    cell.onclick = () => onCellClick(r, c);
+                    grid.appendChild(cell);
+                }
+            }
+        }
+
+        // ==============================================================
+        // SUDOKU SOLVER ENGINE (MULTI-FRAME CONFIDENCE + DEDUCTION ENGINE)
+        // ==============================================================
+        let sdkBoard = Array(9).fill(0).map(() => Array(9).fill(0));
+        let sdkStateBoard = Array(9).fill(0).map(() => Array(9).fill('?'));
+        let sdkUserBoard = Array(9).fill(0).map(() => Array(9).fill(0));
+        let sdkConfidence = Array(9).fill(0).map(() => Array(9).fill(0.0));
+        let sdkLocked = Array(9).fill(0).map(() => Array(9).fill(false));
+        let sdkBoxLocked = Array(3).fill(0).map(() => Array(3).fill(false));
+        let sdkClickLocksBox = true;
+        let sdkConflicts = Array(9).fill(0).map(() => Array(9).fill(false));
+        let sdkLastAnchor = null;
+        let sdkSolution = null;
+        let sdkLockedIdle = false;
+        let selectedSdkCell = null;
+        let lastSdkHintCell = null;
+
+        function toggleSDKClickMode() {
+            sdkClickLocksBox = !sdkClickLocksBox;
+            const btn = document.getElementById('btn-sdk-click-mode');
+            if (btn) {
+                if (sdkClickLocksBox) {
+                    btn.innerHTML = '&#128274; Click Mode: Lock/Unlock 3&times;3 Square';
+                    btn.style.background = 'rgba(16, 185, 129, 0.25)';
+                    btn.style.borderColor = '#10b981';
+                    btn.style.color = '#34d399';
+                } else {
+                    btn.innerHTML = '&#9999;&#65039; Click Mode: Select Single Cell to Edit';
+                    btn.style.background = 'rgba(245, 158, 11, 0.25)';
+                    btn.style.borderColor = '#f59e0b';
+                    btn.style.color = '#fbbf24';
+                }
+            }
+        }
+
+        async function toggleSudokuBoxLock(br, bc) {
+            if (sdkLockedIdle) return;
+            const newLocked = !Boolean(sdkBoxLocked[br] && sdkBoxLocked[br][bc]);
+            sdkBoxLocked[br][bc] = newLocked;
+            const boxCells = [];
+            for (let dr = 0; dr < 3; dr++) {
+                const rowCells = [];
+                for (let dc = 0; dc < 3; dc++) {
+                    const r = br * 3 + dr;
+                    const c = bc * 3 + dc;
+                    const val = (sdkBoard[r] && sdkBoard[r][c] > 0) ? sdkBoard[r][c] : 0;
+                    rowCells.push(val);
+                    if (newLocked) {
+                        sdkStateBoard[r][c] = val > 0 ? val : 0;
+                        sdkLocked[r][c] = true;
+                        sdkConfidence[r][c] = 1.0;
+                    }
+                }
+                boxCells.push(rowCells);
+            }
+            renderSDKGrid();
+            const boxName = `Box (${br + 1},${bc + 1}) [R${br * 3 + 1}..${br * 3 + 3}, C${bc * 3 + 1}..${bc * 3 + 3}]`;
+            logDebug(newLocked
+                ? `🔒 Locked 3×3 ${boxName} — walking away will NOT overwrite this square!`
+                : `🔓 Unlocked 3×3 ${boxName} — scanner can update this square again.`);
+            try {
+                const res = await fetch('/api/toggle_sdk_box', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ br, bc, locked: newLocked, boxCells })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.boxLocked) {
+                        sdkBoxLocked = data.boxLocked;
+                    }
+                    renderSDKGrid();
+                }
+            } catch (e) {}
+        }
+
+        function updateSDKWorkflowUI() {
+            const badge = document.getElementById('sdk-workflow-badge');
+            const btnSolve = document.getElementById('btn-lock-solve-sdk');
+            const btnUnlock = document.getElementById('btn-unlock-sdk');
+            const hint = document.getElementById('sdk-workflow-hint');
+            if (sdkLockedIdle && sdkSolution) {
+                if (badge) {
+                    badge.className = 'badge badge-green';
+                    badge.innerHTML = '&#128274; LOCKED &amp; SOLVED (Scanner Idling)';
+                }
+                if (btnSolve) {
+                    btnSolve.innerHTML = '&#9989; Solved &amp; Locked (Idling)';
+                    btnSolve.disabled = true;
+                    btnSolve.style.opacity = '0.75';
+                }
+                if (btnUnlock) btnUnlock.style.display = 'inline-flex';
+                if (hint) {
+                    hint.innerHTML = '<strong style="color:#10b981;">&#128274; Board Locked &amp; Idling:</strong> Live camera/window updates are paused so changing values in-game will NOT affect this solution. Click <strong>1. Clear &amp; Scan New</strong> when you start the next puzzle!';
+                }
+            } else {
+                if (badge) {
+                    badge.className = 'badge badge-amber';
+                    badge.innerHTML = '&#128269; Step 1: Scanning &amp; Verifying Clues';
+                }
+                if (btnSolve) {
+                    btnSolve.innerHTML = '&#128274; 2. Verify &amp; Lock Solve (Idle)';
+                    btnSolve.disabled = false;
+                    btnSolve.style.opacity = '1';
+                }
+                if (btnUnlock) btnUnlock.style.display = 'none';
+                if (hint) {
+                    hint.innerHTML = '<strong>Workflow:</strong> Stand near a <strong>3&times;3 square</strong> until its clues look right, then <strong>click any cell in that 3&times;3 square to LOCK it &#128274;</strong> (click again to unlock) so moving away never undoes it! Once all 9 squares are ready, press <strong>2. Verify &amp; Lock Solve</strong>.';
+                }
+            }
+        }
+
+        function computeLocalSudokuConflicts(board) {
+            const conf = Array(9).fill(0).map(() => Array(9).fill(false));
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const val = board[r][c];
+                    if (!val || val <= 0) continue;
+                    for (let i = 0; i < 9; i++) {
+                        if (i !== c && board[r][i] === val) { conf[r][c] = true; conf[r][i] = true; }
+                        if (i !== r && board[i][c] === val) { conf[r][c] = true; conf[i][c] = true; }
+                    }
+                    const br = Math.floor(r / 3) * 3;
+                    const bc = Math.floor(c / 3) * 3;
+                    for (let dr = 0; dr < 3; dr++) {
+                        for (let dc = 0; dc < 3; dc++) {
+                            const nr = br + dr, nc = bc + dc;
+                            if ((nr !== r || nc !== c) && board[nr][nc] === val) {
+                                conf[r][c] = true; conf[nr][nc] = true;
+                            }
+                        }
+                    }
+                }
+            }
+            return conf;
+        }
+
+        function applyServerSDKPayload(data) {
+            if (!data || !data.board) return false;
+            if (data.boxLocked) {
+                sdkBoxLocked = data.boxLocked;
+            }
+            const isAdditive = document.getElementById('additive-merge-sdk')?.checked ?? true;
+            if (data.stateBoard) {
+                for (let r = 0; r < 9; r++) {
+                    for (let c = 0; c < 9; c++) {
+                        const boxIsLocked = Boolean(sdkBoxLocked[Math.floor(r / 3)] && sdkBoxLocked[Math.floor(r / 3)][Math.floor(c / 3)]);
+                        if (boxIsLocked && !data.solved && sdkStateBoard[r][c] !== '?') {
+                            continue;
+                        }
+                        if (!isAdditive || data.stateBoard[r][c] !== '?' || data.mode === 'scanning') {
+                            sdkStateBoard[r][c] = data.stateBoard[r][c];
+                            sdkBoard[r][c] = (typeof data.board[r][c] === 'number' && data.board[r][c] > 0) ? data.board[r][c] : 0;
+                        }
+                    }
+                }
+            } else {
+                for (let r = 0; r < 9; r++) {
+                    for (let c = 0; c < 9; c++) {
+                        const boxIsLocked = Boolean(sdkBoxLocked[Math.floor(r / 3)] && sdkBoxLocked[Math.floor(r / 3)][Math.floor(c / 3)]);
+                        if (boxIsLocked && !data.solved && sdkStateBoard[r][c] !== '?') {
+                            continue;
+                        }
+                        if (!isAdditive || data.board[r][c] > 0) {
+                            sdkBoard[r][c] = data.board[r][c];
+                            sdkStateBoard[r][c] = data.board[r][c] > 0 ? data.board[r][c] : 0;
+                        }
+                    }
+                }
+            }
+            if (data.userBoard) {
+                for (let r = 0; r < 9; r++) {
+                    for (let c = 0; c < 9; c++) {
+                        sdkUserBoard[r][c] = (typeof data.userBoard[r][c] === 'number' && data.userBoard[r][c] > 0) ? data.userBoard[r][c] : 0;
+                    }
+                }
+            }
+            if (data.confidence) sdkConfidence = data.confidence;
+            if (data.locked) sdkLocked = data.locked;
+            sdkConflicts = data.conflicts || computeLocalSudokuConflicts(sdkBoard);
+            if (data.lastAnchor !== undefined) sdkLastAnchor = data.lastAnchor;
+
+            if (data.solved && data.solution) {
+                sdkSolution = data.solution;
+                sdkLockedIdle = true;
+                document.getElementById('sdk-status-text').innerText = 'Locked & Solved!';
+            } else {
+                sdkSolution = null;
+                sdkLockedIdle = false;
+                const anyConflict = sdkConflicts.some(row => row.some(Boolean));
+                const clueCount = sdkBoard.flat().filter(v => v > 0).length;
+                const scanned = sdkStateBoard.flat().filter(v => v !== '?').length;
+                if (anyConflict) {
+                    document.getElementById('sdk-status-text').innerText = 'Conflict!';
+                } else if (scanned > 0) {
+                    document.getElementById('sdk-status-text').innerText = `Scan ${scanned}/81 (${clueCount} clues)`;
+                } else {
+                    document.getElementById('sdk-status-text').innerText = 'Ready to Scan';
+                }
+            }
+            updateSDKWorkflowUI();
+            renderSDKGrid();
+            return true;
+        }
+
+        async function syncSDKStateFromServer() {
+            try {
+                const res = await fetch('/api/sdk_state');
+                if (!res.ok) return;
+                const data = await res.json();
+                if (data && data.success) {
+                    applyServerSDKPayload(data);
+                }
+            } catch (e) {}
+        }
+
+        function initSDKBoard() {
+            sdkBoard = Array(9).fill(0).map(() => Array(9).fill(0));
+            sdkStateBoard = Array(9).fill(0).map(() => Array(9).fill('?'));
+            sdkUserBoard = Array(9).fill(0).map(() => Array(9).fill(0));
+            sdkConfidence = Array(9).fill(0).map(() => Array(9).fill(0.0));
+            sdkLocked = Array(9).fill(0).map(() => Array(9).fill(false));
+            sdkBoxLocked = Array(3).fill(0).map(() => Array(3).fill(false));
+            sdkConflicts = Array(9).fill(0).map(() => Array(9).fill(false));
+            sdkLastAnchor = null;
+            sdkSolution = null;
+            selectedSdkCell = null;
+            lastSdkHintCell = null;
+            renderSDKGrid();
+            document.getElementById('sdk-status-text').innerText = 'Ready';
+            syncSDKStateFromServer();
+        }
+
+        function renderSDKGrid() {
+            const grid = document.getElementById('sudoku-grid-element');
+            grid.innerHTML = '';
+            let clueCount = 0;
+            let scannedCount = 0;
+            let userSetCount = 0;
+            let lockedBoxCount = 0;
+            for (let br = 0; br < 3; br++) {
+                for (let bc = 0; bc < 3; bc++) {
+                    if (sdkBoxLocked[br] && sdkBoxLocked[br][bc]) lockedBoxCount++;
+                }
+            }
+            const boxSummary = document.getElementById('sdk-box-lock-summary');
+            if (boxSummary) {
+                boxSummary.innerHTML = `&#128274; ${lockedBoxCount}/9 3&times;3 squares locked (click any 3&times;3 square to lock/unlock)`;
+                boxSummary.style.color = lockedBoxCount > 0 ? '#34d399' : '#94a3b8';
+            }
+
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const br = Math.floor(r / 3);
+                    const bc = Math.floor(c / 3);
+                    const isBoxLocked = Boolean(sdkBoxLocked[br] && sdkBoxLocked[br][bc]);
+                    const val = sdkBoard[r][c];
+                    const userVal = (sdkUserBoard[r] && sdkUserBoard[r][c]) || 0;
+                    const stVal = sdkStateBoard[r] ? sdkStateBoard[r][c] : (val > 0 ? val : '?');
+                    const conf = (sdkConfidence[r] && sdkConfidence[r][c]) || 0;
+                    const isLocked = Boolean(sdkLocked[r] && sdkLocked[r][c]);
+                    const isConflict = Boolean(sdkConflicts[r] && sdkConflicts[r][c]);
+                    if (stVal !== '?') scannedCount++;
+                    if (val === 0 && userVal > 0) userSetCount++;
+
+                    const cell = document.createElement('div');
+                    cell.className = 'sdk-cell';
+                    cell.style.position = 'relative';
+
+                    if (val > 0) {
+                        // Original gray puzzle clue
+                        cell.innerText = val;
+                        cell.classList.add('initial');
+                        clueCount++;
+                        if (isConflict) {
+                            cell.style.background = 'rgba(239, 68, 68, 0.28)';
+                            cell.style.borderColor = '#ef4444';
+                            cell.style.color = '#fca5a5';
+                            cell.title = `R${r+1}C${c+1}: Duplicate conflict on ${val}! Tap cell to fix.`;
+                        } else if (isBoxLocked) {
+                            cell.style.background = 'rgba(16, 185, 129, 0.24)';
+                            cell.style.boxShadow = 'inset 0 0 0 1px rgba(16, 185, 129, 0.65)';
+                            cell.title = `R${r+1}C${c+1}: LOCKED 3x3 Square (${val}) — click square to unlock`;
+                        } else if (isLocked) {
+                            cell.style.boxShadow = 'inset 0 0 0 1px rgba(245, 158, 11, 0.45)';
+                            cell.title = `R${r+1}C${c+1}: Original gray clue ${val} (${Math.round(conf * 100)}% conf) — click to lock 3x3 square`;
+                        } else {
+                            cell.title = `R${r+1}C${c+1}: Scanned gray clue ${val} (${Math.round(conf * 100)}% conf) — click to lock 3x3 square`;
+                        }
+                    } else if (sdkSolution && sdkSolution[r][c] > 0) {
+                        const solVal = sdkSolution[r][c];
+                        if (userVal > 0) {
+                            if (userVal === solVal) {
+                                // Player entered the CORRECT bright white number in-game!
+                                cell.innerText = solVal;
+                                cell.style.color = '#38bdf8';
+                                cell.style.fontWeight = '900';
+                                cell.style.background = 'rgba(56, 189, 248, 0.18)';
+                                cell.style.boxShadow = 'inset 0 0 0 1px rgba(56, 189, 248, 0.55)';
+                                const badge = document.createElement('span');
+                                badge.innerText = '✓';
+                                badge.style.cssText = 'position:absolute;top:1px;right:2px;font-size:9px;color:#38bdf8;line-height:1;';
+                                cell.appendChild(badge);
+                                cell.title = `R${r+1}C${c+1}: Verified! In-game bright white digit (${userVal}) matches solution (${solVal}).`;
+                            } else {
+                                // Player's in-game bright white number differs from solution!
+                                cell.innerText = solVal;
+                                cell.classList.add('solved');
+                                cell.style.background = 'rgba(245, 158, 11, 0.22)';
+                                cell.style.boxShadow = 'inset 0 0 0 2px #f59e0b';
+                                const badge = document.createElement('span');
+                                badge.innerText = `≠${userVal}`;
+                                badge.style.cssText = 'position:absolute;top:1px;right:2px;font-size:9px;color:#fbbf24;font-weight:800;line-height:1;';
+                                cell.appendChild(badge);
+                                cell.title = `R${r+1}C${c+1}: Needs ${solVal} (currently set to ${userVal} in-game)`;
+                            }
+                        } else {
+                            cell.innerText = solVal;
+                            cell.classList.add('solved');
+                            cell.title = `R${r+1}C${c+1}: Solution = ${solVal}`;
+                        }
+                    } else if (userVal > 0) {
+                        // Bright white player-entered number detected before full board solve
+                        cell.innerText = userVal;
+                        cell.style.color = '#38bdf8';
+                        cell.style.fontWeight = '800';
+                        cell.style.background = 'rgba(56, 189, 248, 0.14)';
+                        const badge = document.createElement('span');
+                        badge.innerText = 'USER';
+                        badge.style.cssText = 'position:absolute;top:1px;right:2px;font-size:7px;color:#38bdf8;line-height:1;';
+                        cell.appendChild(badge);
+                        cell.title = `R${r+1}C${c+1}: Player-entered bright white digit (${userVal}) — kept separate from original clues`;
+                    } else if (stVal === '?') {
+                        cell.innerText = '?';
+                        cell.style.color = 'rgba(148, 163, 184, 0.35)';
+                        cell.style.fontSize = '12px';
+                        cell.style.background = isBoxLocked ? 'rgba(16, 185, 129, 0.15)' : 'rgba(15, 23, 42, 0.55)';
+                        cell.title = `R${r+1}C${c+1}: Unscanned — point camera here or tap to enter manually`;
+                    } else {
+                        cell.style.background = isBoxLocked ? 'rgba(16, 185, 129, 0.18)' : 'rgba(14, 116, 144, 0.16)';
+                        if (isBoxLocked) {
+                            cell.style.boxShadow = 'inset 0 0 0 1px rgba(16, 185, 129, 0.5)';
+                        }
+                        cell.title = isBoxLocked
+                            ? `R${r+1}C${c+1}: LOCKED empty tile in 3x3 square — click square to unlock`
+                            : `R${r+1}C${c+1}: Scanned empty tile — click to lock 3x3 square`;
+                    }
+
+                    if (isBoxLocked && (r % 3 === 0) && (c % 3 === 0)) {
+                        const lockBadge = document.createElement('span');
+                        lockBadge.innerText = '🔒';
+                        lockBadge.style.cssText = 'position:absolute;top:1px;left:1px;font-size:9px;line-height:1;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.8));';
+                        cell.appendChild(lockBadge);
+                    }
+
+                    if (sdkLastAnchor &&
+                        r >= sdkLastAnchor.r0 && r < sdkLastAnchor.r0 + sdkLastAnchor.h &&
+                        c >= sdkLastAnchor.c0 && c < sdkLastAnchor.c0 + sdkLastAnchor.w) {
+                        cell.style.outline = '1px dashed rgba(6, 182, 212, 0.45)';
+                        cell.style.outlineOffset = '-2px';
+                    }
+
+                    if (lastSdkHintCell && lastSdkHintCell[0] === r && lastSdkHintCell[1] === c) {
+                        cell.style.boxShadow = '0 0 12px rgba(16, 185, 129, 0.85), inset 0 0 0 2px #10b981';
+                    }
+
+                    if (selectedSdkCell && selectedSdkCell[0] === r && selectedSdkCell[1] === c) {
+                        cell.classList.add('selected');
+                    }
+
+                    cell.onclick = () => {
+                        selectedSdkCell = [r, c];
+                        if (!sdkLockedIdle && sdkClickLocksBox) {
+                            toggleSudokuBoxLock(br, bc);
+                        } else {
+                            renderSDKGrid();
+                        }
+                    };
+                    grid.appendChild(cell);
+                }
+            }
+            const userSuffix = userSetCount > 0 ? ` + ${userSetCount} set` : '';
+            document.getElementById('sdk-clues-count').innerText = `${clueCount} clues${userSuffix} (${scannedCount}/81)`;
+        }
+
+        async function setSudokuKey(num) {
+            if (!selectedSdkCell) {
+                logDebug('Please tap a cell in the 9x9 matrix first before pressing a number.', 'warn');
+                return;
+            }
+            const [r, c] = selectedSdkCell;
+            sdkBoard[r][c] = num;
+            sdkStateBoard[r][c] = num;
+            sdkLocked[r][c] = true;
+            sdkConfidence[r][c] = 0.99;
+            sdkConflicts = computeLocalSudokuConflicts(sdkBoard);
+            sdkSolution = null;
+            lastSdkHintCell = null;
+            renderSDKGrid();
+            logDebug(`Set R${r+1}C${c+1} = ${num === 0 ? 'Empty' : num}`);
+            try {
+                const res = await fetch('/api/update_sdk_cell', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ r, c, val: num })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    applyServerSDKPayload(data);
+                }
+            } catch (e) {}
+        }
+
+        function getSudokuCandidates(board, r, c) {
+            if (board[r][c] > 0) return [];
+            const cands = [];
+            for (let num = 1; num <= 9; num++) {
+                if (isValidSudokuPlacement(board, r, c, num)) {
+                    cands.push(num);
+                }
+            }
+            return cands;
+        }
+
+        function findHumanSudokuStep(board) {
+            // 1. Naked Single: A cell with only 1 legal candidate
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    if (board[r][c] === 0) {
+                        const cands = getSudokuCandidates(board, r, c);
+                        if (cands.length === 1) {
+                            return {
+                                r, c, val: cands[0],
+                                reason: `Naked Single: R${r+1}C${c+1} = ${cands[0]} (only legal digit not in Row ${r+1}, Col ${c+1}, or 3x3 Box)`
+                            };
+                        }
+                    }
+                }
+            }
+            // 2. Hidden Single in Row
+            for (let r = 0; r < 9; r++) {
+                for (let num = 1; num <= 9; num++) {
+                    if (board[r].includes(num)) continue;
+                    const spots = [];
+                    for (let c = 0; c < 9; c++) {
+                        if (board[r][c] === 0 && isValidSudokuPlacement(board, r, c, num)) spots.push(c);
+                    }
+                    if (spots.length === 1) {
+                        const c = spots[0];
+                        return {
+                            r, c, val: num,
+                            reason: `Hidden Single (Row ${r+1}): R${r+1}C${c+1} = ${num} (only cell in Row ${r+1} that can hold ${num})`
+                        };
+                    }
+                }
+            }
+            // 3. Hidden Single in Column
+            for (let c = 0; c < 9; c++) {
+                for (let num = 1; num <= 9; num++) {
+                    let inCol = false;
+                    for (let r = 0; r < 9; r++) if (board[r][c] === num) inCol = true;
+                    if (inCol) continue;
+                    const spots = [];
+                    for (let r = 0; r < 9; r++) {
+                        if (board[r][c] === 0 && isValidSudokuPlacement(board, r, c, num)) spots.push(r);
+                    }
+                    if (spots.length === 1) {
+                        const r = spots[0];
+                        return {
+                            r, c, val: num,
+                            reason: `Hidden Single (Col ${c+1}): R${r+1}C${c+1} = ${num} (only cell in Col ${c+1} that can hold ${num})`
+                        };
+                    }
+                }
+            }
+            // 4. Hidden Single in 3x3 Box
+            for (let br = 0; br < 9; br += 3) {
+                for (let bc = 0; bc < 9; bc += 3) {
+                    for (let num = 1; num <= 9; num++) {
+                        let inBox = false;
+                        const spots = [];
+                        for (let dr = 0; dr < 3; dr++) {
+                            for (let dc = 0; dc < 3; dc++) {
+                                const r = br + dr, c = bc + dc;
+                                if (board[r][c] === num) inBox = true;
+                                else if (board[r][c] === 0 && isValidSudokuPlacement(board, r, c, num)) spots.push([r, c]);
+                            }
+                        }
+                        if (!inBox && spots.length === 1) {
+                            const [r, c] = spots[0];
+                            return {
+                                r, c, val: num,
+                                reason: `Hidden Single (Box R${br+1}..${br+3},C${bc+1}..${bc+3}): R${r+1}C${c+1} = ${num}`
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        async function solveSudoku() {
+            sdkConflicts = computeLocalSudokuConflicts(sdkBoard);
+            if (sdkConflicts.some(row => row.some(Boolean))) {
+                document.getElementById('sdk-status-text').innerText = 'Conflict!';
+                renderSDKGrid();
+                logDebug('Duplicate digit conflict detected (highlighted in red). Tap the conflicting cell to fix.', 'warn');
+                return;
+            }
+            const clueCount = sdkBoard.flat().filter(v => v > 0).length;
+            if (clueCount < 17) {
+                logDebug(`Need at least 17 clues to solve (currently have ${clueCount} clues). Keep scanning or tap cells to add clues.`, 'warn');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/lock_and_solve_sdk', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ board: sdkBoard })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && data.solution) {
+                        applyServerSDKPayload(data);
+                        logDebug(data.message || '🔒 Board LOCKED & SOLVED! Scanner is now idling while you enter values.');
+                        return;
+                    } else if (data.message) {
+                        document.getElementById('sdk-status-text').innerText = 'No Solution';
+                        logDebug(data.message, 'warn');
+                        return;
+                    }
+                }
+            } catch (e) {}
+
+            const copy = sdkBoard.map(row => [...row]);
+            logDebug('Solving Sudoku matrix with MRV Backtracking...');
+            if (solveSudokuBacktrack(copy)) {
+                sdkSolution = copy;
+                sdkLockedIdle = true;
+                document.getElementById('sdk-status-text').innerText = 'Locked & Solved!';
+                updateSDKWorkflowUI();
+                renderSDKGrid();
+                logDebug('🔒 Sudoku solved & locked! Scanner is now idling.');
+            } else {
+                document.getElementById('sdk-status-text').innerText = 'No Solution';
+                logDebug('No valid solution found for current clues. Check for misread digits.', 'warn');
+            }
+        }
+
+        async function unlockSudokuBoard() {
+            sdkLockedIdle = false;
+            sdkSolution = null;
+            try {
+                const res = await fetch('/api/unlock_sdk', { method: 'POST' });
+                if (res.ok) {
+                    const data = await res.json();
+                    applyServerSDKPayload(data);
+                }
+            } catch (e) {}
+            updateSDKWorkflowUI();
+            renderSDKGrid();
+            logDebug('🔓 Sudoku board unlocked — you can now edit clues or resume scanning.');
+        }
+
+        function solveSudokuBacktrack(board, counter = { nodes: 0 }) {
+            counter.nodes++;
+            if (counter.nodes > 50000) return false;
+            let bestR = -1, bestC = -1, bestCands = null;
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    if (board[r][c] === 0) {
+                        const cands = getSudokuCandidates(board, r, c);
+                        if (cands.length === 0) return false;
+                        if (bestCands === null || cands.length < bestCands.length) {
+                            bestCands = cands;
+                            bestR = r;
+                            bestC = c;
+                            if (cands.length === 1) break;
+                        }
+                    }
+                }
+                if (bestCands !== null && bestCands.length === 1) break;
+            }
+            if (bestCands === null) return true;
+            for (const num of bestCands) {
+                board[bestR][bestC] = num;
+                if (solveSudokuBacktrack(board, counter)) return true;
+                board[bestR][bestC] = 0;
+                if (counter.nodes > 50000) return false;
+            }
+            return false;
+        }
+
+        function isValidSudokuPlacement(board, r, c, num) {
+            for (let i = 0; i < 9; i++) {
+                if (i !== c && board[r][i] === num) return false;
+                if (i !== r && board[i][c] === num) return false;
+            }
+            const br = Math.floor(r / 3) * 3;
+            const bc = Math.floor(c / 3) * 3;
+            for (let dr = 0; dr < 3; dr++) {
+                for (let dc = 0; dc < 3; dc++) {
+                    const nr = br + dr, nc = bc + dc;
+                    if ((nr !== r || nc !== c) && board[nr][nc] === num) return false;
+                }
+            }
+            return true;
+        }
+
+        function hintSudokuStep() {
+            const effBoard = sdkBoard.map((row, r) => row.map((v, c) => {
+                if (v > 0) return v;
+                const u = (sdkUserBoard[r] && sdkUserBoard[r][c]) || 0;
+                if (u > 0 && (!sdkSolution || sdkSolution[r][c] === u)) return u;
+                return 0;
+            }));
+            const step = findHumanSudokuStep(effBoard);
+            if (step) {
+                sdkUserBoard[step.r][step.c] = step.val;
+                lastSdkHintCell = [step.r, step.c];
+                selectedSdkCell = [step.r, step.c];
+                renderSDKGrid();
+                logDebug(`💡 ${step.reason}`);
+                return;
+            }
+            if (!sdkSolution) solveSudoku();
+            if (!sdkSolution) return;
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const u = (sdkUserBoard[r] && sdkUserBoard[r][c]) || 0;
+                    if (sdkBoard[r][c] === 0 && u !== sdkSolution[r][c] && sdkSolution[r][c] > 0) {
+                        lastSdkHintCell = [r, c];
+                        selectedSdkCell = [r, c];
+                        renderSDKGrid();
+                        logDebug(`💡 Next Cell: Set R${r+1}C${c+1} = ${sdkSolution[r][c]}`);
+                        return;
+                    }
+                }
+            }
+        }
+
+        async function resetSDKBoard() {
+            sdkLockedIdle = false;
+            sdkSolution = null;
+            try {
+                await fetch('/api/reset_sdk', { method: 'POST' });
+            } catch (e) {}
+            sdkBoard = Array(9).fill(0).map(() => Array(9).fill(0));
+            sdkStateBoard = Array(9).fill(0).map(() => Array(9).fill('?'));
+            sdkUserBoard = Array(9).fill(0).map(() => Array(9).fill(0));
+            sdkConfidence = Array(9).fill(0).map(() => Array(9).fill(0.0));
+            sdkLocked = Array(9).fill(0).map(() => Array(9).fill(false));
+            sdkBoxLocked = Array(3).fill(0).map(() => Array(3).fill(false));
+            sdkConflicts = Array(9).fill(0).map(() => Array(9).fill(false));
+            sdkLastAnchor = null;
+            selectedSdkCell = null;
+            lastSdkHintCell = null;
+            updateSDKWorkflowUI();
+            renderSDKGrid();
+            document.getElementById('sdk-status-text').innerText = 'Ready to Scan';
+            logDebug('🗑️ Sudoku board cleared! Stand near each 3×3 square, click it to lock 🔒 once right, then click Verify & Lock Solve.');
+        }
+
+        // ==============================================================
+        // CAMERA & IMAGE INPUT (MOBILE-FIRST)
+        // ==============================================================
+        let cameraStream = null;
+        let lastProcessedImage = { ms: null, sdk: null };
+
+        async function triggerCameraInput(target = 'sdk') {
+            logDebug(`Triggering camera input for ${target}...`);
+            // 1. Try real-time getUserMedia if supported (HTTPS / Localhost)
+            if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
+                const video = document.getElementById(`camera-video-${target}`);
+                const placeholder = document.getElementById(`placeholder-${target}`);
+                try {
+                    cameraStream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } }
+                    });
+                    video.srcObject = cameraStream;
+                    video.style.display = 'block';
+                    if (placeholder) placeholder.style.display = 'none';
+                    logDebug('Live camera stream started.');
+                    return;
+                } catch (err) {
+                    logDebug(`getUserMedia error (${err.message}), falling back to direct photo picker.`);
+                }
+            }
+
+            // 2. Fallback for HTTP / Mobile browser security: open native phone camera
+            const captureInput = document.getElementById(`camera-capture-${target}`);
+            if (captureInput) {
+                captureInput.click();
+            } else {
+                document.getElementById(`file-input-${target}`).click();
+            }
+        }
+
+        function handleImageUpload(e, target) {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+
+            if (file.type && file.type.startsWith('video/')) {
+                handleVideoUpload(e, target);
+                return;
+            }
+
+            logDebug(`Photo selected: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`);
+
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                const img = new Image();
+                img.onload = () => {
+                    logDebug(`Image loaded into memory: ${img.naturalWidth}x${img.naturalHeight}px`);
+                    displayPreviewImage(img, target);
+                };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ==============================================================
+        // LIVE CAMERA VIEWSTREAM & VIDEO WALKAROUND PROCESSOR
+        // ==============================================================
+        let liveStreams = { sdk: null, ms: null };
+        let liveIntervals = { sdk: null, ms: null };
+        let windowStreams = { sdk: null, ms: null };
+        let windowIntervals = { sdk: null, ms: null };
+
+        async function toggleWindowCapture(target) {
+            const btn = document.getElementById(`btn-win-${target}`);
+            const video = document.getElementById(`camera-video-${target}`);
+            const canvas = document.getElementById(`preview-canvas-${target}`);
+            const placeholder = document.getElementById(`placeholder-${target}`);
+
+            if (windowStreams[target]) {
+                stopWindowCapture(target);
+                return;
+            }
+
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+                alert('Screen / Window Capture is not supported by your browser.');
+                return;
+            }
+
+            btn.innerHTML = '&#9203; Selecting...';
+            btn.disabled = true;
+
+            try {
+                if (liveStreams[target]) {
+                    stopLiveCamera(target);
+                }
+
+                const stream = await navigator.mediaDevices.getDisplayMedia({
+                    video: {
+                        displaySurface: 'window',
+                        cursor: 'never'
+                    },
+                    audio: false
+                });
+
+                windowStreams[target] = stream;
+                video.srcObject = stream;
+                video.style.display = 'block';
+                if (canvas) canvas.style.display = 'none';
+                if (placeholder) placeholder.style.display = 'none';
+
+                btn.disabled = false;
+                btn.innerHTML = '&#9209; Stop Window';
+                btn.className = 'btn btn-danger';
+                logDebug(`Direct Game Window capture started for ${target.toUpperCase()}! Point at board and click Scan & Solve.`);
+
+                stream.getVideoTracks()[0].onended = () => {
+                    stopWindowCapture(target);
+                };
+
+                windowIntervals[target] = setInterval(() => {
+                    if (video.videoWidth > 0 && video.videoHeight > 0) {
+                        sampleLiveStreamFrame(target);
+                    }
+                }, 1200);
+
+            } catch (err) {
+                btn.disabled = false;
+                btn.innerHTML = '&#128187; Capture Game Window';
+                btn.className = 'btn btn-primary';
+                if (err.name !== 'NotAllowedError') {
+                    logDebug(`Window capture error: ${err.name} - ${err.message}`, 'error');
+                }
+            }
+        }
+
+        function stopWindowCapture(target) {
+            const btn = document.getElementById(`btn-win-${target}`);
+            const video = document.getElementById(`camera-video-${target}`);
+            if (windowStreams[target]) {
+                windowStreams[target].getTracks().forEach(t => t.stop());
+                windowStreams[target] = null;
+            }
+            if (windowIntervals[target]) {
+                clearInterval(windowIntervals[target]);
+                windowIntervals[target] = null;
+            }
+            if (video && !liveStreams[target]) {
+                video.srcObject = null;
+                video.style.display = 'none';
+            }
+            if (btn) {
+                btn.innerHTML = '&#128187; Capture Game Window';
+                btn.className = 'btn btn-primary';
+            }
+            logDebug(`Game Window capture stopped for ${target.toUpperCase()}.`);
+        }
+
+        async function toggleLiveCamera(target) {
+            const btn = document.getElementById(`btn-live-${target}`);
+            const video = document.getElementById(`camera-video-${target}`);
+            const canvas = document.getElementById(`preview-canvas-${target}`);
+            const placeholder = document.getElementById(`placeholder-${target}`);
+
+            if (liveStreams[target]) {
+                stopLiveCamera(target);
+                return;
+            }
+
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                logDebug('Live camera requires HTTPS on mobile devices.', 'warn');
+                if (window.location.protocol === 'http:') {
+                    const httpsUrl = 'https://' + window.location.hostname + ':8443/gtnh_lootgames_solver.html';
+                    const proceed = confirm('Notice: Direct live camera streaming requires HTTPS on mobile browsers.\n\nWould you like to open the secure HTTPS version?\n(Accept the self-signed certificate on first visit)\n\nAlternatively, use "Record Walkaround" which works on HTTP.');
+                    if (proceed) window.location.href = httpsUrl;
+                } else {
+                    alert('Camera API not accessible in this browser context.');
+                }
+                return;
+            }
+
+            btn.innerHTML = '&#9203; Starting...';
+            btn.disabled = true;
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: { ideal: 'environment' },
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false
+                });
+
+                liveStreams[target] = stream;
+                video.srcObject = stream;
+                video.style.display = 'block';
+                if (canvas) canvas.style.display = 'none';
+                if (placeholder) placeholder.style.display = 'none';
+
+                btn.disabled = false;
+                btn.innerHTML = '&#9209; Stop Feed';
+                btn.className = 'btn btn-danger';
+                logDebug(`Live camera feed started for ${target.toUpperCase()}! Point phone at the board.`);
+
+                // Periodic frame sampler: captures live frame every 1200ms
+                liveIntervals[target] = setInterval(() => {
+                    if (video.videoWidth > 0 && video.videoHeight > 0) {
+                        sampleLiveStreamFrame(target);
+                    }
+                }, 1200);
+
+            } catch (err) {
+                btn.disabled = false;
+                btn.innerHTML = '&#128249; Live Feed';
+                logDebug(`Camera access error: ${err.name} - ${err.message}`, 'error');
+                if (window.location.protocol === 'http:') {
+                    const httpsUrl = 'https://' + window.location.hostname + ':8443/gtnh_lootgames_solver.html';
+                    const proceed = confirm('Notice: Mobile browsers block direct live camera feeds over insecure HTTP.\n\nSwitch to HTTPS (port 8443) to unlock live camera?\n\nOr click Cancel and use "Record Walkaround" which works on HTTP.');
+                    if (proceed) window.location.href = httpsUrl;
+                } else {
+                    alert(`Could not access live camera: ${err.message}`);
+                }
+            }
+        }
+
+        function stopLiveCamera(target) {
+            const btn = document.getElementById(`btn-live-${target}`);
+            const video = document.getElementById(`camera-video-${target}`);
+            if (liveStreams[target]) {
+                liveStreams[target].getTracks().forEach(track => track.stop());
+                liveStreams[target] = null;
+            }
+            if (liveIntervals[target]) {
+                clearInterval(liveIntervals[target]);
+                liveIntervals[target] = null;
+            }
+            if (video) {
+                video.srcObject = null;
+                video.style.display = 'none';
+            }
+            if (btn) {
+                btn.innerHTML = '&#128249; Live Feed';
+                btn.className = 'btn btn-warning';
+            }
+            logDebug(`Live camera feed stopped for ${target.toUpperCase()}.`);
+        }
+
+        function updateBoardLockStatus(target, locked, msg) {
+            const badge = target === 'sdk' 
+                ? document.getElementById('sdk-status-badge') 
+                : document.getElementById('cv-status-badge');
+            if (!badge) return;
+            if (locked) {
+                badge.className = 'badge badge-green';
+                badge.innerHTML = '&#127919; Board Locked';
+            } else {
+                badge.className = 'badge badge-amber';
+                badge.innerHTML = '&#128269; Searching for Board...';
+            }
+        }
+
+        async function sampleLiveStreamFrame(target) {
+            if (typeof activeGameTab !== 'undefined' && activeGameTab !== target) return;
+            if (target === 'sdk' && sdkLockedIdle) return; // Idle completely while Sudoku board is Locked & Solved!
+            const video = document.getElementById(`camera-video-${target}`);
+            if (!video || video.paused || video.ended || video.videoWidth === 0) return;
+
+            const tempCanvas = document.createElement('canvas');
+            const capW = Math.min(1024, video.videoWidth || 1024);
+            tempCanvas.width = capW;
+            tempCanvas.height = Math.round(capW * (video.videoHeight / video.videoWidth));
+            const ctx = tempCanvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
+            const frameData = tempCanvas.toDataURL('image/jpeg', 0.88);
+
+            try {
+                const res = await fetch('/api/upload_and_solve', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        image: frameData,
+                        target: target,
+                        gridSize: msSize,
+                        region: document.getElementById(`region-${target}`)?.value || 'full'
+                    })
+                });
+                const data = await res.json();
+
+                // VALIDATION CHECK: If not looking at the board, bypass completely!
+                if (data.ignored || !data.success) {
+                    logDebug(`[BYPASSED] ${data.message || 'Frame ignored: Camera pointing away from board.'}`);
+                    updateBoardLockStatus(target, false);
+                    return; // VIRTUAL BOARD REMAINS UNTOUCHED
+                }
+
+                updateBoardLockStatus(target, true);
+
+                if (data.board) {
+                    if (target === 'sdk') {
+                        if (data.warpedUrl) {
+                            const warpedBox = document.getElementById('warped-box-sdk');
+                            const warpedImg = document.getElementById('warped-img-sdk');
+                            if (warpedImg && warpedBox) {
+                                warpedImg.src = data.warpedUrl + '?t=' + Date.now();
+                                warpedBox.style.display = 'block';
+                            }
+                        }
+                        applyServerSDKPayload(data);
+                        logDebug(`[LIVE FEED] ${data.message || 'Updated Sudoku confidence grid'}`);
+                    } else if (target === 'ms') {
+                        if (applyServerMSPayload(data)) {
+                            logDebug(`[LIVE FEED] ${data.message || 'Updated Minesweeper confidence grid'}`);
+                            solveMinesweeper();
+                            renderMSGrid();
+                        }
+                    }
+                }
+            } catch (err) {}
+        }
+
+        async function handleVideoUpload(e, target) {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+
+            logDebug(`Walkaround video selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(1)} MB). Uploading to server...`);
+
+            // Also upload raw video to server for multi-frame stitching and inspection
+            try {
+                fetch('/api/upload_video', {
+                    method: 'POST',
+                    headers: { 'Content-Type': file.type || 'video/mp4' },
+                    body: file
+                }).then(res => res.json()).then(data => {
+                    logDebug(`[SERVER] Saved walkaround video to server as ${data.file}!`);
+                }).catch(err => {
+                    logDebug(`Server video save error: ${err.message}`, 'warn');
+                });
+            } catch (err) {}
+
+            const video = document.getElementById(`camera-video-${target}`);
+            const placeholder = document.getElementById(`placeholder-${target}`);
+            const canvas = document.getElementById(`preview-canvas-${target}`);
+
+            const videoUrl = URL.createObjectURL(file);
+            video.src = videoUrl;
+            video.srcObject = null;
+            video.style.display = 'block';
+            if (canvas) canvas.style.display = 'none';
+            if (placeholder) placeholder.style.display = 'none';
+
+            video.onloadedmetadata = async () => {
+                logDebug(`Video length: ${video.duration.toFixed(1)}s. Scrubbing keyframes across walkaround...`);
+                const sampleTimes = [0.15, 0.35, 0.55, 0.75, 0.90].map(f => f * video.duration);
+
+                for (let i = 0; i < sampleTimes.length; i++) {
+                    const t = sampleTimes[i];
+                    video.currentTime = t;
+                    await new Promise(r => video.onseeked = r);
+
+                    const tempCanvas = document.createElement('canvas');
+                    tempCanvas.width = 640;
+                    tempCanvas.height = Math.round(640 * (video.videoHeight / video.videoWidth));
+                    const ctx = tempCanvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
+                    const frameData = tempCanvas.toDataURL('image/jpeg', 0.85);
+
+                    try {
+                        const res = await fetch('/api/upload_and_solve', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ image: frameData, target: target, region: 'full' })
+                        });
+                        const data = await res.json();
+                        
+                        // Ignore non-board keyframes
+                        if (data.ignored || !data.success) {
+                            logDebug(`[WALKAROUND] Keyframe ${i+1}/${sampleTimes.length} (${t.toFixed(1)}s) ignored: non-board scene.`);
+                            continue;
+                        }
+
+                        logDebug(`[WALKAROUND] Keyframe ${i+1}/${sampleTimes.length} (${t.toFixed(1)}s) aligned & analyzed.`);
+                        updateBoardLockStatus(target, true);
+
+                        if (data.board) {
+                            if (target === 'sdk') {
+                                for (let r = 0; r < 9; r++) {
+                                    for (let c = 0; c < 9; c++) {
+                                        if (data.board[r][c] > 0) sdkBoard[r][c] = data.board[r][c];
+                                    }
+                                }
+                                renderSDKGrid();
+                            }
+                        }
+                    } catch (err) {}
+                }
+
+                if (target === 'sdk') {
+                    const copy = sdkBoard.map(row => [...row]);
+                    if (solveSudokuBacktrack(copy)) {
+                        sdkSolution = copy;
+                        document.getElementById('sdk-status-text').innerText = 'Solved!';
+                        logDebug('Sudoku auto-solved from video walkaround!');
+                    }
+                    renderSDKGrid();
+                }
+            };
+        }
+
+        // ==============================================================
+        // 4-CORNER TOUCH PINS & MULTI-IMAGE ALIGNMENT SYSTEM
+        // ==============================================================
+        const cornerPins = {
+            sdk: [
+                { x: 50, y: 50, name: 'TL', color: '#06b6d4' },
+                { x: 350, y: 50, name: 'TR', color: '#10b981' },
+                { x: 350, y: 350, name: 'BR', color: '#f59e0b' },
+                { x: 50, y: 350, name: 'BL', color: '#a855f7' }
+            ],
+            ms: [
+                { x: 50, y: 50, name: 'TL', color: '#06b6d4' },
+                { x: 350, y: 50, name: 'TR', color: '#10b981' },
+                { x: 350, y: 350, name: 'BR', color: '#f59e0b' },
+                { x: 50, y: 350, name: 'BL', color: '#a855f7' }
+            ]
+        };
+        let activePin = null;
+        let activeTarget = null;
+
+        function resetPins(target) {
+            const canvas = document.getElementById(`preview-canvas-${target}`);
+            if (!canvas) return;
+            const w = canvas.width;
+            const h = canvas.height;
+            cornerPins[target] = [
+                { x: Math.round(w * 0.15), y: Math.round(h * 0.15), name: 'TL', color: '#06b6d4' },
+                { x: Math.round(w * 0.85), y: Math.round(h * 0.15), name: 'TR', color: '#10b981' },
+                { x: Math.round(w * 0.85), y: Math.round(h * 0.85), name: 'BR', color: '#f59e0b' },
+                { x: Math.round(w * 0.15), y: Math.round(h * 0.85), name: 'BL', color: '#a855f7' }
+            ];
+            drawPreviewWithPins(target);
+            logDebug(`Pins reset for ${target.toUpperCase()} to standard margin.`);
+        }
+
+        function drawPreviewWithPins(target) {
+            const canvas = document.getElementById(`preview-canvas-${target}`);
+            if (!canvas || !lastProcessedImage[target]) return;
+            const ctx = canvas.getContext('2d');
+            const img = lastProcessedImage[target];
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            const pins = cornerPins[target];
+            if (!pins || pins.length < 4) return;
+
+            // Draw bounding quadrilateral
+            ctx.beginPath();
+            ctx.moveTo(pins[0].x, pins[0].y);
+            ctx.lineTo(pins[1].x, pins[1].y);
+            ctx.lineTo(pins[2].x, pins[2].y);
+            ctx.lineTo(pins[3].x, pins[3].y);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(6, 182, 212, 0.15)';
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#06b6d4';
+            ctx.setLineDash([8, 6]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw grid lines inside quadrilateral
+            const gridN = target === 'sdk' ? (document.getElementById('region-sdk')?.value === 'full' ? 9 : 5) : (currentMSSize || 7);
+            for (let i = 1; i < gridN; i++) {
+                const f = i / gridN;
+                // Vertical grid lines
+                const topX = pins[0].x + (pins[1].x - pins[0].x) * f;
+                const topY = pins[0].y + (pins[1].y - pins[0].y) * f;
+                const botX = pins[3].x + (pins[2].x - pins[3].x) * f;
+                const botY = pins[3].y + (pins[2].y - pins[3].y) * f;
+                ctx.beginPath();
+                ctx.moveTo(topX, topY);
+                ctx.lineTo(botX, botY);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // Horizontal grid lines
+                const leftX = pins[0].x + (pins[3].x - pins[0].x) * f;
+                const leftY = pins[0].y + (pins[3].y - pins[0].y) * f;
+                const rightX = pins[1].x + (pins[2].x - pins[1].x) * f;
+                const rightY = pins[1].y + (pins[2].y - pins[1].y) * f;
+                ctx.beginPath();
+                ctx.moveTo(leftX, leftY);
+                ctx.lineTo(rightX, rightY);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+
+            // Draw 4 touchable corner pins
+            pins.forEach((p) => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 22, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.shadowColor = p.color;
+                ctx.shadowBlur = 12;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+                ctx.lineWidth = 2.5;
+                ctx.strokeStyle = '#ffffff';
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 12px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(p.name, p.x, p.y);
+            });
+        }
+
+        function setupPinInteractions(target) {
+            const canvas = document.getElementById(`preview-canvas-${target}`);
+            if (!canvas) return;
+
+            function getPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.clientX ?? (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+                const clientY = e.clientY ?? (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                return {
+                    x: (clientX - rect.left) * scaleX,
+                    y: (clientY - rect.top) * scaleY
+                };
+            }
+
+            canvas.addEventListener('pointerdown', (e) => {
+                const pos = getPos(e);
+                const pins = cornerPins[target];
+                for (let i = 0; i < pins.length; i++) {
+                    const dist = Math.hypot(pins[i].x - pos.x, pins[i].y - pos.y);
+                    if (dist <= 35) {
+                        activePin = i;
+                        activeTarget = target;
+                        canvas.setPointerCapture(e.pointerId);
+                        e.preventDefault();
+                        break;
+                    }
+                }
+            });
+
+            canvas.addEventListener('pointermove', (e) => {
+                if (activePin !== null && activeTarget === target) {
+                    const pos = getPos(e);
+                    cornerPins[target][activePin].x = Math.max(0, Math.min(canvas.width, pos.x));
+                    cornerPins[target][activePin].y = Math.max(0, Math.min(canvas.height, pos.y));
+                    drawPreviewWithPins(target);
+                    e.preventDefault();
+                }
+            });
+
+            const endDrag = (e) => {
+                if (activePin !== null && activeTarget === target) {
+                    activePin = null;
+                    activeTarget = null;
+                }
+            };
+            canvas.addEventListener('pointerup', endDrag);
+            canvas.addEventListener('pointercancel', endDrag);
+        }
+
+        function displayPreviewImage(imgElement, target) {
+            lastProcessedImage[target] = imgElement;
+            const canvasId = `preview-canvas-${target}`;
+            const canvas = document.getElementById(canvasId);
+            if (canvas) {
+                // Keep maximum display width manageable for smooth touch dragging
+                const maxDim = 1200;
+                let w = imgElement.naturalWidth || imgElement.videoWidth || imgElement.width || 600;
+                let h = imgElement.naturalHeight || imgElement.videoHeight || imgElement.height || 600;
+                if (w > maxDim || h > maxDim) {
+                    if (w > h) {
+                        h = Math.round(h * (maxDim / w));
+                        w = maxDim;
+                    } else {
+                        w = Math.round(w * (maxDim / h));
+                        h = maxDim;
+                    }
+                }
+                canvas.width = w;
+                canvas.height = h;
+
+                // Initialize pins
+                cornerPins[target] = [
+                    { x: Math.round(w * 0.15), y: Math.round(h * 0.15), name: 'TL', color: '#06b6d4' },
+                    { x: Math.round(w * 0.85), y: Math.round(h * 0.15), name: 'TR', color: '#10b981' },
+                    { x: Math.round(w * 0.85), y: Math.round(h * 0.85), name: 'BR', color: '#f59e0b' },
+                    { x: Math.round(w * 0.15), y: Math.round(h * 0.85), name: 'BL', color: '#a855f7' }
+                ];
+
+                canvas.style.display = 'block';
+                drawPreviewWithPins(target);
+                setupPinInteractions(target);
+            }
+
+            const videoId = `camera-video-${target}`;
+            const video = document.getElementById(videoId);
+            if (video) video.style.display = 'none';
+
+            const placeholder = document.getElementById(`placeholder-${target}`);
+            if (placeholder) placeholder.style.display = 'none';
+
+            logDebug(`Preview canvas updated (${canvas.width}x${canvas.height}). Touch pins initialized.`);
+        }
+
+        // Clipboard Paste Listener (Ctrl+V)
+        window.addEventListener('paste', (e) => {
+            const activeTab = document.getElementById('pane-sdk').classList.contains('active') ? 'sdk' : 'ms';
+            const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+            for (let item of items) {
+                if (item.type.indexOf('image') !== -1) {
+                    const blob = item.getAsFile();
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            logDebug(`Pasted image loaded: ${img.naturalWidth}x${img.naturalHeight}px`);
+                            displayPreviewImage(img, activeTab);
+                        };
+                        img.src = evt.target.result;
+                    };
+                    reader.readAsDataURL(blob);
+                }
+            }
+        });
+
+        // ==============================================================
+        // SCAN & SOLVE (COMMUNICATES WITH PYTHON CV SERVER)
+        // ==============================================================
+        async function captureAndSolveSDK(usePins = false) {
+            const btn = document.getElementById('btn-scan-sdk');
+            const pinBtn = document.getElementById('btn-pin-scan-sdk');
+            const canvas = document.getElementById('preview-canvas-sdk');
+            let imgToProcess = null;
+
+            const videoSDK = document.getElementById('camera-video-sdk');
+            if (videoSDK && videoSDK.videoWidth > 0 && !videoSDK.paused) {
+                canvas.width = videoSDK.videoWidth;
+                canvas.height = videoSDK.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(videoSDK, 0, 0, canvas.width, canvas.height);
+                lastProcessedImage.sdk = canvas;
+                canvas.style.display = 'block';
+                videoSDK.style.display = 'none';
+                setupPinsForImage('sdk', canvas.width, canvas.height);
+            }
+
+            if (lastProcessedImage.sdk && canvas) {
+                imgToProcess = canvas.toDataURL('image/jpeg', 0.92);
+            }
+
+            if (!imgToProcess) {
+                logDebug('No image available to scan. Please take a photo or upload first.', 'warn');
+                alert('Please upload an image, take a photo, or paste a screenshot first.');
+                return;
+            }
+
+            const region = document.getElementById('region-sdk')?.value || 'full';
+            let scaledPoints = null;
+            if (usePins && canvas && cornerPins.sdk) {
+                scaledPoints = cornerPins.sdk.map(p => [Math.round(p.x), Math.round(p.y)]);
+            }
+
+            btn.disabled = true;
+            if (pinBtn) pinBtn.disabled = true;
+            btn.innerHTML = '&#9203; Scanning...';
+            logDebug(`Sending image to Python CV server (Pins: ${usePins ? 'Manual' : 'Auto'}, Region: ${region})...`);
+
+            try {
+                const res = await fetch('/api/upload_and_solve', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        image: imgToProcess,
+                        target: 'sdk',
+                        points: scaledPoints,
+                        region: region
+                    })
+                });
+
+                if (!res.ok) throw new Error(`Server returned HTTP ${res.status}`);
+                const data = await res.json();
+
+                if (data.success) {
+                    logDebug(`Server: ${data.message}`);
+
+                    if (data.warpedUrl) {
+                        const warpedBox = document.getElementById('warped-box-sdk');
+                        const warpedImg = document.getElementById('warped-img-sdk');
+                        warpedImg.src = data.warpedUrl + '?t=' + Date.now();
+                        warpedBox.style.display = 'block';
+                    }
+
+                    // Update pins if auto-detected
+                    if (data.corners && canvas) {
+                        data.corners.forEach((pt, i) => {
+                            if (cornerPins.sdk[i]) {
+                                cornerPins.sdk[i].x = Math.round(pt[0]);
+                                cornerPins.sdk[i].y = Math.round(pt[1]);
+                            }
+                        });
+                        drawPreviewWithPins('sdk');
+                    }
+
+                    applyServerSDKPayload(data);
+                    if (sdkSolution) {
+                        logDebug('Sudoku auto-solved! Complete solution displayed in green.');
+                    } else {
+                        logDebug('Sudoku confidence grid updated. Snap another angle or tap Step Hint!');
+                    }
+
+                } else {
+                    logDebug(`Server notice: ${data.message}`, 'warn');
+                    if (data.suggestedPins && canvas) {
+                        data.suggestedPins.forEach((pt, i) => {
+                            if (cornerPins.sdk[i]) {
+                                cornerPins.sdk[i].x = Math.round(pt[0]);
+                                cornerPins.sdk[i].y = Math.round(pt[1]);
+                            }
+                        });
+                        drawPreviewWithPins('sdk');
+                        alert(data.message);
+                    } else {
+                        alert(data.message || 'Could not isolate board.');
+                    }
+                }
+            } catch (err) {
+                logDebug(`Server communication error: ${err.message}`, 'error');
+                alert('Could not connect to Python CV server on port 8000.');
+            } finally {
+                btn.disabled = false;
+                if (pinBtn) pinBtn.disabled = false;
+                btn.innerHTML = '&#9889; Scan &amp; Solve';
+            }
+        }
+
+        async function captureAndSolveMS(usePins = false) {
+            const btn = document.getElementById('btn-scan-ms');
+            const pinBtn = document.getElementById('btn-pin-scan-ms');
+            const canvas = document.getElementById('preview-canvas-ms');
+            let imgToProcess = null;
+
+            const videoMS = document.getElementById('camera-video-ms');
+            if (videoMS && videoMS.videoWidth > 0 && !videoMS.paused) {
+                canvas.width = videoMS.videoWidth;
+                canvas.height = videoMS.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(videoMS, 0, 0, canvas.width, canvas.height);
+                lastProcessedImage.ms = canvas;
+                canvas.style.display = 'block';
+                videoMS.style.display = 'none';
+                setupPinsForImage('ms', canvas.width, canvas.height);
+            }
+
+            if (lastProcessedImage.ms && canvas) {
+                imgToProcess = canvas.toDataURL('image/jpeg', 0.92);
+            }
+
+            if (!imgToProcess) {
+                logDebug('No Minesweeper image available. Take a photo or upload first.', 'warn');
+                alert('Please upload an image, take a photo, or paste a screenshot first.');
+                return;
+            }
+
+            let scaledPoints = null;
+            if (usePins && canvas && cornerPins.ms) {
+                scaledPoints = cornerPins.ms.map(p => [Math.round(p.x), Math.round(p.y)]);
+            }
+
+            btn.disabled = true;
+            if (pinBtn) pinBtn.disabled = true;
+            btn.innerHTML = '&#9203; Scanning...';
+            logDebug(`Sending Minesweeper photo (${msSize}x${msSize}, Pins: ${usePins ? 'Manual' : 'Auto'})...`);
+
+            try {
+                const res = await fetch('/api/upload_and_solve', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        image: imgToProcess,
+                        target: 'ms',
+                        points: scaledPoints,
+                        gridSize: msSize
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    logDebug(`Server: ${data.message}`);
+                    if (data.warpedUrl) {
+                        const warpedBox = document.getElementById('warped-box-ms');
+                        const warpedImg = document.getElementById('warped-img-ms');
+                        warpedImg.src = data.warpedUrl + '?t=' + Date.now();
+                        warpedBox.style.display = 'block';
+                    }
+
+                    if (data.corners && canvas) {
+                        data.corners.forEach((pt, i) => {
+                            if (cornerPins.ms[i]) {
+                                cornerPins.ms[i].x = Math.round(pt[0]);
+                                cornerPins.ms[i].y = Math.round(pt[1]);
+                            }
+                        });
+                        drawPreviewWithPins('ms');
+                    }
+
+                    applyServerMSPayload(data);
+                    solveMinesweeper();
+                    renderMSGrid();
+                } else {
+                    logDebug(`Notice: ${data.message}`, 'warn');
+                    if (data.suggestedPins && canvas) {
+                        data.suggestedPins.forEach((pt, i) => {
+                            if (cornerPins.ms[i]) {
+                                cornerPins.ms[i].x = Math.round(pt[0]);
+                                cornerPins.ms[i].y = Math.round(pt[1]);
+                            }
+                        });
+                        drawPreviewWithPins('ms');
+                        alert(data.message);
+                    }
+                }
+            } catch (err) {
+                logDebug(`Server error: ${err.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                if (pinBtn) pinBtn.disabled = false;
+                btn.innerHTML = '&#9889; Scan &amp; Solve';
+            }
+        }
+
+        // Initialize on DOM ready
+        window.addEventListener('DOMContentLoaded', () => {
+            initMSBoard();
+            initSDKBoard();
+            logDebug('LootGames Solver ready. Running on http://192.168.86.32:8000');
+        });
+    </script>
+</body>
+</html>
