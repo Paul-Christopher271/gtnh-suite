@@ -2581,6 +2581,7 @@ How Bonus Hearts Actually Work in GTNH 2.9.0 (Quest "More Food, More Hearts"):
                     <div class="food-meta">
                         <span>🍗 ${f.hunger}</span>
                         <span>Tier ${f.tier}</span>
+                        ${(f.max_stack && f.max_stack < 64) ? `<span style="color: var(--orange); font-weight: 700;">⚠️ Stack: ${f.max_stack}</span>` : ''}
                         <span style="color: ${canCraft ? 'var(--green)' : 'var(--orange)'};">${canCraft ? 'Ready to Cook' : 'Missing Equipment'}</span>
                         <span style="color: var(--cyan); font-size: 10px;">🔍 View Recipe</span>
                     </div>
@@ -2601,7 +2602,7 @@ How Bonus Hearts Actually Work in GTNH 2.9.0 (Quest "More Food, More Hearts"):
             sorted.forEach(f => {
                 const opt = document.createElement('option');
                 opt.value = f.id;
-                opt.textContent = `${f.name} (⚡ ${f.total_saturation} Sat • ${f.hunger}🍗 • ${ (f.nutrients||[]).join('/') })`;
+                opt.textContent = `${f.name} (⚡ ${f.total_saturation} Sat • ${f.hunger}🍗${(f.max_stack && f.max_stack < 64) ? ' • ⚠️ ' + f.max_stack + '-Stack' : ''} • ${ (f.nutrients||[]).join('/') })`;
                 if (f.id === customLunchBoxIds[i]) opt.selected = true;
                 selectEl.appendChild(opt);
             });
@@ -4261,6 +4262,7 @@ How Bonus Hearts Actually Work in GTNH 2.9.0 (Quest "More Food, More Hearts"):
                     <div class="food-meta">
                         <span>🍗 ${f.hunger} Hunger</span>
                         <span>Tier ${f.tier}</span>
+                        ${(f.max_stack && f.max_stack < 64) ? `<span style="color: var(--orange); font-weight: 700;">⚠️ Max Stack: ${f.max_stack}</span>` : `<span style="color: var(--text-dim);">📦 Stack: 64</span>`}
                         ${statusBadge}
                         <span style="color: var(--cyan); font-size: 10px;">🔍 View Recipe</span>
                     </div>
@@ -4357,7 +4359,7 @@ How Bonus Hearts Actually Work in GTNH 2.9.0 (Quest "More Food, More Hearts"):
         currentModalFood = food;
 
         document.getElementById('modal-food-name').textContent = food.name;
-        document.getElementById('modal-food-meta').textContent = `🍗 ${food.hunger} Hunger • ⚡ ${food.total_saturation} Saturation • Tier ${food.tier || 0} Meal`;
+        document.getElementById('modal-food-meta').textContent = `🍗 ${food.hunger} Hunger • ⚡ ${food.total_saturation} Saturation • Tier ${food.tier || 0} Meal • ${(food.max_stack && food.max_stack < 64) ? '⚠️ Max Stack: ' + food.max_stack : '📦 Max Stack: 64'}`;
         
         const tagsContainer = document.getElementById('modal-nutrient-tags');
         tagsContainer.innerHTML = (food.nutrients || []).map(n => `<span class="tag-nutrient tag-${n}">${n}</span>`).join(' ');
