@@ -46,12 +46,15 @@ A comprehensive, zero-dependency web companion suite for **GregTech: New Horizon
    - 21/31/0 & 23/31/0 Growth/Gain/Resistance breeding strategies.
 
 8. **🧪 Clean Crucible & Essentia Solver (`gtnh_clean_crucible.html`)**
-   - Zero-flux alchemical calculator determining exact item inputs with minimum aspect waste.
+   - Zero-flux alchemical calculator with all 10,803 GTNH 2.9.0 aspected items, 108 Crucible recipes, and interactive Quartz Sliver / Metal Nugget Scrubber controls.
 
-9. **🔮 Thaumcraft Research & Aspect Solver (`thaumcraft_research_navigator.html`)**
+9. **📜 Thaumcraft 4 AR Research Table Solver (`gtnh_thaumcraft_researcher.html`)**
+   - Live computer-vision AR scanner & abundance-weighted zero-cycle Steiner tree solver for the 61-hex Thaumcraft 4 Research Table across all 1,247 GTNH 2.9.0 research notes, including 69-slot sidebar OCR, auto-lock against mouse/tooltip occlusion, and instant note-swap detection.
+
+10. **🔮 Thaumcraft Research & Aspect Solver (`thaumcraft_research_navigator.html`)**
    - Hex grid shortest-path aspect combination solver.
 
-10. **💎 LootGames AR Companion & Solver (`gtnh_lootgames_solver.html`)**
+11. **💎 LootGames AR Companion & Solver (`gtnh_lootgames_solver.html`)**
     - Computer vision and constraint-satisfaction solver for GTNH LootGames Dungeon Minigames.
     - **Minesweeper Solver**: Supports multi-stage dynamic board expansion ($7\times 7 \rightarrow 15\times 15$), zero-RNG logic verification, deterministic safe-click / mine deduction, and probabilistic risk assessment for unrevealed tiles.
     - **Sudoku Solver**: Instant exact-cover solution generator with step-by-step hint progression.
