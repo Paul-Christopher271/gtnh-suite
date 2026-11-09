@@ -630,7 +630,7 @@ function hexNeighbors(q, r) {
     return out;
 }
 function ktRound(val) {
-    return val >= 0 ? Math.floor(val + 0.5) : Math.ceil(val - 0.5);
+    return Math.floor(val + 0.5);
 }
 
 // Board State
@@ -649,6 +649,7 @@ let lockedHoles = null;
 let lockedFixed = null;
 let lockedSolved = null;
 let missingParchmentFrames = 0;
+let noGridOverlay = null;       // { icon, title, sub } when no active hex grid is detected on screen
 
 function updateLockUI() {
     const btn = document.getElementById('btnToggleLock');
@@ -717,10 +718,16 @@ async function initAssets() {
         ringMask16[i] = hData[i * 4 + 3] > 60 ? 1 : 0;
     }
 
-    // Extract 16x16 RGBA templates for each of the 69 aspects
+    // Extract 16x16 RGBA templates for each of the 69 aspects via 32->48(GL_NEAREST)->16 to match OpenGL 3x GUI scale rendering!
+    const c48 = document.createElement('canvas');
+    c48.width = 48; c48.height = 48;
+    const ctx48 = c48.getContext('2d');
+    ctx48.imageSmoothingEnabled = false;
     for (const k of ASPECT_KEYS) {
+        ctx48.clearRect(0, 0, 48, 48);
+        ctx48.drawImage(aspectImages[k], 0, 0, 48, 48);
         ctx16.clearRect(0, 0, 16, 16);
-        ctx16.drawImage(aspectImages[k], 0, 0, 16, 16);
+        ctx16.drawImage(c48, 0, 0, 16, 16);
         templates16[k] = new Float32Array(ctx16.getImageData(0, 0, 16, 16).data);
     }
 
@@ -846,6 +853,7 @@ function unpinResearchNote() {
 function loadResearchPreset(key, isInitialShowcase = false) {
     const r = TC_BUNDLE.researches.find(x => x.k === key);
     if (!r) return;
+    noGridOverlay = null;
     activeResearchKey = key;
     if (!isInitialShowcase) {
         pinnedResearchKey = key;
@@ -1107,6 +1115,7 @@ function resetFullBoard() {
     fixedAspects = {};
     solvedAspects = {};
     activeResearchKey = null;
+    noGridOverlay = null;
     drawHexBoard();
     updateSolutionSummary();
 }
@@ -1208,12 +1217,54 @@ function drawHexBoard() {
         ctx.fillStyle = fixedAspects[hk] ? '#f3e8ff' : '#a7f3d0';
         ctx.fillText(lbl, cx, cy + 16);
     }
+
+    // 4. If no active Research Note hex grid is detected on screen, draw a clean status overlay card!
+    if (noGridOverlay && Object.keys(fixedAspects).length === 0) {
+        ctx.save();
+        ctx.fillStyle = 'rgba(7, 11, 20, 0.76)';
+        ctx.fillRect(0, 0, cw, ch);
+
+        const cardW = Math.min(460, cw - 40);
+        const cardH = 128;
+        const cardX = (cw - cardW) / 2;
+        const cardY = (ch - cardH) / 2;
+
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.96)';
+        ctx.strokeStyle = 'rgba(168, 85, 247, 0.55)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(cardX, cardY, cardW, cardH, 14);
+        else ctx.rect(cardX, cardY, cardW, cardH);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.textAlign = 'center';
+        ctx.font = '700 26px Inter, sans-serif';
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillText(noGridOverlay.icon || '📜', cw / 2, cardY + 42);
+
+        ctx.font = '700 15.5px Inter, sans-serif';
+        ctx.fillStyle = '#e2e8f0';
+        ctx.fillText(noGridOverlay.title, cw / 2, cardY + 74);
+
+        ctx.font = '400 12px Inter, sans-serif';
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText(noGridOverlay.sub, cw / 2, cardY + 100);
+        ctx.restore();
+    }
 }
 
 function updateSolutionSummary() {
     const titleEl = document.getElementById('solutionTitleText');
     const statsEl = document.getElementById('solutionStatsText');
     const chipsEl = document.getElementById('solutionChipsContainer');
+
+    if (noGridOverlay && Object.keys(fixedAspects).length === 0) {
+        titleEl.innerHTML = `${noGridOverlay.icon || '📜'} <span style="color:#fbbf24">${noGridOverlay.title}</span>`;
+        statsEl.textContent = noGridOverlay.sub;
+        chipsEl.innerHTML = '';
+        return;
+    }
 
     // Auto-identify research note from fixedAspects
     const fixedList = Object.values(fixedAspects);
@@ -1274,6 +1325,7 @@ function updateSolutionSummary() {
 
     function applyHexAction(q, r, isFirstClick) {
         const hk = hexKey(q, r);
+        noGridOverlay = null;
         activeResearchKey = null;
         if (boardMode === 'hole') {
             if (isFirstClick) dragAction = holesSet.has(hk) ? 'remove_hole' : 'add_hole';
@@ -1431,17 +1483,17 @@ function detectParchmentBox(sourceCanvas, imgData, W, H) {
         }
     }
 
-    if (!bestBox || bestArea < 1000) return null;
+    if (!bestBox || bestArea < 3500) return null;
     const [bx, by, bw, bh] = bestBox;
     const estS = Math.round(Math.max(bw, bh) * (150.0 / 147.333));
-    if (estS < 100 || estS > Math.min(W, H)) return null;
+    if (estS < 160 || estS > Math.min(W, H)) return null;
 
-    // 2. Two-stage Coarse-to-Fine border refinement (only ~90 CPU canvas checks instead of 847 GPU readbacks!)
+    // 2. Two-stage Coarse-to-Fine border refinement
     let bestErr = 1e18;
     let bestPx = bx, bestPy = by, bestS = estS;
 
     // Stage 1: Coarse step=2 search
-    for (let s = estS - 2; s <= estS + 2; s += 2) {
+    for (let s = estS - 3; s <= estS + 3; s += 2) {
         const xStart = bx + bw - s - 2;
         const yStart = by + bh - s - 2;
         for (let dy = -4; dy <= 4; dy += 2) {
@@ -1458,13 +1510,13 @@ function detectParchmentBox(sourceCanvas, imgData, W, H) {
     }
 
     // Early reject if not a real Research Table parchment
-    if (bestErr > 12.0) return null;
+    if (bestErr > 11.5) return null;
 
     // Stage 2: Fine 1-pixel refinement around Stage 1 winner
     const centerPx = bestPx, centerPy = bestPy, centerS = bestS;
-    for (let s = centerS - 1; s <= centerS + 1; s++) {
-        for (let dy = -1; dy <= 1; dy++) {
-            for (let dx = -1; dx <= 1; dx++) {
+    for (let s = centerS - 2; s <= centerS + 2; s++) {
+        for (let dy = -2; dy <= 2; dy++) {
+            for (let dx = -2; dx <= 2; dx++) {
                 const meanErr = scoreBorderCandidate(sourceCanvas, centerPx + dx, centerPy + dy, s, W, H);
                 if (meanErr < bestErr) {
                     bestErr = meanErr;
@@ -1476,7 +1528,7 @@ function detectParchmentBox(sourceCanvas, imgData, W, H) {
         }
     }
 
-    if (bestErr > 7.5) return null;
+    if (bestErr > 6.2) return null;
     return [bestPx, bestPy, bestS, bestErr];
 }
 
@@ -1610,12 +1662,13 @@ function _processImageForARInner(sourceElement, W, H, forceRescan = false) {
             if (invMean > 110.0) {
                 boardLocked = false;
                 lockedBox = null;
+                pinnedResearchKey = null;
+                updatePinnedBanner();
                 updateLockUI();
             }
         } else if (meanParchMax > 120.0) {
-            // 2. A parchment is present — verify that the lockedFixed root aspects have not turned into empty beige parchment!
-            // In Thaumcraft 4, root aspects can never be erased; if any root hex is now unoccupied parchment (diffInner0 < 13.5),
-            // a different Research Note was swapped in! (Tooltips and cursors always have diffInner0 > 25, so they never trigger this.)
+            // 2. A parchment is present — verify that the lockedFixed root aspects have not turned into empty beige parchment,
+            // AND verify that empty hex grid rings have not vanished (which happens when a Research Note is completed!).
             let missingRoots = 0;
             for (const hk of Object.keys(lockedFixed)) {
                 const [q, r] = parseHexKey(hk);
@@ -1639,15 +1692,42 @@ function _processImageForARInner(sourceElement, W, H, forceRescan = false) {
                     break;
                 }
             }
-            if (missingRoots >= 1) {
-                // Different Research Note detected! Unlock immediately and scan the new note!
+            // Also check if hex grid rings vanished because the player just completed the Research Note!
+            let visibleEmptyRings = 0, lockedTooltipCells = 0;
+            for (const [q, r] of ALL_HEXES) {
+                const ox = 75 + ktRound(9.0 * 1.5 * q) - 8;
+                const oy = 75 + ktRound(9.0 * Math.sqrt(3.0) * (r + q / 2.0)) - 8;
+                let minRowMax = 255.0, iSum = 0, rDarkSum = 0, rCnt = 0;
+                for (let py16 = 0; py16 < 16; py16++) {
+                    let rowSum = 0;
+                    for (let px16 = 0; px16 < 16; px16++) {
+                        const idx = ((oy + py16) * 150 + (ox + px16)) * 4;
+                        rowSum += Math.max(obs150[idx], obs150[idx+1], obs150[idx+2]);
+                        if (py16 >= 3 && py16 < 13 && px16 >= 3 && px16 < 13) {
+                            iSum += (Math.abs(obs150[idx] - parchData150[idx]) + Math.abs(obs150[idx+1] - parchData150[idx+1]) + Math.abs(obs150[idx+2] - parchData150[idx+2])) / 3.0;
+                        }
+                        if (ringMask16[py16 * 16 + px16]) {
+                            rDarkSum += (Math.max(0, parchData150[idx] - obs150[idx]) + Math.max(0, parchData150[idx+1] - obs150[idx+1]) + Math.max(0, parchData150[idx+2] - obs150[idx+2])) / 3.0;
+                            rCnt++;
+                        }
+                    }
+                    if (rowSum / 16.0 < minRowMax) minRowMax = rowSum / 16.0;
+                }
+                if (minRowMax < 52.0) lockedTooltipCells++;
+                else if ((iSum / 100.0) <= 17.5 && (rDarkSum / (rCnt || 1)) > 6.5) visibleEmptyRings++;
+            }
+            if (missingRoots >= 1 || (lockedTooltipCells === 0 && visibleEmptyRings < 3)) {
+                // Different Research Note swapped in OR current Research Note completed! Unlock immediately!
                 boardLocked = false;
                 lockedBox = null;
+                pinnedResearchKey = null;
+                updatePinnedBanner();
                 updateLockUI();
             }
         }
         if (boardLocked) {
             missingParchmentFrames = 0;
+            noGridOverlay = null;
             // Keep locked board 100% immune to mouse cursor & tooltip movement!
             holesSet = new Set(lockedHoles);
             fixedAspects = Object.assign({}, lockedFixed);
@@ -1660,8 +1740,19 @@ function _processImageForARInner(sourceElement, W, H, forceRescan = false) {
     const imgData = workCtx.getImageData(0, 0, W, H);
     const box = detectParchmentBox(workCanvas, imgData, W, H);
     if (!box) {
-        statusPill.textContent = 'Scanning stream (Waiting for Research Table)...';
+        statusPill.textContent = 'No Research Note on Table (Waiting for Research Grid)...';
         statusPill.style.color = '#f87171';
+        holesSet.clear();
+        fixedAspects = {};
+        solvedAspects = {};
+        activeResearchKey = null;
+        noGridOverlay = {
+            icon: '📜',
+            title: 'No Research Note Detected',
+            sub: 'Place an unfinished Research Note into the Research Table slot to scan & solve.'
+        };
+        drawHexBoard();
+        updateSolutionSummary();
         const arCanvas = document.getElementById('arPreviewCanvas');
         const tw = Math.min(640, W), th = Math.round(H * (tw / W));
         if (arCanvas.width !== tw || arCanvas.height !== th) {
@@ -1679,6 +1770,7 @@ function _processImageForARInner(sourceElement, W, H, forceRescan = false) {
     const newHoles = new Set();
     const newFixed = {};
     let tooltipOccludedCells = 0;
+    let emptyPlayableCount = 0;
     const pinnedRes = pinnedResearchKey ? TC_BUNDLE.researches.find(x => x.k === pinnedResearchKey) : null;
     const pinnedAspectSet = pinnedRes ? new Set(pinnedRes.a) : null;
 
@@ -1711,9 +1803,13 @@ function _processImageForARInner(sourceElement, W, H, forceRescan = false) {
             continue;
         }
         const isMouseCursor = (whitePx >= 2 && blackPx >= 2);
+        if (isMouseCursor) {
+            // Never lock in a frame while the white OS mouse cursor is sitting on a hex cell!
+            tooltipOccludedCells++;
+        }
 
-        // Compute diffInner0 and drDark0 (ring darkening at 0,0 shift so bright neighbor icons like Motus never bleed into adjacent holes!)
-        let innerSum0 = 0, innerCnt0 = 0, ringDarkSum0 = 0, ringDarkCnt0 = 0;
+        // Compute diffInner0, meanBlueDelta0, and drDark0 (ring darkening at 0,0 shift so bright neighbor icons like Motus never bleed into adjacent holes!)
+        let innerSum0 = 0, innerCnt0 = 0, ringDarkSum0 = 0, ringDarkCnt0 = 0, blueDeltaSum0 = 0;
         for (let py16 = 0; py16 < 16; py16++) {
             for (let px16 = 0; px16 < 16; px16++) {
                 const idx = ((oy + py16) * 150 + (ox + px16)) * 4;
@@ -1721,6 +1817,7 @@ function _processImageForARInner(sourceElement, W, H, forceRescan = false) {
                     innerSum0 += (Math.abs(obs150[idx] - parchData150[idx]) +
                                   Math.abs(obs150[idx+1] - parchData150[idx+1]) +
                                   Math.abs(obs150[idx+2] - parchData150[idx+2])) / 3.0;
+                    blueDeltaSum0 += (obs150[idx+2] - parchData150[idx+2]);
                     innerCnt0++;
                 }
                 if (ringMask16[py16 * 16 + px16]) {
@@ -1732,6 +1829,7 @@ function _processImageForARInner(sourceElement, W, H, forceRescan = false) {
             }
         }
         const diffInner0 = innerSum0 / (innerCnt0 || 1);
+        const meanBlueDelta0 = blueDeltaSum0 / (innerCnt0 || 1);
         const drDark0 = ringDarkSum0 / (ringDarkCnt0 || 1);
 
         // Subpixel [-1, 0, 1] check for hex ring DARKENING vs inner darkening
@@ -1766,15 +1864,18 @@ function _processImageForARInner(sourceElement, W, H, forceRescan = false) {
                 for (let sx = -1; sx <= 1; sx++) {
                     if (oy + sy < 0 || ox + sx < 0 || oy + sy + 16 > 150 || ox + sx + 16 > 150) continue;
                     for (const k of ASPECT_KEYS) {
+                        // Spiritus is a translucent blue-white ghost with max_alpha=118; require cool blue shift (meanBlueDelta0 > 18) for Spiritus!
+                        if (k === 'spiritus' && meanBlueDelta0 < 18.0) continue;
+                        const aThresh = (k === 'spiritus') ? 65 : 140;
                         const tmpl = templates16[k];
-                        let errSum = 0, mCnt = 0;
+                        let errSum = 0, mCnt = 0, bgExcessSum = 0, bgCnt = 0;
                         for (let py16 = 0; py16 < 16; py16++) {
                             for (let px16 = 0; px16 < 16; px16++) {
                                 const tIdx = (py16 * 16 + px16) * 4;
                                 const a = tmpl[tIdx + 3];
-                                if (a > 140) {
+                                const pIdx = ((oy + sy + py16) * 150 + (ox + sx + px16)) * 4;
+                                if (a > aThresh) {
                                     const alpha = a / 255.0;
-                                    const pIdx = ((oy + sy + py16) * 150 + (ox + sx + px16)) * 4;
                                     const cr = parchData150[pIdx] * (1.0 - alpha) + tmpl[tIdx] * alpha;
                                     const cg = parchData150[pIdx+1] * (1.0 - alpha) + tmpl[tIdx+1] * alpha;
                                     const cb = parchData150[pIdx+2] * (1.0 - alpha) + tmpl[tIdx+2] * alpha;
@@ -1782,11 +1883,18 @@ function _processImageForARInner(sourceElement, W, H, forceRescan = false) {
                                                Math.abs(obs150[pIdx+1] - cg) +
                                                Math.abs(obs150[pIdx+2] - cb)) / 3.0;
                                     mCnt++;
+                                } else if (a < 25 && py16 >= 2 && py16 < 14 && px16 >= 2 && px16 < 14) {
+                                    // Silhouette check: penalize candidate templates that are transparent where the observed cell has bright/dark icon pixels (fixes Nebrisum vs Gloria!)
+                                    const dParch = (Math.abs(obs150[pIdx] - parchData150[pIdx]) +
+                                                    Math.abs(obs150[pIdx+1] - parchData150[pIdx+1]) +
+                                                    Math.abs(obs150[pIdx+2] - parchData150[pIdx+2])) / 3.0;
+                                    if (dParch > 14.0) bgExcessSum += (dParch - 14.0);
+                                    bgCnt++;
                                 }
                             }
                         }
                         if (mCnt >= 10) {
-                            let err = errSum / mCnt;
+                            let err = (errSum / mCnt) + 0.55 * (bgExcessSum / (bgCnt || 1));
                             // If user pinned a Research Note, give a strong bonus to that note's root aspects!
                             if (pinnedAspectSet && pinnedAspectSet.has(k)) {
                                 err -= 9.5;
@@ -1796,27 +1904,52 @@ function _processImageForARInner(sourceElement, W, H, forceRescan = false) {
                     }
                 }
             }
-            if (bestErr < 35.8 && bestK) {
+            if (bestErr < 36.5 && bestK) {
                 newFixed[hk] = bestK;
             } else if (drDark0 > 6.5 && bestDiffRingDark > 9.5 && bestRingExcessDark > 3.5) {
                 // Playable hex with partial occlusion — do NOT mark as hole or aspect!
+                emptyPlayableCount++;
             } else {
                 newHoles.add(hk);
             }
         } else if (drDark0 > 6.5 && bestDiffRingDark > 9.5 && bestRingExcessDark > 4.2) {
             // Empty playable hex
+            emptyPlayableCount++;
         } else {
             newHoles.add(hk);
         }
     }
 
     const numFixed = Object.keys(newFixed).length;
-    // Reject non-note screens (e.g. dimmed pause screen or non-parchment where > 18 cells looked occupied)
-    if (numFixed < 2 || numFixed > 18) {
-        statusPill.textContent = 'Scanning stream (Waiting for Research Note)...';
-        statusPill.style.color = '#fbbf24';
+    // Reject completed research scrolls (where all empty hex rings vanish: emptyPlayableCount < 3) or non-note screens (numFixed < 2 || numFixed > 16)
+    if (emptyPlayableCount < 3 || numFixed < 2 || numFixed > 16) {
+        holesSet.clear();
+        fixedAspects = {};
+        solvedAspects = {};
+        activeResearchKey = null;
+        if (emptyPlayableCount < 3 && borderErr < 5.5) {
+            statusPill.textContent = '✅ Research Note Completed (No active hex grid)';
+            statusPill.style.color = '#34d399';
+            noGridOverlay = {
+                icon: '✅',
+                title: 'Research Note Completed — No Active Grid',
+                sub: 'Hex grid lines have vanished! Take your finished scroll or place a new Research Note.'
+            };
+        } else {
+            statusPill.textContent = 'Scanning stream (Waiting for active Research Note grid)...';
+            statusPill.style.color = '#fbbf24';
+            noGridOverlay = {
+                icon: '⏳',
+                title: 'Waiting for Active Research Grid...',
+                sub: 'Place an unfinished Research Note with a visible hex grid into the Research Table.'
+            };
+        }
+        drawHexBoard();
+        updateSolutionSummary();
         return;
     }
+
+    noGridOverlay = null;
 
     // Optional: Extract sidebar aspect counts via canonical 3.0x GUI warp (1026 x 657)
     let ocrUpdatedCount = 0;
