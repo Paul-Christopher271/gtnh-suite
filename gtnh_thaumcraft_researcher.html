@@ -1324,27 +1324,83 @@ function rgbToHsv(r, g, b) {
     return [h, s, v];
 }
 
-function detectParchmentBox(imgData, W, H) {
-    // 1. Find largest tan/parchment HSV connected region or bounding box via row/col projection
+const sharedWorkCanvas = document.createElement('canvas');
+const sharedWorkCtx = sharedWorkCanvas.getContext('2d', { willReadFrequently: true });
+const sharedPCanvas = document.createElement('canvas');
+sharedPCanvas.width = 150; sharedPCanvas.height = 150;
+const sharedPCtx = sharedPCanvas.getContext('2d', { willReadFrequently: true });
+const sharedTestCanvas = document.createElement('canvas');
+sharedTestCanvas.width = 150; sharedTestCanvas.height = 150;
+const sharedTestCtx = sharedTestCanvas.getContext('2d', { willReadFrequently: true });
+const sharedCanonCanvas = document.createElement('canvas');
+sharedCanonCanvas.width = 1026; sharedCanonCanvas.height = 657;
+const sharedCanonCtx = sharedCanonCanvas.getContext('2d', { willReadFrequently: true });
+
+function scoreBorderCandidate(sourceCanvas, px, py, s, W, H) {
+    if (px < 0 || py < 0 || px + s > W || py + s > H) return 1e18;
+    sharedTestCtx.drawImage(sourceCanvas, px, py, s, s, 0, 0, 150, 150);
+    const tData = sharedTestCtx.getImageData(0, 0, 150, 150).data;
+    let errL = 0, cntL = 0, errR = 0, cntR = 0, errB = 0, cntB = 0;
+    for (let ty = 85; ty < 149; ty += 2) {
+        for (let tx = 0; tx < 14; tx += 2) {
+            const pIdx = (ty * 150 + tx) * 4;
+            const a = parchData150[pIdx + 3] / 255.0;
+            const er = parchData150[pIdx] * a + 22.0 * (1.0 - a);
+            const eg = parchData150[pIdx+1] * a + 16.0 * (1.0 - a);
+            const eb = parchData150[pIdx+2] * a + 12.0 * (1.0 - a);
+            errL += Math.abs(tData[pIdx] - er) + Math.abs(tData[pIdx+1] - eg) + Math.abs(tData[pIdx+2] - eb);
+            cntL += 3;
+        }
+        for (let tx = 136; tx < 150; tx += 2) {
+            const pIdx = (ty * 150 + tx) * 4;
+            const a = parchData150[pIdx + 3] / 255.0;
+            const er = parchData150[pIdx] * a + 22.0 * (1.0 - a);
+            const eg = parchData150[pIdx+1] * a + 16.0 * (1.0 - a);
+            const eb = parchData150[pIdx+2] * a + 12.0 * (1.0 - a);
+            errR += Math.abs(tData[pIdx] - er) + Math.abs(tData[pIdx+1] - eg) + Math.abs(tData[pIdx+2] - eb);
+            cntR += 3;
+        }
+    }
+    for (let ty = 136; ty < 150; ty += 2) {
+        for (let tx = 14; tx < 136; tx += 3) {
+            const pIdx = (ty * 150 + tx) * 4;
+            const a = parchData150[pIdx + 3] / 255.0;
+            const er = parchData150[pIdx] * a + 22.0 * (1.0 - a);
+            const eg = parchData150[pIdx+1] * a + 16.0 * (1.0 - a);
+            const eb = parchData150[pIdx+2] * a + 12.0 * (1.0 - a);
+            errB += Math.abs(tData[pIdx] - er) + Math.abs(tData[pIdx+1] - eg) + Math.abs(tData[pIdx+2] - eb);
+            cntB += 3;
+        }
+    }
+    return ((errL / cntL) + (errR / cntR) + (errB / cntB)) / 3.0;
+}
+
+function detectParchmentBox(sourceCanvas, imgData, W, H) {
+    // 1. Fast 2x-strided HSV connected-component search (4x fewer pixels & zero GC pressure)
     const data = imgData.data;
-    const mask = new Uint8Array(W * H);
-    for (let i = 0; i < W * H; i++) {
-        const r = data[i * 4], g = data[i * 4 + 1], b = data[i * 4 + 2];
-        const [h, s, v] = rgbToHsv(r, g, b);
-        if (h >= 12 && h <= 26 && s >= 55 && s <= 205 && v >= 115 && v <= 248) {
-            mask[i] = 1;
+    const W2 = W >> 1, H2 = H >> 1;
+    const N2 = W2 * H2;
+    const mask = new Uint8Array(N2);
+    for (let y2 = 0; y2 < H2; y2++) {
+        const rowOff = (y2 * 2) * W;
+        const mOff = y2 * W2;
+        for (let x2 = 0; x2 < W2; x2++) {
+            const p = (rowOff + x2 * 2) * 4;
+            const [h, s, v] = rgbToHsv(data[p], data[p + 1], data[p + 2]);
+            if (h >= 12 && h <= 26 && s >= 55 && s <= 205 && v >= 115 && v <= 248) {
+                mask[mOff + x2] = 1;
+            }
         }
     }
 
-    // Connected components BFS to find largest parchment blob
-    const visited = new Uint8Array(W * H);
+    const visited = new Uint8Array(N2);
     let bestArea = 0, bestBox = null;
-    const qx = new Int32Array(W * H);
-    const qy = new Int32Array(W * H);
+    const qx = new Int32Array(N2);
+    const qy = new Int32Array(N2);
 
-    for (let y = 0; y < H; y++) {
-        for (let x = 0; x < W; x++) {
-            const idx = y * W + x;
+    for (let y = 0; y < H2; y++) {
+        for (let x = 0; x < W2; x++) {
+            const idx = y * W2 + x;
             if (mask[idx] && !visited[idx]) {
                 let head = 0, tail = 0;
                 qx[tail] = x; qy[tail] = y; tail++;
@@ -1358,8 +1414,8 @@ function detectParchmentBox(imgData, W, H) {
                     if (cy > maxY) maxY = cy;
                     const nbs = [[cx+1,cy],[cx-1,cy],[cx,cy+1],[cx,cy-1]];
                     for (const [nx, ny] of nbs) {
-                        if (nx >= 0 && nx < W && ny >= 0 && ny < H) {
-                            const nIdx = ny * W + nx;
+                        if (nx >= 0 && nx < W2 && ny >= 0 && ny < H2) {
+                            const nIdx = ny * W2 + nx;
                             if (mask[nIdx] && !visited[nIdx]) {
                                 visited[nIdx] = 1;
                                 qx[tail] = nx; qy[tail] = ny; tail++;
@@ -1369,81 +1425,59 @@ function detectParchmentBox(imgData, W, H) {
                 }
                 if (tail > bestArea) {
                     bestArea = tail;
-                    bestBox = [minX, minY, maxX - minX + 1, maxY - minY + 1];
+                    bestBox = [minX * 2, minY * 2, (maxX - minX + 1) * 2, (maxY - minY + 1) * 2];
                 }
             }
         }
     }
 
-    if (!bestBox || bestArea < 4000) return null;
+    if (!bestBox || bestArea < 1000) return null;
     const [bx, by, bw, bh] = bestBox;
     const estS = Math.round(Math.max(bw, bh) * (150.0 / 147.333));
+    if (estS < 100 || estS > Math.min(W, H)) return null;
 
-    // Refine exact (px, py, ps) using bottom-half parchment template matching (immune to top-left tooltip!)
+    // 2. Two-stage Coarse-to-Fine border refinement (only ~90 CPU canvas checks instead of 847 GPU readbacks!)
     let bestErr = 1e18;
-    let refined = [bx, by, estS];
+    let bestPx = bx, bestPy = by, bestS = estS;
 
-    const offCanvas = document.createElement('canvas');
-    offCanvas.width = W; offCanvas.height = H;
-    const offCtx = offCanvas.getContext('2d');
-    offCtx.putImageData(imgData, 0, 0);
-
-    const testCanvas = document.createElement('canvas');
-    testCanvas.width = 150; testCanvas.height = 150;
-    const testCtx = testCanvas.getContext('2d');
-
-    for (let s = estS - 3; s <= estS + 3; s++) {
-        if (s < 100) continue;
+    // Stage 1: Coarse step=2 search
+    for (let s = estS - 2; s <= estS + 2; s += 2) {
         const xStart = bx + bw - s - 2;
         const yStart = by + bh - s - 2;
-        for (let dy = -5; dy <= 5; dy += 1) {
-            for (let dx = -5; dx <= 5; dx += 1) {
-                const px = xStart + dx, py = yStart + dy;
-                if (px < 0 || py < 0 || px + s > W || py + s > H) continue;
-                testCtx.drawImage(offCanvas, px, py, s, s, 0, 0, 150, 150);
-                const tData = testCtx.getImageData(0, 0, 150, 150).data;
-                // Compare alpha-composited left (0..13), right (136..149), and bottom (136..149) border strips (including ragged dark edge!)
-                let errL = 0, cntL = 0, errR = 0, cntR = 0, errB = 0, cntB = 0;
-                for (let ty = 85; ty < 149; ty += 2) {
-                    for (let tx = 0; tx < 14; tx += 2) {
-                        const pIdx = (ty * 150 + tx) * 4;
-                        const a = parchData150[pIdx + 3] / 255.0;
-                        const er = parchData150[pIdx] * a + 22.0 * (1.0 - a);
-                        const eg = parchData150[pIdx+1] * a + 16.0 * (1.0 - a);
-                        const eb = parchData150[pIdx+2] * a + 12.0 * (1.0 - a);
-                        errL += Math.abs(tData[pIdx] - er) + Math.abs(tData[pIdx+1] - eg) + Math.abs(tData[pIdx+2] - eb);
-                        cntL += 3;
-                    }
-                    for (let tx = 136; tx < 150; tx += 2) {
-                        const pIdx = (ty * 150 + tx) * 4;
-                        const a = parchData150[pIdx + 3] / 255.0;
-                        const er = parchData150[pIdx] * a + 22.0 * (1.0 - a);
-                        const eg = parchData150[pIdx+1] * a + 16.0 * (1.0 - a);
-                        const eb = parchData150[pIdx+2] * a + 12.0 * (1.0 - a);
-                        errR += Math.abs(tData[pIdx] - er) + Math.abs(tData[pIdx+1] - eg) + Math.abs(tData[pIdx+2] - eb);
-                        cntR += 3;
-                    }
-                }
-                for (let ty = 136; ty < 150; ty += 2) {
-                    for (let tx = 14; tx < 136; tx += 3) {
-                        const pIdx = (ty * 150 + tx) * 4;
-                        const a = parchData150[pIdx + 3] / 255.0;
-                        const er = parchData150[pIdx] * a + 22.0 * (1.0 - a);
-                        const eg = parchData150[pIdx+1] * a + 16.0 * (1.0 - a);
-                        const eb = parchData150[pIdx+2] * a + 12.0 * (1.0 - a);
-                        errB += Math.abs(tData[pIdx] - er) + Math.abs(tData[pIdx+1] - eg) + Math.abs(tData[pIdx+2] - eb);
-                        cntB += 3;
-                    }
-                }
-                const meanErr = ((errL / cntL) + (errR / cntR) + (errB / cntB)) / 3.0;
+        for (let dy = -4; dy <= 4; dy += 2) {
+            for (let dx = -4; dx <= 4; dx += 2) {
+                const meanErr = scoreBorderCandidate(sourceCanvas, xStart + dx, yStart + dy, s, W, H);
                 if (meanErr < bestErr) {
                     bestErr = meanErr;
-                    refined = [px, py, s, meanErr];
+                    bestPx = xStart + dx;
+                    bestPy = yStart + dy;
+                    bestS = s;
                 }
             }
         }
     }
-    return refined;
+
+    // Early reject if not a real Research Table parchment
+    if (bestErr > 12.0) return null;
+
+    // Stage 2: Fine 1-pixel refinement around Stage 1 winner
+    const centerPx = bestPx, centerPy = bestPy, centerS = bestS;
+    for (let s = centerS - 1; s <= centerS + 1; s++) {
+        for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+                const meanErr = scoreBorderCandidate(sourceCanvas, centerPx + dx, centerPy + dy, s, W, H);
+                if (meanErr < bestErr) {
+                    bestErr = meanErr;
+                    bestPx = centerPx + dx;
+                    bestPy = centerPy + dy;
+                    bestS = s;
+                }
+            }
+        }
+    }
+
+    if (bestErr > 7.5) return null;
+    return [bestPx, bestPy, bestS, bestErr];
 }
 
 function readSidebarDigitSlot48(gray48, W48) {
@@ -1523,15 +1557,28 @@ function readSidebarDigitSlot48(gray48, W48) {
     return parseInt(outDigits.reverse().join(''), 10);
 }
 
+let isProcessingARFrame = false;
 function processImageForAR(sourceElement, W, H, forceRescan = false) {
     if (!assetsReady) return;
+    if (isProcessingARFrame && !forceRescan) return;
+    isProcessingARFrame = true;
+    try {
+        _processImageForARInner(sourceElement, W, H, forceRescan);
+    } finally {
+        isProcessingARFrame = false;
+    }
+}
+
+function _processImageForARInner(sourceElement, W, H, forceRescan = false) {
     if (forceRescan) {
         boardLocked = false;
         updateLockUI();
     }
-    const workCanvas = document.createElement('canvas');
-    workCanvas.width = W; workCanvas.height = H;
-    const workCtx = workCanvas.getContext('2d');
+    const workCanvas = sharedWorkCanvas;
+    if (workCanvas.width !== W || workCanvas.height !== H) {
+        workCanvas.width = W; workCanvas.height = H;
+    }
+    const workCtx = sharedWorkCtx;
     workCtx.drawImage(sourceElement, 0, 0, W, H);
     lastCapturedCanvas = workCanvas;
     const statusPill = document.getElementById('arStatusPill');
@@ -1540,11 +1587,8 @@ function processImageForAR(sourceElement, W, H, forceRescan = false) {
     // Auto-unlocks immediately if the parchment is removed OR if a different Research Note is swapped in!
     if (boardLocked && lockedBox && lockedBox[0] + lockedBox[2] <= W && lockedBox[1] + lockedBox[2] <= H) {
         const [px, py, ps] = lockedBox;
-        const pCanvas = document.createElement('canvas');
-        pCanvas.width = 150; pCanvas.height = 150;
-        const pCtx = pCanvas.getContext('2d');
-        pCtx.drawImage(workCanvas, px, py, ps, ps, 0, 0, 150, 150);
-        const obs150 = pCtx.getImageData(0, 0, 150, 150).data;
+        sharedPCtx.drawImage(workCanvas, px, py, ps, ps, 0, 0, 150, 150);
+        const obs150 = sharedPCtx.getImageData(0, 0, 150, 150).data;
 
         // 1. Check if parchment scroll was removed from table while the Research Table GUI is still open
         let parchSum = 0, parchCnt = 0;
@@ -1614,24 +1658,23 @@ function processImageForAR(sourceElement, W, H, forceRescan = false) {
     }
 
     const imgData = workCtx.getImageData(0, 0, W, H);
-    const box = detectParchmentBox(imgData, W, H);
+    const box = detectParchmentBox(workCanvas, imgData, W, H);
     if (!box) {
         statusPill.textContent = 'Scanning stream (Waiting for Research Table)...';
         statusPill.style.color = '#f87171';
         const arCanvas = document.getElementById('arPreviewCanvas');
-        arCanvas.width = W; arCanvas.height = H;
-        arCanvas.getContext('2d').drawImage(workCanvas, 0, 0);
-        sendTelemetry(workCanvas, arCanvas, 'no_parchment');
+        const tw = Math.min(640, W), th = Math.round(H * (tw / W));
+        if (arCanvas.width !== tw || arCanvas.height !== th) {
+            arCanvas.width = tw; arCanvas.height = th;
+        }
+        arCanvas.getContext('2d').drawImage(workCanvas, 0, 0, W, H, 0, 0, tw, th);
         return;
     }
     const [px, py, ps, borderErr] = box;
 
-    // Warp parchment to 150x150
-    const pCanvas = document.createElement('canvas');
-    pCanvas.width = 150; pCanvas.height = 150;
-    const pCtx = pCanvas.getContext('2d');
-    pCtx.drawImage(workCanvas, px, py, ps, ps, 0, 0, 150, 150);
-    const obs150 = pCtx.getImageData(0, 0, 150, 150).data;
+    // Warp parchment to 150x150 using shared CPU-backed canvas
+    sharedPCtx.drawImage(workCanvas, px, py, ps, ps, 0, 0, 150, 150);
+    const obs150 = sharedPCtx.getImageData(0, 0, 150, 150).data;
 
     const newHoles = new Set();
     const newFixed = {};
@@ -1767,17 +1810,22 @@ function processImageForAR(sourceElement, W, H, forceRescan = false) {
         }
     }
 
+    const numFixed = Object.keys(newFixed).length;
+    // Reject non-note screens (e.g. dimmed pause screen or non-parchment where > 18 cells looked occupied)
+    if (numFixed < 2 || numFixed > 18) {
+        statusPill.textContent = 'Scanning stream (Waiting for Research Note)...';
+        statusPill.style.color = '#fbbf24';
+        return;
+    }
+
     // Optional: Extract sidebar aspect counts via canonical 3.0x GUI warp (1026 x 657)
     let ocrUpdatedCount = 0;
     if (document.getElementById('chkUpdateCountsFromOCR').checked) {
         const sc = ps / 150.0;
         const guiLeft = px - 96.0 * sc;
         const guiTop = py - 35.0 * sc;
-        const canonC = document.createElement('canvas');
-        canonC.width = 1026; canonC.height = 657;
-        const canonCtx = canonC.getContext('2d');
-        canonCtx.drawImage(workCanvas, guiLeft, guiTop, 342 * sc, 219 * sc, 0, 0, 1026, 657);
-        const cData = canonCtx.getImageData(0, 0, 1026, 657).data;
+        sharedCanonCtx.drawImage(workCanvas, guiLeft, guiTop, 342 * sc, 219 * sc, 0, 0, 1026, 657);
+        const cData = sharedCanonCtx.getImageData(0, 0, 1026, 657).data;
         const grayCanon = new Float32Array(1026 * 657);
         for (let i = 0; i < 1026 * 657; i++) {
             // OpenCV BGR2GRAY: 0.299 R + 0.587 G + 0.114 B
@@ -1834,7 +1882,6 @@ function processImageForAR(sourceElement, W, H, forceRescan = false) {
     runSteinerSolver();
 
     // Lock in automatically when we have a clean frame (no tooltip occlusion over parchment, low border error, and valid solved board)!
-    const numFixed = Object.keys(newFixed).length;
     const autoLockEnabled = document.getElementById('chkAutoLockBoard') && document.getElementById('chkAutoLockBoard').checked;
     if (autoLockEnabled && borderErr < 5.0 && tooltipOccludedCells === 0 && numFixed >= 2 && numFixed <= 18) {
         boardLocked = true;
@@ -1850,17 +1897,25 @@ function processImageForAR(sourceElement, W, H, forceRescan = false) {
 }
 
 function renderARCanvasOverlay(workCanvas, W, H, px, py, ps, statusPill, ocrUpdatedCount, isLocked) {
-    // Render AR Overlay onto a temporary full-size canvas, then crop #arPreviewCanvas to the Research Table GUI so it is large and sharp!
-    const fullAR = document.createElement('canvas');
-    fullAR.width = W; fullAR.height = H;
-    const arCtx = fullAR.getContext('2d');
-    arCtx.drawImage(workCanvas, 0, 0);
-
+    // Draw directly onto #arPreviewCanvas cropped tightly around the Research Table GUI (5x faster than full-screen 2560x1440 canvas!)
     const sc = ps / 150.0;
+    const cropX = Math.max(0, Math.round(px - 96.0 * sc - 14));
+    const cropY = Math.max(0, Math.round(py - 35.0 * sc - 14));
+    const cropW = Math.min(W - cropX, Math.round(342.0 * sc + 28));
+    const cropH = Math.min(H - cropY, Math.round(219.0 * sc + 28));
+
+    const arCanvas = document.getElementById('arPreviewCanvas');
+    if (arCanvas.width !== cropW || arCanvas.height !== cropH) {
+        arCanvas.width = cropW;
+        arCanvas.height = cropH;
+    }
+    const arCtx = arCanvas.getContext('2d');
+    arCtx.drawImage(workCanvas, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+
     function hexScreenCenter(q, r) {
         const dx = ktRound(9.0 * 1.5 * q);
         const dy = ktRound(9.0 * Math.sqrt(3.0) * (r + q / 2.0));
-        return [px + (75 + dx) * sc, py + (75 + dy) * sc];
+        return [px - cropX + (75 + dx) * sc, py - cropY + (75 + dy) * sc];
     }
 
     const showHoles = document.getElementById('chkShowHolesOnAR').checked;
@@ -1923,47 +1978,13 @@ function renderARCanvasOverlay(workCanvas, W, H, px, py, ps, statusPill, ocrUpda
         arCtx.fillText(lbl, cx, cy + 7.5 * sc);
     }
 
-    // Crop #arPreviewCanvas tightly around the Research Table GUI so it fills the AR viewport!
-    const arCanvas = document.getElementById('arPreviewCanvas');
-    const cropX = Math.max(0, Math.round(px - 96.0 * sc - 14));
-    const cropY = Math.max(0, Math.round(py - 35.0 * sc - 14));
-    const cropW = Math.min(W - cropX, Math.round(342.0 * sc + 28));
-    const cropH = Math.min(H - cropY, Math.round(219.0 * sc + 28));
-    arCanvas.width = cropW;
-    arCanvas.height = cropH;
-    arCanvas.getContext('2d').drawImage(fullAR, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
-
     const lockPrefix = isLocked ? '🔒 LOCKED IN: ' : 'Solved: ';
     statusPill.textContent = `${lockPrefix}${Object.keys(fixedAspects).length} fixed, ${Object.keys(newSteps).length} steps`;
     statusPill.style.color = isLocked ? '#34d399' : '#6ee7b7';
-    sendTelemetry(workCanvas, arCanvas, isLocked ? 'locked' : 'solved', [px, py, ps], fixedAspects, newSteps, ocrUpdatedCount);
 }
 
-let lastTelemetryTs = 0;
-function sendTelemetry(rawCanvas, arCanvas, status, box = null, fixed = {}, newSteps = {}, ocrCnt = 0) {
-    const now = Date.now();
-    if (now - lastTelemetryTs < 1500) return;
-    lastTelemetryTs = now;
-    try {
-        const payload = {
-            rawImage: rawCanvas.toDataURL('image/png'),
-            arImage: arCanvas.toDataURL('image/png'),
-            state: {
-                status: status,
-                box: box,
-                fixed: fixed,
-                holes: Array.from(holesSet),
-                newSteps: newSteps,
-                ocrUpdatedCount: ocrCnt,
-                research: document.getElementById('solutionTitleText').innerText.replace(/[^ -~]/g, '').trim()
-            }
-        };
-        fetch('http://localhost:8000/api/tc_telemetry', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        }).catch(() => {});
-    } catch (e) {}
+function sendTelemetry() {
+    // Telemetry PNG encoding disabled so 2560x1440 canvas.toDataURL('image/png') never blocks the UI thread!
 }
 
 function drawARPlaceholder() {
