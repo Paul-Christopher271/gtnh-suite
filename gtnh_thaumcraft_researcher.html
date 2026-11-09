@@ -917,6 +917,17 @@ function getPermutations(arr) {
     return out;
 }
 
+function hasHexInAncestors(parentHex, parentSt, startSt, targetHex) {
+    let cur = startSt;
+    let steps = 0;
+    while (cur && steps < 64) {
+        if (parentHex[cur] === targetHex) return true;
+        cur = parentSt[cur];
+        steps++;
+    }
+    return false;
+}
+
 function solveBoardSteiner(playableSet, fixedMap) {
     const roots = Object.keys(fixedMap);
     if (roots.length <= 1) return Object.assign({}, fixedMap);
@@ -933,11 +944,12 @@ function solveBoardSteiner(playableSet, fixedMap) {
     }
     if (repRoots.length <= 1) return Object.assign({}, fixedMap);
 
-    const orders = repRoots.length <= 4 ? getPermutations(repRoots) : [repRoots];
+    const maxPerms = playableSet.size > 40 ? 6 : 24;
+    const orders = repRoots.length <= 4 ? getPermutations(repRoots).slice(0, maxPerms) : [repRoots];
     let bestBoard = null;
     let bestTotalCost = 1e18;
 
-    for (const order of orders.slice(0, 24)) {
+    for (const order of orders) {
         const board = Object.assign({}, fixedMap);
         let possible = true;
 
@@ -946,73 +958,75 @@ function solveBoardSteiner(playableSet, fixedMap) {
             const comp = getTreeComponent(board, order[0]);
             if (comp.has(targetRoot)) continue;
 
-            // Dijkstra over simple (non-self-intersecting) hex paths so a path NEVER visits the same hex twice with two different aspects!
-            const visits = {};
+            // Fast push-pruned Dijkstra over simple (non-self-intersecting) hex paths
+            const dist = {};
+            const parentSt = {};
+            const parentHex = {};
+            const stateAsp = {};
             const pq = [];
             for (const u of comp) {
-                pq.push([0.0, u, board[u], [[u, board[u]]], new Set(comp)]);
+                const st = `${u}|${board[u]}`;
+                dist[st] = 0.0;
+                parentHex[st] = u;
+                stateAsp[st] = board[u];
+                pq.push([0.0, u, board[u], st]);
             }
 
-            let foundPath = null;
+            let foundTarget = null;
             while (pq.length > 0) {
-                // Pop min cost
                 let minIdx = 0;
                 for (let i = 1; i < pq.length; i++) {
                     if (pq[i][0] < pq[minIdx][0]) minIdx = i;
                 }
-                const [d, uk, asp, path, usedHexes] = pq[minIdx];
+                const [d, uk, asp, st] = pq[minIdx];
                 pq[minIdx] = pq[pq.length - 1];
                 pq.pop();
 
+                if (d > (dist[st] ?? 1e18)) continue;
                 if (uk === targetRoot && asp === board[targetRoot]) {
-                    foundPath = path;
+                    foundTarget = st;
                     break;
                 }
-
-                const st = `${uk}|${asp}`;
-                let vlist = visits[st];
-                if (!vlist) {
-                    vlist = [];
-                    visits[st] = vlist;
-                }
-                if (vlist.length >= 3 && d > vlist[vlist.length - 1]) continue;
-                vlist.push(d);
-                vlist.sort((a, b) => a - b);
-                if (vlist.length > 3) vlist.length = 3;
 
                 const [q, r] = parseHexKey(uk);
                 for (const [nq, nr] of hexNeighbors(q, r)) {
                     const nk = hexKey(nq, nr);
-                    if (!playableSet.has(nk) || usedHexes.has(nk)) continue;
+                    if (!playableSet.has(nk) || comp.has(nk) || hasHexInAncestors(parentHex, parentSt, st, nk)) continue;
                     if (board[nk]) {
                         const nAsp = board[nk];
                         if (ASPECT_ADJ[asp].has(nAsp)) {
                             const nst = `${nk}|${nAsp}`;
-                            const nv = visits[nst];
-                            if (!nv || nv.length < 3 || d < nv[nv.length - 1]) {
-                                const nextUsed = new Set(usedHexes);
-                                nextUsed.add(nk);
-                                pq.push([d, nk, nAsp, path.concat([[nk, nAsp]]), nextUsed]);
+                            if (d < (dist[nst] ?? 1e18)) {
+                                dist[nst] = d;
+                                parentSt[nst] = st;
+                                parentHex[nst] = nk;
+                                stateAsp[nst] = nAsp;
+                                pq.push([d, nk, nAsp, nst]);
                             }
                         }
                     } else {
                         for (const nAsp of ASPECT_ADJ[asp]) {
                             const nd = d + getAspectCost(nAsp);
                             const nst = `${nk}|${nAsp}`;
-                            const nv = visits[nst];
-                            if (!nv || nv.length < 3 || nd < nv[nv.length - 1]) {
-                                const nextUsed = new Set(usedHexes);
-                                nextUsed.add(nk);
-                                pq.push([nd, nk, nAsp, path.concat([[nk, nAsp]]), nextUsed]);
+                            if (nd < (dist[nst] ?? 1e18)) {
+                                dist[nst] = nd;
+                                parentSt[nst] = st;
+                                parentHex[nst] = nk;
+                                stateAsp[nst] = nAsp;
+                                pq.push([nd, nk, nAsp, nst]);
                             }
                         }
                     }
                 }
             }
 
-            if (!foundPath) { possible = false; break; }
-            for (const [ck, casp] of foundPath) {
+            if (!foundTarget) { possible = false; break; }
+            let curr = foundTarget;
+            while (parentSt[curr]) {
+                const ck = parentHex[curr];
+                const casp = stateAsp[curr];
                 if (!board[ck]) board[ck] = casp;
+                curr = parentSt[curr];
             }
         }
 
