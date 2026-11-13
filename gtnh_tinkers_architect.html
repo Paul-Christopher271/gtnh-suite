@@ -1255,16 +1255,19 @@
                         <label class="control-label">Tool XP Level (Iguana Tweaks Slot Unlocks)</label>
                         <select id="tool-level-select" class="select-input" onchange="calculateToolStats()">
                             <option value="3" selected>Default Sandbox (3 Base Slots)</option>
-                            <option value="0">01-Crude (0 Base Slots — Fresh GTNH Tool)</option>
-                            <option value="1">02-Urchin (1 Slot — Lvl 2)</option>
-                            <option value="2">03-Interactive (2 Slots — Lvl 3)</option>
-                            <option value="3">05-Simple (3 Slots — Lvl 5)</option>
-                            <option value="4">07-Clumsy (4 Slots — Lvl 7)</option>
-                            <option value="5">09-Comfortable (5 Slots — Lvl 9)</option>
-                            <option value="6">11-Decorated (6 Slots — Lvl 11)</option>
-                            <option value="7">11-Decorated + 1 Bonus (7 Slots)</option>
-                            <option value="8">14-Master (8 Slots — Lvl 14+)</option>
-                            <option value="10">20-Grandmaster (10 Slots — Lvl 20+)</option>
+                            <option value="0">01-Abused (0 Base Slots — Fresh GTNH Tool)</option>
+                            <option value="1">02-Dented (1 Slot — Lvl 2)</option>
+                            <option value="2">03-Scratched (2 Slots — Lvl 3–4)</option>
+                            <option value="3">05-Polished (3 Slots — Lvl 5–6)</option>
+                            <option value="4">07-Unbearable (4 Slots — Lvl 7–8)</option>
+                            <option value="5">09-Accustomed (5 Slots — Lvl 9–10)</option>
+                            <option value="6">11-Decorated (6 Slots — Lvl 11–13)</option>
+                            <option value="7">14-Uncommon (7 Slots — Lvl 14–16)</option>
+                            <option value="8">17-Rare (8 Slots — Lvl 17–19)</option>
+                            <option value="9">20-Shiny (9 Slots — Lvl 20–23)</option>
+                            <option value="10">24-Heroic (10 Slots — Lvl 24–27)</option>
+                            <option value="11">28-God forged (11 Slots — Lvl 28–31)</option>
+                            <option value="12">32+Couple Years (12 Slots — Lvl 32–35)</option>
                         </select>
                     </div>
 
@@ -5792,7 +5795,7 @@
                     "Block breaking speed multiplier. Formula: Base Speed × Schema Multiplier (e.g. 0.4x for Hammers, 1.0x for Pickaxes) + (Haste × 1.5). Exceeding specific speed breakpoints enables 1-tick instamining.");
 
                 setCardTip(cardAttack, "⚔️ Digging Strike Attack Damage", 
-                    "Damage dealt in hearts when hitting entities with this tool. Head base attack + schema attack bonus.");
+                    "Vanilla/TConstruct attribute (+Attack Damage, 1 Heart = 2 Dmg). Note: On worn Stonebound tools, TiCTooltips [Shift] subtracts Stonebound Loss and truncates integer damage (e.g. +6 Dmg − 1.33 Stonebound = ⌊4.67⌋ = 4 Dmg = 2 Hearts, showing -0.5 Hearts loss). Hammers also deal +2 to +4.5 Hearts inherent Smite bonus vs Undead.");
 
                 setCardTip(cardMods, "💎 Free Modifier Slots", 
                     "Modifier slots for Haste (Redstone), Fortune (Lapis), Silk Touch, Auto-Repair (Moss), Diamond (+500 dura, +1 mining level), Emerald (+50% dura).");
@@ -6092,9 +6095,17 @@
                 const avgDura = Math.floor((stats.sumHeadDura || stats.headMat.durability) / (stats.headsCount || 1));
                 const headScale = (0.5 + (stats.headsCount || 1) * 0.5).toFixed(1);
                 const duraMod = (schema.durabilityMod || 1.0).toFixed(2).replace(/\.00$/, '.0');
+                const sbMaxSpd = Math.floor(stats.maxStoneboundBonus * 100) / 100;
+                const sbMaxTotalSpd = Math.floor((stats.effectiveSpeed + stats.maxStoneboundBonus) * 100) / 100;
                 const sbLine = stats.stoneboundMod > 0
-                    ? ` &bull; Stonebound Mod: <strong>${stats.stoneboundMod.toFixed(2)}</strong> (Max Bonus: <strong>+${stats.maxStoneboundBonus.toFixed(2)}</strong>)`
+                    ? ` &bull; Stonebound Mod: <strong>${stats.stoneboundMod.toFixed(2)}</strong> (Max Bonus: <strong>+${sbMaxSpd.toFixed(2)}</strong> &rarr; <strong>${sbMaxTotalSpd.toFixed(2)}</strong>)`
                     : '';
+                const sbAtkDmg = Math.max(1, Math.trunc(stats.baseAttack - stats.maxStoneboundBonus));
+                const sbAtkLossHearts = Math.trunc(-stats.maxStoneboundBonus) / 2;
+                const undeadNote = currentToolType === "hammer" ? ` &bull; Bonus vs Undead: <strong style="color:#34d399;">2–4.5 Hearts</strong>` : '';
+                const atkDiagLine = stats.stoneboundMod > 0
+                    ? `<div>• <strong>Attack Breakdown:</strong> <strong>+${stats.baseAttack.toFixed(0)} Attack Dmg</strong> (${(stats.baseAttack/2).toFixed(1)}♥ New) &bull; TiCTooltips Worn: <strong>${sbAtkDmg / 2} Hearts</strong> (Stonebound Loss: <strong>${sbAtkLossHearts} Hearts</strong>)${undeadNote}</div>`
+                    : (undeadNote ? `<div>• <strong>Attack Breakdown:</strong> <strong>+${stats.baseAttack.toFixed(0)} Attack Dmg</strong> (${(stats.baseAttack/2).toFixed(1)}♥)${undeadNote}</div>` : '');
                 diag.innerHTML = `
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                         <div>• <strong>Head / Core:</strong> ${stats.headMat.name} (${stats.headMat.tier}) &mdash; Base Dura: ${stats.headMat.durability}, Speed: ${stats.headMat.miningSpeed}</div>
@@ -6103,6 +6114,7 @@
                         <div>• <strong>Modifier Slot Usage:</strong> ${stats.usedSlots} used / ${stats.totalAvailableSlots} total (${stats.remainingSlots} remaining)</div>
                         <div>• <strong>Reinforced Breakdown:</strong> <strong>Level ${stats.totalReinforcedLevel}/10</strong> (${stats.basePartReinforced} from Parts + ${stats.modReinforced} from Plates = <strong>${stats.unbreakPct}% save</strong>)</div>
                         <div>• <strong>Harvest Speed Factor:</strong> Avg ${Number(stats.baseSpeed.toFixed(2))} &times; ${schema.speedMult || 1.0}x + ${Number((stats.hasteBonus || 0).toFixed(2))} Haste = <strong>${Number(stats.effectiveSpeed.toFixed(2))}</strong>${sbLine}</div>
+                        ${atkDiagLine}
                     </div>
                 `;
             }
